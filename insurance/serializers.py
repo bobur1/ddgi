@@ -155,11 +155,18 @@ class DtOptionSerializer(serializers.ModelSerializer):
                   'autoFill', 'serverSide', 'processing', 'scrollY', 'columns']
 
 
+class HumanSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Human
+        fields = ['id', 'first_name', 'last_name', 'middle_name', 'phone']
+
+
 class IndividualClientSerializer(serializers.ModelSerializer):
+    person = HumanSerializer()
+
     class Meta:
         model = IndividualClient
-        fields = ['id', 'first_name', 'last_name',
-                  'middle_name', 'address', 'phone_number']
+        fields = ['id', 'person']
 
 
 class LegalClientSerializer(serializers.ModelSerializer):

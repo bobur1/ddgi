@@ -189,7 +189,11 @@ class Human(models.Model):
 
 
 class Bank(models.Model):
-    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
+    name = models.CharField(verbose_name="Имя", max_length=128, default=None)
+    mfo = models.CharField(max_length=6, null=True)
+    inn = models.CharField(max_length=20, null=True)
+    phone_number = models.CharField(verbose_name="Номер телефона", max_length=14, default=None)
+    address = models.CharField(verbose_name="Адрес", max_length=1024, default=None)
     checking_account = models.CharField(verbose_name="Расчётный счёт", max_length=30)
     is_exist = models.BooleanField(default=True)
 

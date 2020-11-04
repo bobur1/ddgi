@@ -1,3 +1,5 @@
+from abc import ABC
+
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from insurance import util
@@ -36,7 +38,54 @@ class UserRoleSerializer(serializers.ModelSerializer):
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Position
-        fields = '__all__'
+        fields = ['id', 'name']
+
+
+class PoliciesIncomeSerializer(serializers.ModelSerializer):
+    from_user = UserSerializer()
+
+    class Meta:
+        model = PoliciesIncome
+        fields = ['act_number', 'act_date', 'policy_number_from', 'policy_number_to',
+                  'is_free_policy', 'from_user', 'document']
+
+
+class KlassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Klass
+        fields = ['id', 'name']
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Klass
+        fields = ['id', 'name']
+
+
+class VidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vid
+        fields = ['id', 'name']
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    klass = KlassSerializer()
+    group = GroupSerializer()
+    vid = VidSerializer()
+
+    class Meta:
+        model = ProductType
+        fields = ['id', 'name', 'klass', 'group', 'vid']
+
+
+class PoliciesSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+    income_session = PoliciesIncomeSerializer()
+
+    class Meta:
+        model = Policy
+        fields = ['id', 'series', 'is_free_generated', 'policy_number', 'product', 'client_type',
+                  'date_from', 'date_to', 'goal', 'zone', 'beneficiary', 'pledger', 'income_session']
 
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -69,6 +118,7 @@ class PermissionSerializer(serializers.ModelSerializer):
 
 class PermissionUserSerializer(serializers.ModelSerializer):
     permission_code = serializers.CharField(source="permission.code_name")
+
     class Meta:
         model = PermissionUser
         fields = ('permission_code', 'grant')
@@ -157,12 +207,85 @@ class BranchSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'director']
 
 
+class ProductFieldsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductField
+        fields = ['id', 'product', 'type', 'name', 'value', 'order']
 
 
+class RegionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Region
+        fields = ['id', 'name']
 
 
+class DistrictSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = District
+        fields = ['id', 'region', 'name']
 
 
+class VidSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vid
+        fields = ['id', 'name']
 
 
+class BeneficiarySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Beneficiary
+        fields = ['id', 'first_name', 'last_name', 'middle_name',
+                  'address', 'fax_number', 'checking_number',
+                  'bank_name', 'inn', 'mfo']
 
+
+class Insurer(serializers.ModelSerializer):
+    class Meta:
+        model = Insurer
+        fields = ['id', 'first_name', 'last_name', 'middle_name', 'address',
+                  'phone_number', 'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo']
+
+
+class PledgerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pledger
+        fields = ['id', 'first_name', 'last_name', 'middle_name', 'address', 'phone_number',
+                  'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo']
+
+
+class ActSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Policy
+        fields = ['id', 'client_type', 'date_from', 'date_to',
+                  'insurance', 'goal', 'zone', 'is_damaged',
+                  'is_insured', 'risk']
+
+
+class ActFieldsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PolicyFields
+        fields = ['id', 'product', 'order', 'name', 'value']
+
+
+class PolicySeriesTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PolicySeriesType
+        fields = ['id', 'code']
+
+
+class PoliciesSimpleSerializer(serializers.ModelSerializer):
+    product = ProductSerializer()
+    # income_session = PoliciesIncomeSerializer()
+
+    class Meta:
+        model = Policy
+        fields = ['series', 'is_free_generated', 'policy_number', 'product', 'client_type',
+                  'date_from', 'date_to', 'goal', 'zone', 'beneficiary', 'pledger']
+
+
+class TransferPoliciesSerializer(serializers.ModelSerializer):
+    policies = PoliciesSimpleSerializer(many=True)
+
+    class Meta:
+        model = PolicyTransfers
+        fields = ['id', 'to_branch', 'policies', 'to_user', 'cr_by', 'cr_on']

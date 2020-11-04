@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     'corsheaders',
     #'autofixture',
     'rest_framework_datatables',
-
+    'test',
 ]
 
 

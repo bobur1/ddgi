@@ -99,7 +99,6 @@ class UserRoleAdmin(admin.ModelAdmin):
             obj.delete()
 
 
-
 @admin.register(PermissionRole)
 class PermissionRoleAdmin(admin.ModelAdmin):
     list_display = ('role', 'permission')
@@ -177,3 +176,57 @@ class CurrencyAdmin(admin.ModelAdmin):
 class LegalClientAdmin(admin.ModelAdmin):
     pass
 
+
+class ProductFieldInline(admin.TabularInline):
+    model = ProductField
+    extra = 0
+    fields = ('type', 'name', 'value', 'order')
+
+
+@admin.register(ProductType)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'klass', 'group', 'vid')
+    inlines = [ProductFieldInline]
+
+
+@admin.register(PoliciesIncome)
+class PoliciesIncomeAdmin(admin.ModelAdmin):
+    list_display = ['act_number', 'act_date', 'policy_number_from', 'policy_number_to']
+
+
+@admin.register(PolicySeriesType)
+class PolicySeriesType(admin.ModelAdmin):
+    list_display = ['code', 'cr_by']
+
+
+@admin.register(Policy)
+class PolicyAdmin(admin.ModelAdmin):
+
+    list_display = (str, 'is_free_generated')
+
+
+@admin.register(Beneficiary)
+class BeneficiaryAdmin(admin.ModelAdmin):
+    list_display = (str, 'person', 'fax_number', 'checking_account', 'bank', 'inn', 'mfo')
+
+
+@admin.register(Pledger)
+class PledgerAdmin(admin.ModelAdmin):
+    list_display = ('person', 'fax_number', 'inn')
+
+
+@admin.register(Human)
+class PledgerAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'phone')
+
+
+@admin.register(PolicyTransfers)
+class PolicyTransfersAdmin(admin.ModelAdmin):
+    list_display = ('id', 'to_branch', 'to_user', 'cr_by', 'cr_on')
+
+    # to_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=False, blank=False)
+    # to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    # policies = models.ManyToManyField(Policy)
+    # cr_on = models.DateTimeField(auto_now_add=True)
+    # cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+    #                           related_name='policy_transfers_cr_by')

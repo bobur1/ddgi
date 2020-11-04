@@ -2,10 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Position(models.Model):
     name = models.CharField(verbose_name='Имя', max_length=50)
+    is_exist = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Должность'
@@ -40,7 +42,8 @@ class Permission(models.Model):
     title = models.CharField(max_length=50)
     cr_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
-    up_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='permission_updated_by')
+    up_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                              related_name='permission_updated_by')
     up_on = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -80,7 +83,8 @@ class PermissionUser(models.Model):
     permission = models.ForeignKey(Permission, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     grant = models.BooleanField(default=False)
-    cr_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='permissionuser_created_by', null=True, blank=True)
+    cr_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='permissionuser_created_by', null=True,
+                              blank=True)
     cr_on = models.DateTimeField(auto_now_add=True)
 
 
@@ -88,10 +92,6 @@ class ClientPhysical(models.Model):
     firstname = models.CharField(verbose_name="Имя", max_length=50)
     lastname = models.CharField(verbose_name="Фамилия", max_length=50)
     middlename = models.CharField(verbose_name="Отчество", max_length=50)
-
-
-class Product(models.Model):
-    name = models.CharField(verbose_name="Наименование", max_length=255)
 
 
 class Group(models.Model):
@@ -110,12 +110,86 @@ class Klass(models.Model):
         return self.name
 
 
-class Bank(models.Model):
+class Vid(models.Model):
+    name = models.CharField(max_length=256)
+    is_exist = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class PolicySeriesType(models.Model):
+    code = models.CharField(verbose_name="Код", max_length=24)
+
+    cr_on = models.DateTimeField(auto_now_add=True)
+
+    cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+                              related_name='policy_series_cr_by')
+
+    class Meta:
+        verbose_name = "Серии полиса"
+        verbose_name_plural = 'Серии полисов'
+
+    def __str__(self):
+        return self.code
+
+
+class PoliciesIncome(models.Model):
+    act_number = models.CharField(verbose_name="Номер акта", max_length=128, unique=True)
+    act_date = models.DateTimeField(verbose_name="Дата акта")
+
+    policy_series = models.ForeignKey(PolicySeriesType,
+                                      on_delete=models.SET_NULL,
+                                      null=True, blank=True, default=None,
+                                      verbose_name="Серии полиса")
+
+    policy_number_from = models.PositiveIntegerField(verbose_name="Номер полиса с", default=1)
+    policy_number_to = models.PositiveIntegerField(verbose_name="Номер полиса до", default=2)
+    is_free_policy = models.BooleanField(verbose_name="Свободный", default=False)
+
+    from_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False,
+                                  related_name="policies_income_up_by")
+
+    document = models.FileField(verbose_name="Документ", upload_to='policies_income', blank=True, null=True, default=None)
+
+    cr_on = models.DateTimeField(auto_now_add=True)
+
+    cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+                              related_name='policies_income_cr_by')
+
+    class Meta:
+        verbose_name = 'Поступления полис'
+        verbose_name_plural = 'Поступления полисы'
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super().save(force_insert, force_update, using, update_fields)
+
+    def __str__(self):
+        return self.act_number + " " + self.cr_by.__str__()
+
+
+class ProductType(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
-    mfo = models.CharField(verbose_name="МФО банка", max_length=8)
-    inn = models.CharField(verbose_name="ИНН", max_length=10)
-    address = models.CharField(verbose_name="Адрес", max_length=150)
-    phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
+    klass = models.ForeignKey(Klass, on_delete=models.CASCADE, null=True)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
+    vid = models.ForeignKey(Vid, on_delete=models.CASCADE, null=True)
+    is_exist = models.BooleanField(default=True)
+
+
+class Human(models.Model):
+    phone = models.CharField(verbose_name="Номер телефона", max_length=14, default=None)
+    first_name = models.CharField(verbose_name="Имя", max_length=128, default=None)
+    last_name = models.CharField(verbose_name="Фамилия", max_length=128, default=None)
+    middle_name = models.CharField(verbose_name="Отчество", max_length=128, default=None)
+    address = models.CharField(verbose_name="Адрес", max_length=1024, default=None)
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
+
+class Bank(models.Model):
+    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
     checking_account = models.CharField(verbose_name="Расчётный счёт", max_length=30)
     is_exist = models.BooleanField(default=True)
 
@@ -124,6 +198,7 @@ class Bank(models.Model):
 
 
 class Branch(models.Model):
+    series = models.CharField(verbose_name="Серии", max_length=10, default="AAA")
     name = models.CharField(verbose_name="Наименование", max_length=255)
     director = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='branch_director')
     cr_on = models.DateTimeField(auto_now_add=True)
@@ -155,7 +230,15 @@ class BasicTariffRate(models.Model):
 
 
 class Beneficiary(models.Model):
-    name = models.CharField(verbose_name="Наименование", max_length=255)
+    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
+    fax_number = models.CharField(max_length=64, null=True)
+    checking_account = models.CharField(max_length=64, null=True)
+    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, related_name='beneficiary_bank', null=True)
+    inn = models.CharField(max_length=20, null=True)
+    mfo = models.CharField(max_length=6, null=True)
+
+    def __str__(self):
+        return self.person.__str__() + ' ' + self.inn
 
 
 class InsurancePeriod(models.Model):
@@ -178,11 +261,7 @@ class LegalClient(models.Model):
 
 
 class IndividualClient(models.Model):
-    first_name = models.CharField(verbose_name="Имя", max_length=255)
-    last_name = models.CharField(verbose_name="Фамилия", max_length=255)
-    middle_name = models.CharField(verbose_name="Отчество", max_length=255)
-    address = models.CharField(verbose_name="Адрес", max_length=150)
-    phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
+    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
     up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='individual_client_up_by')
@@ -191,6 +270,7 @@ class IndividualClient(models.Model):
 
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
+
 
 #
 # class CompanyBankAccount(models.Model):
@@ -223,6 +303,40 @@ class IndividualClient(models.Model):
 #     original = models.TextField()  # TODO: change to Jsonb field
 #
 #
+
+class Pledger(models.Model):
+    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True, default=None)
+    fax_number = models.CharField(max_length=32)
+    checking_account = models.CharField(max_length=32)
+    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
+    inn = models.CharField(max_length=20, null=True)
+    mfo = models.CharField(max_length=6, null=True)
+
+    def __str__(self):
+        return self.person.__str__()
+
+
+class Policy(models.Model):
+    series = models.ForeignKey(PolicySeriesType, on_delete=models.SET_NULL, null=True, blank=True)
+    is_free_generated = models.BooleanField(default=False, verbose_name="Свободный")
+    policy_number = models.PositiveIntegerField(verbose_name="Номер")
+
+    product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    client_type = models.CharField(max_length=64, null=True, blank=True, default=None)
+    date_from = models.DateField(null=True, blank=True, default=None)
+    date_to = models.DateField(null=True, blank=True, default=None)
+    goal = models.CharField(max_length=2048, null=True, blank=True, default=None)
+    zone = models.CharField(max_length=256, null=True, blank=True, default=None)
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+
+    income_session = models.ForeignKey(PoliciesIncome, verbose_name="Policies income session",
+                                       on_delete=models.SET_NULL,
+                                       default=None, null=True, blank=True)
+
+    def __str__(self):
+        return self.series.__str__() + '|' + self.policy_number.__str__()
+
 # class Policy(models.Model):
 #     contract = models.ForeignKey(InsuranceContract, on_delete=models.SET_NULL, null=True, blank=True)
 #     contract_number = models.IntegerField(verbose_name="Номер договора")  # TODO: make unsigned
@@ -243,6 +357,24 @@ class IndividualClient(models.Model):
 #     original = models.TextField()  # TODO: change to Jsonb field
 
 
+class PolicyTransfers(models.Model):
+    to_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=False, blank=False)
+    to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    policies = models.ManyToManyField(Policy)
+    cr_on = models.DateTimeField(auto_now_add=True)
+    cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+                              related_name='policy_transfers_cr_by')
+
+
+# class PolicyReTransfer(models.Model):
+#     parent_transfer = models.ForeignKey(PolicyTransfers, verbose_name="Перевод", on_delete=models.DEFERRED, null=False, blank=False)
+#     act_date = models.CharField(verbose_name="Дата акта", max_length=128)
+#     policy_number_from = models.PositiveIntegerField(verbose_name="Номер полиса с",
+#                                                      validators=[MinValueValidator(parent_transfer.policy_number_from),
+#                                                                  MaxValueValidator(parent_transfer.policy_number_to)])
+#     policy_number_to = models.PositiveIntegerField(verbose_name="Номер полиса до")
+
+
 class RegisteredPolises(models.Model):
     act_number = models.CharField(verbose_name="Номер акта", max_length=128)
     act_date = models.CharField(verbose_name="Дата акта", max_length=128)
@@ -252,7 +384,8 @@ class RegisteredPolises(models.Model):
     polis_status = models.SmallIntegerField(verbose_name="Статус полиса")
     document = models.FileField(verbose_name="Документ", upload_to='registered_polis')
     cr_on = models.DateTimeField(auto_now_add=True)
-    cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='polise_register_up_by')
+    cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+                              related_name='polise_register_up_by')
     is_exist = models.BooleanField(default=True)
 
     class Meta:
@@ -261,6 +394,8 @@ class RegisteredPolises(models.Model):
 
     def __str__(self):
         return '{} {}'.format(self.act_number, self.act_date)
+
+
 #
 #
 # class Transaction(models.Model):
@@ -332,3 +467,53 @@ class GridCols(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class ProductField(models.Model):
+    product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+    type = models.CharField(max_length=128)
+    name = models.CharField(max_length=128)
+    value = models.CharField(max_length=4096)
+    order = models.IntegerField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Region(models.Model):
+    name = models.CharField(max_length=512)
+    is_exist = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class District(models.Model):
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    name = models.CharField(max_length=128)
+    is_exist = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Insurer(models.Model):
+    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
+    fax_number = models.CharField(max_length=32)
+    checking_account = models.CharField(max_length=32)
+    bank_name = models.CharField(max_length=256, null=True)
+    inn = models.CharField(max_length=20, null=True)
+    mfo = models.CharField(max_length=6, null=True)
+
+    def __str__(self):
+        return "{} ".format(self.person)
+
+
+class PolicyFields(models.Model):
+    product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
+    order = models.IntegerField(null=True)
+    name = models.CharField(max_length=128, null=True)
+    value = models.CharField(max_length=4096, null=True, blank=True)
+
+    def __str__(self):
+        return self.name

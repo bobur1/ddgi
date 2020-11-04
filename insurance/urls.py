@@ -17,13 +17,20 @@ router.register('registered-policies', viewset=views.RegisterPoliseViewSet)
 router.register('currency', viewset=views.CurrencyViewset)
 router.register('group', viewset=views.GroupViewset)
 router.register('klass', viewset=views.KlassViewset)
+router.register('vid', viewset=views.VidViewset)
 router.register('bank', viewset=views.BankViewset)
 router.register('branch', viewset=views.BranchViewSet)
-
+router.register('product', viewset=views.ProductViewSet)
+router.register('policies-incomes', viewset=views.PolicyIncomeViewSet)
+router.register('policies', viewset=views.PolicyViewSet)
+router.register('policy-transfers', viewset=views.TransferPoliciesViewSet)
 
 urlpatterns = [
-    path('test/', views.test_view),
-    path('api/', include(router.urls)),
-]+static(
+                  path('test/', views.test_view),
+                  path('api/', include(router.urls)),
+                  path('api/product-fields/', views.product_fields),
+                  path('api/policy-series/', views.policy_series)
+
+    ]+static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

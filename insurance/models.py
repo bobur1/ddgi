@@ -273,7 +273,7 @@ class IndividualClient(models.Model):
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
-        return "{} {}".format(self.first_name, self.last_name)
+        return "{} {}".format(self.person.first_name, self.person.last_name)
 
 
 #

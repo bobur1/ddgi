@@ -162,11 +162,12 @@ class HumanSerializer(serializers.ModelSerializer):
 
 
 class IndividualClientSerializer(serializers.ModelSerializer):
-    person = HumanSerializer()
+    #person = HumanSerializer()
+    person_first_name = serializers.CharField(source='person.first_name')
 
     class Meta:
         model = IndividualClient
-        fields = ['id', 'person']
+        fields = ['id', 'person_first_name']
 
 
 class LegalClientSerializer(serializers.ModelSerializer):

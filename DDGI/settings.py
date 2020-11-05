@@ -30,7 +30,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'insurance.apps.InsuranceConfig',
     'rest_framework',
-    'coreapi',
     'corsheaders',
     #'autofixture',
     'rest_framework_datatables',

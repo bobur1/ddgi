@@ -3,7 +3,7 @@ from insurance import views
 from rest_framework import routers
 from django.conf.urls.static import static
 from django.conf import settings
-
+from insurance import controller
 
 router = routers.DefaultRouter()
 
@@ -26,10 +26,13 @@ router.register('policies', viewset=views.PolicyViewSet)
 router.register('policy-transfers', viewset=views.TransferPoliciesViewSet)
 
 urlpatterns = [
+                  path('', controller.home),
                   path('test/', views.test_view),
                   path('api/', include(router.urls)),
                   path('api/product-fields/', views.product_fields),
-                  path('api/policy-series/', views.policy_series)
+                  path('api/policy-series/', views.policy_series),
+                  path('individual-client/', controller.individual_client, name='individual_client'),
+                  path('individual-client/add/', controller.individual_client_add, name='individual_client_add')
 
     ]+static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

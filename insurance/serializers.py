@@ -52,13 +52,13 @@ class PoliciesIncomeSerializer(serializers.ModelSerializer):
 
 class KlassSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Klass
+        model = ProductTypeClass
         fields = ['id', 'name']
 
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Klass
+        model = ProductTypeClass
         fields = ['id', 'name']
 
 
@@ -108,6 +108,23 @@ class ProfileSerializer(serializers.ModelSerializer):
                   'is_active',
                   'is_superuser',
                   'last_login')
+
+
+class UserDetailedSerializer(serializers.ModelSerializer):
+    class InnerProfileSerializer(serializers.ModelSerializer):
+        position_name = serializers.CharField(source="position")
+        last_login = serializers.DateTimeField(source="user.last_login", format="%d.%m.%Y %H:%M:%S")
+        is_active = serializers.BooleanField(source="user.is_active")
+
+        class Meta:
+            model = Profile
+            fields = ('id', 'position_name', 'middle_name', 'last_login', 'is_active')
+
+    profile = InnerProfileSerializer()
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email', 'profile')
 
 
 class PermissionSerializer(serializers.ModelSerializer):
@@ -198,7 +215,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
 class KlassSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Klass
+        model = ProductTypeClass
         fields = ['id', 'name']
 
 
@@ -210,9 +227,11 @@ class BankSerializer(serializers.ModelSerializer):
 
 
 class BranchSerializer(serializers.ModelSerializer):
+    director = UserDetailedSerializer()
+
     class Meta:
-        model = Branch
-        fields = ['id', 'name', 'director']
+        model = InsuranceOffice
+        fields = ['id', 'name', 'is_branch', 'director']
 
 
 class ProductFieldsSerializer(serializers.ModelSerializer):
@@ -292,8 +311,27 @@ class PoliciesSimpleSerializer(serializers.ModelSerializer):
 
 
 class TransferPoliciesSerializer(serializers.ModelSerializer):
-    policies = PoliciesSimpleSerializer(many=True)
+    policy = PoliciesSimpleSerializer()
 
     class Meta:
         model = PolicyTransfers
-        fields = ['id', 'to_branch', 'policies', 'to_user', 'cr_by', 'cr_on']
+        fields = ['id', 'to_office', 'policy', 'cr_by', 'cr_on']
+
+
+class RetransferPoliciesSerializer(serializers.ModelSerializer):
+    to_user = UserSerializer()
+    transfer = TransferPoliciesSerializer()
+
+    class Meta:
+        model = PolicyRetransfer
+        fields = ['id', 'transfer', 'to_user', 'cr_by', 'cr_on']
+
+
+class OfficeWorkersSerializer(serializers.ModelSerializer):
+    user = UserDetailedSerializer()
+    office = BranchSerializer()
+
+    class Meta:
+        model = OfficeWorkers
+        fields = ['id', 'user', 'office', 'cr_on']
+

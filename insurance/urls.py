@@ -32,7 +32,11 @@ urlpatterns = [
                   path('api/product-fields/', views.product_fields),
                   path('api/policy-series/', views.policy_series),
                   path('individual-client/', controller.individual_client, name='individual_client'),
-                  path('individual-client/add/', controller.individual_client_add, name='individual_client_add')
+                  path('individual-client/add/', controller.individual_client_add, name='individual_client_add'),
+                  path('legal-client/', controller.legal_client, name='legal_client'),
+                  path('legal-client/add/', controller.legal_client_add, name='legal_client_add'),
+                  path('polis-registration/', controller.polis_registration, name='polis_registration'),
+                  path('polis-registration/add/', controller.polis_registration_add, name='polis_registration_add'),
 
     ]+static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

@@ -95,9 +95,6 @@
                       class="form-control"
                       name="polis_status"
                       required>
-                        {% for c in curr_list %}
-                            <option value="{{ c.id }}">{{ c.code }}</option>
-                        {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -125,8 +122,5 @@
     </form>
   </div>
 </div>
-    <script>
-        
-    </script>
 
 {% endblock %}

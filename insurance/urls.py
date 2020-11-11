@@ -31,9 +31,11 @@ urlpatterns = [
                   path('api/', include(router.urls)),
                   path('api/product-fields/', views.product_fields),
                   path('api/policy-series/', views.policy_series),
+                  path('api/get-my-workers/', views.get_my_workers),
+                  path('api/get-my-branches/', views.get_my_branches),
                   path('individual-client/', controller.individual_client, name='individual_client'),
                   path('individual-client/add/', controller.individual_client_add, name='individual_client_add')
 
-    ]+static(
+              ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

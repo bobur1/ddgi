@@ -1,3 +1,5 @@
+from builtins import id
+
 from django.http import HttpResponse, JsonResponse
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework.decorators import api_view, permission_classes, action
@@ -34,7 +36,7 @@ def is_valid_policies_range(is_freely_generated, series, from_number, to_number)
 
 
 def generate_policies(from_number, to_number, is_free_generated, series, session):
-    for i in range(int(from_number), int(to_number)+1):
+    for i in range(int(from_number), int(to_number) + 1):
         s = None
         if series != '' and series is not None:
             s = PolicySeriesType.objects.get(id=series)
@@ -66,10 +68,48 @@ def policy_series(request):
     return JsonResponse(response)
 
 
-def generatePageSize(page=None, size=None):
+def generate_page_size(page=None, size=None):
     if page is None or size is None:
         return [0, 0]
     return [page, size]
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_my_workers(request):
+    response = {}
+    try:
+        objs = OfficeWorkers.objects.filter(office__director=request.user)
+        serializer = OfficeWorkersSerializer(objs, many=True)
+
+        response = {
+            'data': serializer.data,
+            'success': True
+        }
+
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+
+    return JsonResponse(response)
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, ])
+def get_my_branches(request):
+    response = {}
+    try:
+        objs = InsuranceOffice.objects.filter(director=request.user.id)
+        serializer = BranchSerializer(objs, many=True)
+        response = {
+            'data': serializer.data,
+            'success': True
+        }
+    except Exception as e:
+        response['error_msg'] = e.__str__()
+        response['success'] = False
+
+    return Response(response)
 
 
 class PolicyViewSet(viewsets.ViewSet):
@@ -87,7 +127,7 @@ class PolicyViewSet(viewsets.ViewSet):
         try:
             items = 0
             if is_non_transferred == 'true':
-                items = Policy.objects.filter(policytransfers__policies__policy_number__isnull=True)
+                items = Policy.objects.filter(policytransfers__to_office__isnull=True)
             else:
                 items = Policy.objects.all()
 
@@ -117,14 +157,23 @@ class TransferPoliciesViewSet(viewsets.ViewSet):
     def get(self, request):
         page = request.query_params.get('page', 1)
         size = request.query_params.get('size', 20)
+        retransferred = request.query_params.get('retransferred', False)
+
         response = {}
         try:
-            items = PolicyTransfers.objects.all()
-            paginator = Paginator(items, size)
+            if not retransferred:
+                items = PolicyTransfers.objects.all()
+                paginator = Paginator(items, size)
+                serializer = TransferPoliciesSerializer(paginator.page(page), many=True)
+                response['data'] = serializer.data
+                response['success'] = True
+            else:
+                items = PolicyRetransfer.objects.all()
+                paginator = Paginator(items, size)
+                serializer = RetransferPoliciesSerializer(paginator.page(page), many=True)
+                response['data'] = serializer.data
+                response['success'] = True
 
-            serializer = TransferPoliciesSerializer(paginator.page(page), many=True)
-            response['data'] = serializer.data
-            response['success'] = True
         except Exception as e:
             response['success'] = False
             response['error_msg'] = e.__str__()
@@ -133,40 +182,42 @@ class TransferPoliciesViewSet(viewsets.ViewSet):
         response['size'] = size
         return Response(response)
 
-
     def create(self, request, *args, **kwargs):
         response = {}
         try:
-            to_branch_id = request.data.get('to_branch', None)
-            to_branch = Branch.objects.get(id=to_branch_id)
+            # request.user.permission_set
+            to_branch_id = request.data.get('to_office', None)
             to_user_id = request.data.get('to_user', None)
-            to_user = None
-
             policy_ids = list(request.data.get('policies', []))
-            # policies = Policy.objects.raw("SELECT * FROM insurance_policy where id in {}".format(policy_ids))
+            if request.user.is_superuser and to_branch_id is not None:
+                to_branch = InsuranceOffice.objects.get(id=to_branch_id)
 
-            if to_user_id is not None:
-                to_user = User.objects.get(id=to_user_id)
+                for i in policy_ids:
+                    policy = Policy.objects.get(id=i)
+                    obj = PolicyTransfers.objects.create(to_office=to_branch, policy=policy, cr_on=datetime,
+                                                         cr_by=request.user)
+                    obj.save()
 
-            obj = PolicyTransfers.objects.create(to_branch=to_branch, to_user=to_user, cr_on=datetime, cr_by=request.user)
-            obj.save()
-            for i in policy_ids:
-                obj.policies.add(i)
+                response['data'] = request.data
+                response['success'] = True
+            elif request.user.is_superuser and to_user_id is not None:
+                to_user = OfficeWorkers.objects.get(user_id=to_user_id, office__director=request.user).user
 
-            response['data'] = request.data
-            response['success'] = True
+                for i in policy_ids:
+                    transfer = PolicyTransfers.objects.get(policy=i)
+                    obj = PolicyRetransfer.objects.create(transfer=transfer, to_user=to_user, cr_on=datetime,
+                                                          cr_by=request.user)
+                    obj.save()
+
+                response['data'] = request.data
+                response['success'] = True
+            else:
+                response['error_msg'] = 'Only admin can access'
+                response['success'] = False
         except Exception as e:
             response['success'] = False
             response['error_msg'] = e.__str__()
         return Response(response)
-
-
-    # to_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=False, blank=False)
-    # to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
-    # policies = models.ManyToManyField(Policy)
-    # cr_on = models.DateTimeField(auto_now_add=True)
-    # cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
-    #                           related_name='policy_transfers_cr_by')
 
 
 class PolicyIncomeViewSet(viewsets.ViewSet):
@@ -326,7 +377,7 @@ class GridViewSet(viewsets.ModelViewSet):
 
 
 class IndividualClientViewSet(viewsets.ModelViewSet):
-    #permission_classes = [IsAuthenticated, ]
+    # permission_classes = [IsAuthenticated, ]
     queryset = IndividualClient.objects.all()
     serializer_class = IndividualClientSerializer
 
@@ -497,7 +548,7 @@ class GroupViewset(viewsets.ModelViewSet):
 
 class KlassViewset(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
-    queryset = Klass.objects.filter(is_exist=True)
+    queryset = ProductTypeClass.objects.filter(is_exist=True)
     serializer_class = KlassSerializer
 
     def create(self, request, *args, **kwargs):
@@ -505,30 +556,30 @@ class KlassViewset(viewsets.ModelViewSet):
         try:
             if self.request.data['action'] == 'create':
                 params = self.request.data['params']
-                Klass.objects.create(
+                ProductTypeClass.objects.create(
                     name=params['name']
                 ).save()
                 response['success'] = True
             elif self.request.data['action'] == 'get':
                 item_id = self.request.data['id']
-                item = Klass.objects.get(id=item_id)
+                item = ProductTypeClass.objects.get(id=item_id)
                 serializer = KlassSerializer(item)
                 response['data'] = serializer.data
                 response['success'] = True
             elif self.request.data['action'] == 'update':
                 params = self.request.data['params']
-                Klass.objects.filter(id=params['id'], is_exist=True).update(
+                ProductTypeClass.objects.filter(id=params['id'], is_exist=True).update(
                     name=params['name']
                 )
                 response['success'] = True
             elif self.request.data['action'] == 'delete':
                 item_id = self.request.data['id']
-                Klass.objects.filter(id=item_id).update(
+                ProductTypeClass.objects.filter(id=item_id).update(
                     is_exist=False
                 )
                 response['success'] = True
             elif self.request.data['action'] == 'list':
-                items = Klass.objects.filter(is_exist=True)
+                items = ProductTypeClass.objects.filter(is_exist=True)
                 serializer = KlassSerializer(items)
                 response['data'] = serializer.data
                 response['success'] = True
@@ -628,7 +679,7 @@ class BankViewset(viewsets.ModelViewSet):
 
 class BranchViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]
-    queryset = Branch.objects.filter(is_exist=True)
+    queryset = InsuranceOffice.objects.filter(is_exist=True)
     serializer_class = BranchSerializer
 
     @action(methods=['GET'], detail=True)
@@ -637,7 +688,7 @@ class BranchViewSet(viewsets.ViewSet):
         size = request.query_params.get('size', 20)
         response = {}
         try:
-            items = Branch.objects.all()
+            items = InsuranceOffice.objects.all()
             paginator = Paginator(items, size)
 
             serializer = BranchSerializer(paginator.page(page), many=True)
@@ -657,7 +708,7 @@ class BranchViewSet(viewsets.ViewSet):
             if self.request.data['action'] == 'create':
                 params = self.request.data['params']
                 director = User.objects.get(id=params['director'])
-                Branch.objects.create(
+                InsuranceOffice.objects.create(
                     name=params['name'],
                     director=director,
                     cr_by=self.request.user
@@ -665,14 +716,14 @@ class BranchViewSet(viewsets.ViewSet):
                 response['success'] = True
             elif self.request.data['action'] == 'get':
                 item_id = self.request.data['id']
-                item = Branch.objects.get(id=item_id)
+                item = InsuranceOffice.objects.get(id=item_id)
                 serializer = BranchSerializer(item)
                 response['data'] = serializer.data
                 response['success'] = True
             elif self.request.data['action'] == 'update':
                 params = self.request.data['params']
                 director = User.objects.get(id=params['director'])
-                Branch.objects.filter(id=params['id']).update(
+                InsuranceOffice.objects.filter(id=params['id']).update(
                     name=params['name'],
                     director=director,
                     up_by=self.request.user
@@ -680,7 +731,7 @@ class BranchViewSet(viewsets.ViewSet):
                 response['success'] = True
             elif self.request.data['action'] == 'delete':
                 item_id = self.request.data['id']
-                Branch.objects.filter(id=item_id).update(
+                InsuranceOffice.objects.filter(id=item_id).update(
                     up_by=self.request.user,
                     is_exist=False
                 )
@@ -743,7 +794,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         try:
             if self.request.data['action'] == 'create':
                 params = self.request.data['params']
-                klass = Klass.objects.get(id=params['klass'])
+                klass = ProductTypeClass.objects.get(id=params['klass'])
                 group = Group.objects.get(id=params['klass'])
                 vid = Vid.objects.get(id=params['vid'])
                 new_product = ProductType.objects.create(
@@ -764,7 +815,7 @@ class ProductViewSet(viewsets.ModelViewSet):
                 response['success'] = True
             elif self.request.data['action'] == 'update':
                 params = self.request.data['params']
-                klass = Klass.objects.get(id=params['klass'])
+                klass = ProductTypeClass.objects.get(id=params['klass'])
                 group = Group.objects.get(id=params['group'])
                 vid = Vid.objects.get(id=params['vid'])
                 ProductType.objects.filter(id=params['id']).update(

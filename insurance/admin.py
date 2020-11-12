@@ -55,6 +55,12 @@ class PermissionAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+@admin.register(OfficeWorkers)
+class OfficeWorkersAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'office')
+    readonly_fields = ('cr_by', 'cr_on', 'up_by', 'up_on')
+
+
 class PermissionRoleInline(admin.TabularInline):
     model = PermissionRole
     fk_name = 'role'
@@ -152,7 +158,7 @@ class GroupAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Klass)
+@admin.register(ProductTypeClass)
 class KlassAdmin(admin.ModelAdmin):
     pass
 
@@ -162,7 +168,7 @@ class BankAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Branch)
+@admin.register(InsuranceOffice)
 class BranchAdmin(admin.ModelAdmin):
     pass
 
@@ -222,8 +228,14 @@ class PledgerAdmin(admin.ModelAdmin):
 
 @admin.register(PolicyTransfers)
 class PolicyTransfersAdmin(admin.ModelAdmin):
-    list_display = ('id', 'to_branch', 'to_user', 'cr_by', 'cr_on')
+    list_display = ('id', 'to_office', 'cr_by', 'cr_on')
 
+
+@admin.register(PolicyRetransfer)
+class PolicyRetransferAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'transfer', 'to_user', 'cr_on', 'cr_by'
+    )
     # to_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=False, blank=False)
     # to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     # policies = models.ManyToManyField(Policy)

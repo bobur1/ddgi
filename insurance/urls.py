@@ -47,7 +47,8 @@ urlpatterns = [
                   path('polis-transfer/add/', controller.polis_transfer, name='polis_transfer_add'),
                   path('polis-retransfer/', controller.polis_retransfer_list, name='polis_retransfer'),
                   path('polis-retransfer/add/', controller.polis_retransfer, name='polis_retransfer_add'),
-
+                  path('request/add', controller.request, name='request_add'),
+                  path('spravochniki/bank/add', controller.spravochnik_bank, name='spravochnik_bank_add'),
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

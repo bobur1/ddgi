@@ -4,6 +4,8 @@ from rest_framework import routers
 from django.conf.urls.static import static
 from django.conf import settings
 from insurance import controller
+from django.contrib.auth import views as authview
+
 
 router = routers.DefaultRouter()
 
@@ -34,7 +36,9 @@ urlpatterns = [
                   path('api/get-my-workers/', views.get_my_workers),
                   path('api/get-my-branches/', views.get_my_branches),
                   path('individual-client/', controller.individual_client, name='individual_client'),
-                  path('individual-client/add/', controller.individual_client_add, name='individual_client_add')
+                  path('individual-client/add/', controller.individual_client_add, name='individual_client_add'),
+                  path('login/', authview.LoginView.as_view(template_name='login.html'), name='login'),
+                  path('logout/', authview.LogoutView.as_view(template_name='logout.html'), name='logout')
 
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

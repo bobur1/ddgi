@@ -33,30 +33,30 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="office" class="col-form-label">Офисы:</label>
+                    <label for="office-worker" class="col-form-label">Работники:</label>
                     <select
-                        id="office"
+                        id="office-worker"
                         class="form-control"
-                        name="to_office"
+                        name="to_user"
                     >
                         <option selected></option>
-                        {% for office in offices %}
-                            <option value="{{ office.id }}">{{ office.name }}</option>
+                        {% for officeWorker in officeWorkers %}
+                            <option value="{{ officeWorker.user.id }}">{{ officeWorker.user.username }}</option>
                         {% endfor %}
                     </select>
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label for="polises" class="col-form-label">Полиса:</label>
+                    <label for="transfered-polises" class="col-form-label">Распределённые полиса:</label>
                     <select
-                        id="polises"
+                        id="transfered-polises"
                         class="form-control"
                         name="policies[]"
                         multiple
                     >
-                        {% for polis in polises %}
-                            <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>
+                        {% for polisTransfer in polisTransfers %}
+                            <option value="{{ polisTransfer.id }}">{{ polisTransfer.policy.policy_number }} - {{ polisTransfer.policy.income_session.act_number }}</option>
                         {% endfor %}
                     </select>
                   </div>
@@ -81,11 +81,11 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
-        let office = $('#office');
-        let polises = $('#polises');
+        let officeWorker = $('#office-worker');
+        let polises = $('#transfered-polises');
         let submitButton = $('#submit-button');
         let form = $('#polis-transfer-form');
-        office.select2();
+        officeWorker.select2();
         polises.select2();
 
         $(document).ready(function () {
@@ -96,29 +96,22 @@
                     beforeSend: function (xhr, settings) {
                         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            xhr.setRequestHeader("Authorization", 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA1NDA4Mzk3LCJqdGkiOiIwMGQzMjUzNzZiM2Q0MmFmODQ4ZDljNTE1NjM4Yjc2NSIsInVzZXJfaWQiOjF9.st1ri35h1SvBc7ozrh6JuYDKBEKo4YB4pJJOpiPoqrI');
                         }
                     }
                 });
 
-                console.log(polises.val());
-
                 let forms = {};
                 forms.csrfmiddlewaretoken = csrftoken;
-                forms.to_office = office.val();
+                forms.to_user = officeWorker.val();
                 forms.policies = polises.val();
-                let formData = new FormData(form[0]);
                 console.log(forms);
-                console.log(...formData);
 
                 $.ajax({
                     url: '/api/policy-transfers/',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    type: "POST",
+                    data: JSON.stringify(forms),
+                    contentType: 'application/json',
                     dataType: 'json',
-                    cache: false,
+                    type: "POST",
                     success: function (data) {
                         if (data) {
                             console.log(data);

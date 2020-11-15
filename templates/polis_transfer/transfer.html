@@ -96,30 +96,22 @@
                     beforeSend: function (xhr, settings) {
                         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            xhr.setRequestHeader("Authorization", 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA1NDQ5NTc0LCJqdGkiOiJjM2YyMzFmNzU3NTQ0N2MyYWI0ZmYxYTQxMjZiZmYzNyIsInVzZXJfaWQiOjF9._dZPyyWoOCB9uPVDuKqkxBumcAvqqjQ0nTeOUidGiSw');
                         }
                     }
                 });
-
-                console.log(polises.val());
 
                 let forms = {};
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.to_office = office.val();
                 forms.policies = polises.val();
-                let formData = new FormData(form[0]);
-                console.log(forms);
-                console.log(...formData);
 
                 $.ajax({
                     url: '/api/policy-transfers/',
-                    data: formData,
-                    processData: false,
+                    data: JSON.stringify(forms),
+                    {#processData: false,#}
                     contentType: 'application/json',
-                    type: "POST",
                     dataType: 'json',
-                    cache: false,
+                    type: "POST",
                     success: function (data) {
                         if (data) {
                             console.log(data);

@@ -96,8 +96,7 @@
                     beforeSend: function (xhr, settings) {
                         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            xhr.setRequestHeader("Authorization", 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA1NDQ5NTc0LCJqdGkiOiJjM2YyMzFmNzU3NTQ0N2MyYWI0ZmYxYTQxMjZiZmYzNyIsInVzZXJfaWQiOjF9._dZPyyWoOCB9uPVDuKqkxBumcAvqqjQ0nTeOUidGiSw');
+                            xhr.setRequestHeader("Authorization", 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA1NDA4Mzk3LCJqdGkiOiIwMGQzMjUzNzZiM2Q0MmFmODQ4ZDljNTE1NjM4Yjc2NSIsInVzZXJfaWQiOjF9.st1ri35h1SvBc7ozrh6JuYDKBEKo4YB4pJJOpiPoqrI');
                         }
                     }
                 });
@@ -116,7 +115,7 @@
                     url: '/api/policy-transfers/',
                     data: formData,
                     processData: false,
-                    contentType: 'application/json',
+                    contentType: false,
                     type: "POST",
                     dataType: 'json',
                     cache: false,

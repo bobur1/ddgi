@@ -1,6 +1,6 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from insurance.models import Currency, RegisteredPolises, Branch
+from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User
 
 def home(request):
     return render(request, "home.html")
@@ -29,8 +29,10 @@ def polis_registration(request):
 
 
 def polis_registration_add(request):
+    polis_series = PolicySeriesType.objects.all()
     return render(request, "polis_registration/add.html", {
         'policy': None,
+        'polis_series': polis_series,
     })
 
 
@@ -39,9 +41,22 @@ def polis_transfer_list(request):
 
 
 def polis_transfer(request):
-    polises = RegisteredPolises.objects.all()
-    offices = Branch.objects.all()
+    polises = Policy.objects.filter(policytransfers__to_office__isnull=True)
+    offices = InsuranceOffice.objects.all()
     return render(request, "polis_transfer/transfer.html", {
         'polises': polises,
         'offices': offices,
+    })
+
+
+def polis_retransfer_list(request):
+    return render(request, "polis_retransfer/index.html")
+
+
+def polis_retransfer(request):
+    polises = Policy.objects.filter(policytransfers__to_office__isnull=False)
+    users = User.objects.all()
+    return render(request, "polis_retransfer/retransfer.html", {
+        'polises': polises,
+        'users': users,
     })

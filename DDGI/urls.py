@@ -12,4 +12,4 @@ urlpatterns = [
     path('login/', authview.LoginView.as_view(template_name='login.html'), name='login'),
     path('logout/', authview.LogoutView.as_view(template_name='logout.html'), name='logout'),
     path('', include('insurance.urls'))
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] #+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

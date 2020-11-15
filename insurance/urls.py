@@ -39,6 +39,10 @@ urlpatterns = [
                   path('legal-client/add/', controller.legal_client_add, name='legal_client_add'),
                   path('polis-registration/', controller.polis_registration, name='polis_registration'),
                   path('polis-registration/add/', controller.polis_registration_add, name='polis_registration_add'),
+                  path('polis-transfer/', controller.polis_transfer_list, name='polis_transfer'),
+                  path('polis-transfer/add/', controller.polis_transfer, name='polis_transfer_add'),
+                  path('polis-retransfer/', controller.polis_retransfer_list, name='polis_retransfer'),
+                  path('polis-retransfer/add/', controller.polis_retransfer, name='polis_retransfer_add'),
 
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT

@@ -1,0 +1,193 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Банк{% endblock %}
+
+{% block content %}
+  <div class="content-header">
+  <div class="container-fluid">
+  </div>
+</div>
+
+<!-- Main content -->
+   <div class="content">
+  <div class="container-fluid">
+    <form>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary card-outline">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="branch_code" class="col-form-label">Branch code</label>
+                    <input
+                      id="branch_code"
+                      class="form-control"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="branch_symbol" class="col-form-label">Branch symbol</label>
+                    <select
+                      id="branch_symbol"
+                      class="form-control"
+                      required>
+                      <option selected></option>
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="bank_id" class="col-form-label">Bank ID</label>
+                  <select name="bank_id" class="form-control bank_id col-sm-4" >
+                    <option selected="selected" value="1">bank_id1</option>
+                    <option value="2">bank_id2</option>
+                  </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="bank_name" class="col-form-label">Bank name</label>
+                    <input
+                      id="bank_name"
+                      class="form-control"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="branch_name" class="col-form-label">Branch name</label>
+                    <input
+                      id="branch_name"
+                      class="form-control"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="address" class="col-form-label">Branch address</label>
+                    <input
+                      id="address"
+                      class="form-control"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="founded_at" class="col-form-label">Founded at</label>
+                    <div class="input-group">
+                      <input
+                        id="founded_at"
+                        class="form-control"
+                        placeholder="yyyy-mm-dd"
+                        name="founded_at"
+                      >
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-calendar"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="changed_at" class="col-form-label">Changed at</label>
+                    <div class="input-group">
+                      <input
+                        id="changed_at"
+                        class="form-control"
+                        placeholder="yyyy-mm-dd"
+                        name="changed_at"
+                        required
+                      >
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-calendar"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="inn" class="col-form-label">INN</label>
+                    <input
+                      id="inn"
+                      class="form-control"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="web_site" class="col-form-label">Website</label>
+                    <input
+                      id="web_site"
+                      class="form-control"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group" id="form-group-1">
+                  <label for="region_id" class="col-form-label">Родительский регион</label>
+                  <select
+                    id="region_id" class="form-control parent-region"
+                  >
+                    <option selected></option>
+                  </select>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--      <div class="row">-->
+<!--        <div class="col-md-12">-->
+<!--          <div class="card card-green card-outline">-->
+<!--              <div class="card-header"><h3 class="card-title">Regions</h3></div>-->
+<!--              <div class="card-body" id="regions">-->
+<!--                <div class="form-group" id="form-group-1">-->
+<!--                  <label for="region_id" class="col-form-label">Родительский регион</label>-->
+<!--                  <select-->
+<!--                    id="region_id" class="form-control parent-region"-->
+<!--                    formArrayName="region_id" data-depth="1"-->
+<!--                    [ngClass]="{ 'is-invalid': submitted && f.region_id.errors }"-->
+<!--                  >-->
+<!--                    <option selected></option>-->
+<!--                    <option *ngFor="let region of parentRegions" [ngValue]="region.id" value="{{ region.id }}">{{ region.name }}</option>-->
+<!--                  </select>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+      <div class="col-md-1">
+        <div class="form-group">
+          <button type="'submit'" content="Create"></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+    <!-- /.content -->
+
+{% endblock %}

@@ -62,3 +62,9 @@ def polis_retransfer(request):
         'polises': polises,
         'users': users,
     })
+
+def request (request):
+    return render(request, "request/add.html")
+
+def spravochnik_bank (request):
+    return render(request, "spravochniki/bank/add.html")

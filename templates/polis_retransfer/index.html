@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %} ValleyWood Clients {% endblock %}
+{% block title %} Перераспределённые полиса {% endblock %}
 {% block content %}
   <div class="row" style="width: 100%; padding-top: 2px; margin: 0;">
     <div class="col-sm-12">
@@ -82,7 +82,7 @@
     });
 
     function addClient() {
-        window.location.href ='{% url "individual_client_add" %}';
+        window.location.href ='{% url "polis_retransfer_add" %}';
     }
 
 

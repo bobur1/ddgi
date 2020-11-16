@@ -83,3 +83,7 @@ def request (request):
 @login_required
 def spravochnik_bank (request):
     return render(request, "spravochniki/bank/add.html")
+
+@login_required
+def user (request):
+    return render(request, "user/add.html")

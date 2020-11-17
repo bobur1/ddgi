@@ -52,6 +52,7 @@ urlpatterns = [
                   path('user/add', controller.user, name='user_add'),
                   path('spravochniki/currency/', controller.currency, name='currency'),
                   path('spravochniki/currency/add/', controller.currency_add, name='currency_add'),
+                  path('spravochniki/currency/<int:id>/', controller.currency_show, name='currency_show'),
                   path('spravochniki/currency/<int:id>/edit/', controller.currency_edit, name='currency_edit'),
                   path('spravochniki/view/', controller.view, name='view'),
                   path('spravochniki/view/add/', controller.view_add, name='view_add'),

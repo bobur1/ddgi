@@ -105,8 +105,9 @@
                     dataType: 'json',
                     type: "POST",
                     success: function (data) {
-                        if (data) {
+                        if (data.success === true) {
                             console.log(data);
+                            window.location.replace('/spravochniki/currency/' + {{ currency.id }} + '/');
                         }
                     }
                 });

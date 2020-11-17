@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Edit Client{% endblock %}
+{% block title %}Редактировать клиента{% endblock %}
 {% block content %}
   <div class="content-header">
   <div class="container-fluid">
@@ -14,7 +14,7 @@
         <div class="col-md-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Edit Client</h3>
+              <h3 class="card-title">Редактировать клиента</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" title="Collapse">
                   <i class="fas fa-window-close"></i></button>
@@ -24,17 +24,18 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="act_number" class="col-form-label">Act number</label>
+                    <label for="act_number" class="col-form-label">Номер акта</label>
                     <input
                       id="act_number"
                       class="form-control"
+                      name="act_number"
                       required
                     >
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="act_date" class="col-form-label">Act date</label>
+                    <label for="act_date" class="col-form-label">Время подписания акта</label>
                     <div class="input-group">
                       <input
                         id="act_date"
@@ -52,20 +53,22 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="polis_number_from" class="col-form-label">Policy number from:</label>
+                    <label for="polis_number_from" class="col-form-label">Номер полиса с:</label>
                     <input
                       id="polis_number_from"
                       class="form-control"
+                      name="polis_number_from"
                       required
                     >
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="polis_number_to" class="col-form-label">Policy number to:</label>
+                    <label for="polis_number_to" class="col-form-label">Номер полиса до:</label>
                     <input
                       id="polis_number_to"
                       class="form-control"
+                      name="polis_number_to"
                       required
                     >
                   </div>
@@ -75,22 +78,26 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="polis_quantity" class="col-form-label">Policy quantity</label>
-                    <input
+                    <label for="polis_quantity" class="col-form-label">Количество полисов</label>
+                      <input
                       id="polis_quantity"
                       class="form-control"
+                      name="polis_quantity"
                       required
                     >
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="polis_status" class="col-form-label">Policy status</label>
+                    <label for="polis_status" class="col-form-label">Состояние полиса</label>
                     <select
                       id="polis_status"
                       class="form-control"
-
+                      name="polis_status"
                       required>
+                        {% for c in curr_list %}
+                            <option value="{{ c.id }}">{{ c.code }}</option>
+                        {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -118,5 +125,8 @@
     </form>
   </div>
 </div>
+    <script>
+        
+    </script>
 
 {% endblock %}

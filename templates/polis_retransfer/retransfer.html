@@ -1,0 +1,124 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Перераспределить полис{% endblock %}
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-fileinput/css/fileinput.min.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="content-header">
+  <div class="container-fluid">
+  </div>
+</div>
+
+<div class="content">
+  <div class="container-fluid">
+    <form method="post" id="polis-transfer-form" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Перераспределить полис</h3>
+              <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                      <i class="fas fa-times"></i>
+                  </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="office-worker" class="col-form-label">Работники:</label>
+                    <select
+                        id="office-worker"
+                        class="form-control"
+                        name="to_user"
+                    >
+                        <option selected></option>
+                        {% for officeWorker in officeWorkers %}
+                            <option value="{{ officeWorker.user.id }}">{{ officeWorker.user.username }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="transfered-polises" class="col-form-label">Распределённые полиса:</label>
+                    <select
+                        id="transfered-polises"
+                        class="form-control"
+                        name="policies[]"
+                        multiple
+                    >
+                        {% for polisTransfer in polisTransfers %}
+                            <option value="{{ polisTransfer.id }}">{{ polisTransfer.policy.policy_number }} - {{ polisTransfer.policy.income_session.act_number }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button type="submit" id="submit-button" class="btn btn-primary float-right">Распределить</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'custom/js/csrftoken.js' %}"></script>
+
+    <script>
+        let officeWorker = $('#office-worker');
+        let polises = $('#transfered-polises');
+        let submitButton = $('#submit-button');
+        let form = $('#polis-transfer-form');
+        officeWorker.select2();
+        polises.select2();
+
+        $(document).ready(function () {
+            submitButton.click(function (e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+
+                let forms = {};
+                forms.csrfmiddlewaretoken = csrftoken;
+                forms.to_user = officeWorker.val();
+                forms.policies = polises.val();
+                console.log(forms);
+
+                $.ajax({
+                    url: '/api/policy-transfers/',
+                    data: JSON.stringify(forms),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        if (data) {
+                            console.log(data);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

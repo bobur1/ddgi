@@ -193,14 +193,6 @@ class LegalClientSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'address', 'phone_number']
 
 
-class RegisteredPoliseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = RegisteredPolises
-        fields = ['id', 'act_number', 'act_date', 'polis_number_from',
-                  'polis_number_to', 'polis_quantity', 'polis_status',
-                  'document']
-
-
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency

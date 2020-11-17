@@ -32,12 +32,13 @@ class Profile(models.Model):
     phone = models.CharField(verbose_name='Тел', max_length=15, null=True, blank=True)
     image = models.ImageField(verbose_name='Фото', upload_to='users', null=True, blank=True)
     passport = models.CharField(verbose_name='Паспорт', max_length=50, null=True, blank=True)
+    is_active = models.BooleanField(verbose_name='Active', default=True)
 
     def __str__(self):
         return self.user.username
 
 
-#### signal receiver. when User changed or created, Profile also updated or created
+# signal receiver. when User changed or created, Profile also updated or created
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -147,7 +148,8 @@ class PoliciesIncome(models.Model):
     from_user = models.ForeignKey(User, on_delete=models.CASCADE, null=False, blank=False,
                                   related_name="policies_income_up_by")
 
-    document = models.FileField(verbose_name="Документ", upload_to='policies_income', blank=True, null=True, default=None)
+    document = models.FileField(verbose_name="Документ", upload_to='policies_income', blank=True, null=True,
+                                default=None)
 
     cr_on = models.DateTimeField(auto_now_add=True)
 
@@ -258,11 +260,6 @@ class Beneficiary(models.Model):
         return self.person.__str__() + ' ' + self.inn
 
 
-class InsurancePeriod(models.Model):
-    date_from = models.DateField()
-    date_to = models.DateField(null=True, blank=True)
-
-
 class LegalClient(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
     address = models.CharField(verbose_name="Адрес", max_length=150)
@@ -307,17 +304,26 @@ class Policy(models.Model):
     policy_number = models.PositiveIntegerField(verbose_name="Номер")
 
     product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+
     client_type = models.CharField(max_length=64, null=True, blank=True, default=None)
+
     date_from = models.DateField(null=True, blank=True, default=None)
+
     date_to = models.DateField(null=True, blank=True, default=None)
+
     goal = models.CharField(max_length=2048, null=True, blank=True, default=None)
+
     zone = models.CharField(max_length=256, null=True, blank=True, default=None)
+
     beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+
     pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
     income_session = models.ForeignKey(PoliciesIncome, verbose_name="Policies income session",
                                        on_delete=models.SET_NULL,
                                        default=None, null=True, blank=True)
+
+    is_active = models.BooleanField(default=True, verbose_name="Active", null=False, blank=False)
 
     def __str__(self):
         return self.series.__str__() + '|' + self.policy_number.__str__()
@@ -345,27 +351,6 @@ class PolicyRetransfer(models.Model):
 
     def __str__(self):
         return self.transfer.__str__()
-
-
-class RegisteredPolises(models.Model):
-    act_number = models.CharField(verbose_name="Номер акта", max_length=128)
-    act_date = models.CharField(verbose_name="Дата акта", max_length=128)
-    polis_number_from = models.IntegerField(verbose_name="Номер полиса с")
-    polis_number_to = models.IntegerField(verbose_name="Номер полиса до")
-    polis_quantity = models.IntegerField(verbose_name="Количество полисво")
-    polis_status = models.SmallIntegerField(verbose_name="Статус полиса")
-    document = models.FileField(verbose_name="Документ", upload_to='registered_polis')
-    cr_on = models.DateTimeField(auto_now_add=True)
-    cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
-                              related_name='polise_register_up_by')
-    is_exist = models.BooleanField(default=True)
-
-    class Meta:
-        verbose_name_plural = 'Зарегистрированные полисы'
-        verbose_name = 'зарегистрированный полис'
-
-    def __str__(self):
-        return '{} {}'.format(self.act_number, self.act_date)
 
 
 class Dt_Option(models.Model):

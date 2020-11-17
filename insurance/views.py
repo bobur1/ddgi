@@ -1,4 +1,4 @@
-from builtins import id
+from insurance.helpers import *
 
 from django.http import HttpResponse, JsonResponse
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -41,10 +41,10 @@ def generate_policies(from_number, to_number, is_free_generated, series, session
         if series != '' and series is not None:
             s = PolicySeriesType.objects.get(id=series)
 
-        # session = PoliciesIncome.objects.get(id = session_id)
         Policy.objects.create(policy_number=i,
                               series=s,
                               is_free_generated=is_free_generated,
+                              is_active=True,
                               income_session=session).save()
 
 
@@ -68,48 +68,65 @@ def policy_series(request):
     return JsonResponse(response)
 
 
+@api_view(['POST'])
+# @permission_classes([])
+def deactivate_policy(request):
+    response = {}
+    try:
+        policy_id = request.data.get('policy_id', None)
+        policy = Policy.objects.get(id=policy_id)
+        policy.is_active = False
+        policy.save()
+        response['success'] = True
+    except Exception as e:
+        response['error_msg'] = e.__str__()
+        response['success'] = False
+    return JsonResponse(response)
+
+
 def generate_page_size(page=None, size=None):
     if page is None or size is None:
         return [0, 0]
     return [page, size]
 
+# WARNING - DO not delete yet
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def get_my_workers(request):
+#     response = {}
+#     try:
+#         objs = OfficeWorkers.objects.filter(office__director=request.user)
+#         serializer = OfficeWorkersSerializer(objs, many=True)
+#
+#         response = {
+#             'data': serializer.data,
+#             'success': True
+#         }
+#
+#     except Exception as e:
+#         response['success'] = False
+#         response['error_msg'] = e.__str__()
+#
+#     return JsonResponse(response)
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_my_workers(request):
-    response = {}
-    try:
-        objs = OfficeWorkers.objects.filter(office__director=request.user)
-        serializer = OfficeWorkersSerializer(objs, many=True)
 
-        response = {
-            'data': serializer.data,
-            'success': True
-        }
-
-    except Exception as e:
-        response['success'] = False
-        response['error_msg'] = e.__str__()
-
-    return JsonResponse(response)
-
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated, ])
-def get_my_branches(request):
-    response = {}
-    try:
-        objs = InsuranceOffice.objects.filter(director=request.user.id)
-        serializer = BranchSerializer(objs, many=True)
-        response = {
-            'data': serializer.data,
-            'success': True
-        }
-    except Exception as e:
-        response['error_msg'] = e.__str__()
-        response['success'] = False
-
-    return Response(response)
+# WARNING - DO not delete yet
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated, ])
+# def get_my_branches(request):
+#     response = {}
+#     try:
+#         objs = InsuranceOffice.objects.filter(director=request.user.id)
+#         serializer = BranchSerializer(objs, many=True)
+#         response = {
+#             'data': serializer.data,
+#             'success': True
+#         }
+#     except Exception as e:
+#         response['error_msg'] = e.__str__()
+#         response['success'] = False
+#
+#     return Response(response)
 
 
 class PolicyViewSet(viewsets.ViewSet):
@@ -200,7 +217,8 @@ class TransferPoliciesViewSet(viewsets.ViewSet):
 
                 response['data'] = request.data
                 response['success'] = True
-            elif request.user.is_superuser and to_user_id is not None:
+
+            elif is_user_worker_of_director(director=request.user, user_id=to_user_id):
                 to_user = OfficeWorkers.objects.get(user_id=to_user_id, office__director=request.user).user
 
                 for i in policy_ids:
@@ -416,46 +434,6 @@ class IndividualClientViewSet(viewsets.ModelViewSet):
                 IndividualClient.objects.filter(id=item_id).update(
                     is_exist=False
                 )
-        except Exception as e:
-            response['success'] = False
-            response['error_msg'] = str(e)
-        return Response(response)
-
-
-class RegisterPoliseViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, ]
-    queryset = RegisteredPolises.objects.filter(is_exist=True)
-    serializer_class = RegisteredPoliseSerializer
-
-    def create(self, request, *args, **kwargs):
-        response = {}
-        # req = json.loads(self.request.data)
-        try:
-            if str(self.request.data['action']) == 'create':
-                params = json.loads(self.request.data['params'])
-                RegisteredPolises.objects.create(
-                    act_number=params['act_number'],
-                    act_date=params['act_date'],
-                    polis_number_from=params['polis_number_from'],
-                    polis_number_to=params['polis_number_to'],
-                    polis_quantity=params['polis_quantity'],
-                    polis_status=params['polis_status'],
-                    document=self.request.FILES['file'],
-                    cr_by=self.request.user
-                ).save()
-                response['success'] = True
-            elif self.request.data['action'] == 'get':
-                item_id = self.request.data['id']
-                item = RegisteredPolises.objects.get(id=item_id)
-                serializer = RegisteredPoliseSerializer(item)
-                response['data'] = serializer.data
-            elif str(self.request.data['action']) == 'update':
-                print(self.request.content_type)
-                print(self.request.data)
-                print(self.request.FILES)
-                if self.request.FILES['file']:
-                    print(self.request.data)
-                    print(self.request.FILES)
         except Exception as e:
             response['success'] = False
             response['error_msg'] = str(e)

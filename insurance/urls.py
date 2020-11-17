@@ -58,6 +58,10 @@ urlpatterns = [
                   path('spravochniki/view/add/', controller.view_add, name='view_add'),
                   path('spravochniki/view/<int:id>/', controller.view_show, name='view_show'),
                   path('spravochniki/view/<int:id>/edit/', controller.view_edit, name='view_edit'),
+                  path('spravochniki/branch/', controller.branch, name='branch'),
+                  path('spravochniki/branch/add/', controller.branch_add, name='branch_add'),
+                  path('spravochniki/branch/<int:id>/', controller.branch_show, name='branch_show'),
+                  path('spravochniki/branch/<int:id>/edit/', controller.branch_edit, name='branch_edit'),
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

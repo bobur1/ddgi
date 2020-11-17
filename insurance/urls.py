@@ -15,7 +15,6 @@ router.register('permission', viewset=views.PermissionViewSet)
 router.register('grid', viewset=views.GridViewSet)
 router.register('client-individual', viewset=views.IndividualClientViewSet)
 router.register('client-legal', viewset=views.LegalClientViewSet)
-router.register('registered-policies', viewset=views.RegisterPoliseViewSet)
 router.register('currency', viewset=views.CurrencyViewset)
 router.register('group', viewset=views.GroupViewset)
 router.register('klass', viewset=views.KlassViewset)
@@ -33,8 +32,9 @@ urlpatterns = [
                   path('api/', include(router.urls)),
                   path('api/product-fields/', views.product_fields),
                   path('api/policy-series/', views.policy_series),
-                  path('api/get-my-workers/', views.get_my_workers),
-                  path('api/get-my-branches/', views.get_my_branches),
+                  path('api/deactivate-policy/', views.deactivate_policy),
+                  # path('api/get-my-workers/', views.get_my_workers),
+                  # path('api/get-my-branches/', views.get_my_branches),
                   path('individual-client/', controller.individual_client, name='individual_client'),
                   path('individual-client/add/', controller.individual_client_add, name='individual_client_add'),
                   path('login/', authview.LoginView.as_view(template_name='login.html'), name='login'),

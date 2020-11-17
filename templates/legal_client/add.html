@@ -1,0 +1,126 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Редактировать клиента{% endblock %}
+{% block content %}
+  <div class="content-header">
+  <div class="container-fluid">
+  </div>
+</div>
+
+<div class="content">
+  <div class="container-fluid">
+    <form>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Редактировать клиента</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" title="Collapse">
+                  <i class="fas fa-window-close"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="act_number" class="col-form-label">Номер акта</label>
+                    <input
+                      id="act_number"
+                      class="form-control"
+                      name="act_number"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="act_date" class="col-form-label">Время подписания акта</label>
+                    <div class="input-group">
+                      <input
+                        id="act_date"
+                        class="form-control"
+                        placeholder="yyyy-mm-dd"
+                        name="act_date"
+                        required
+                      >
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="polis_number_from" class="col-form-label">Номер полиса с:</label>
+                    <input
+                      id="polis_number_from"
+                      class="form-control"
+                      name="polis_number_from"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="polis_number_to" class="col-form-label">Номер полиса до:</label>
+                    <input
+                      id="polis_number_to"
+                      class="form-control"
+                      name="polis_number_to"
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="polis_quantity" class="col-form-label">Количество полисов</label>
+                      <input
+                      id="polis_quantity"
+                      class="form-control"
+                      name="polis_quantity"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="polis_status" class="col-form-label">Состояние полиса</label>
+                    <select
+                      id="polis_status"
+                      class="form-control"
+                      name="polis_status"
+                      required>
+                    </select>
+                  </div>
+                </div>
+              </div>
+<!--              <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                  <div class="form-group">-->
+<!--                    <div class="custom-file">-->
+<!--                      <input type="file" (change)="onFileSelected($event)" formControlName="file" class="custom-file-input" id="poliseFile">-->
+<!--                      <label class="custom-file-label" for="poliseFile"></label>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="col-md-1">
+        <div class="form-group">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

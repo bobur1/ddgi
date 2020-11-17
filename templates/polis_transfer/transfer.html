@@ -1,0 +1,124 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Распределить полис{% endblock %}
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-fileinput/css/fileinput.min.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="content-header">
+  <div class="container-fluid">
+  </div>
+</div>
+
+<div class="content">
+  <div class="container-fluid">
+    <form method="post" id="polis-transfer-form" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Распределить полис</h3>
+              <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                      <i class="fas fa-times"></i>
+                  </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="office" class="col-form-label">Офисы:</label>
+                    <select
+                        id="office"
+                        class="form-control"
+                        name="to_office"
+                    >
+                        <option selected></option>
+                        {% for office in offices %}
+                            <option value="{{ office.id }}">{{ office.name }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label for="polises" class="col-form-label">Полиса:</label>
+                    <select
+                        id="polises"
+                        class="form-control"
+                        name="policies[]"
+                        multiple
+                    >
+                        {% for polis in polises %}
+                            <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <button type="submit" id="submit-button" class="btn btn-primary float-right">Распределить</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'custom/js/csrftoken.js' %}"></script>
+
+    <script>
+        let office = $('#office');
+        let polises = $('#polises');
+        let submitButton = $('#submit-button');
+        let form = $('#polis-transfer-form');
+        office.select2();
+        polises.select2();
+
+        $(document).ready(function () {
+            submitButton.click(function (e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+
+                let forms = {};
+                forms.csrfmiddlewaretoken = csrftoken;
+                forms.to_office = office.val();
+                forms.policies = polises.val();
+
+                $.ajax({
+                    url: '/api/policy-transfers/',
+                    data: JSON.stringify(forms),
+                    {#processData: false,#}
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        if (data) {
+                            console.log(data);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

@@ -148,11 +148,6 @@ class IndividualClientAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(RegisteredPolises)
-class RegisteredPolises(admin.ModelAdmin):
-    pass
-
-
 @admin.register(Group)
 class GroupAdmin(admin.ModelAdmin):
     pass
@@ -207,8 +202,7 @@ class PolicySeriesType(admin.ModelAdmin):
 
 @admin.register(Policy)
 class PolicyAdmin(admin.ModelAdmin):
-
-    list_display = (str, 'is_free_generated')
+    list_display = ('id', str, 'is_free_generated', 'is_active')
 
 
 @admin.register(Beneficiary)
@@ -236,9 +230,4 @@ class PolicyRetransferAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'transfer', 'to_user', 'cr_on', 'cr_by'
     )
-    # to_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=False, blank=False)
-    # to_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, default=None)
-    # policies = models.ManyToManyField(Policy)
-    # cr_on = models.DateTimeField(auto_now_add=True)
-    # cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
-    #                           related_name='policy_transfers_cr_by')
+

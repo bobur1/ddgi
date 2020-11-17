@@ -76,7 +76,7 @@ def polis_retransfer(request):
 
 
 @login_required
-def request (request):
+def request(request):
     return render(request, "request/add.html")
 
 

@@ -132,3 +132,30 @@ def view_show(request, id):
 def view_edit(request, id):
     view = Vid.objects.filter(id=id).first()
     return render(request, "spravochniki/view/edit.html", { 'view': view })
+
+
+@login_required
+def branch(request):
+    return render(request, "spravochniki/branch/index.html")
+
+
+@login_required
+def branch_add(request):
+    users = User.objects.all()
+    return render(request, "spravochniki/branch/add.html", { 'users': users })
+
+
+@login_required
+def branch_show(request, id):
+    branch = InsuranceOffice.objects.filter(id=id).first()
+    return render(request, "spravochniki/branch/show.html", { 'branch': branch })
+
+
+@login_required
+def branch_edit(request, id):
+    branch = InsuranceOffice.objects.filter(id=id).first()
+    users = User.objects.get()
+    return render(request, "spravochniki/branch/edit.html", {
+        'branch': branch,
+        'users': users
+    })

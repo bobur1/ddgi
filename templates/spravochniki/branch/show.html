@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Вид: {{ currency.name }}{% endblock %}
+{% block title %}Вид: {{ branch.name }}{% endblock %}
 {% block content %}
   <div class="content-header">
     <div class="container-fluid">
@@ -10,7 +10,7 @@
 <div class="content">
   <div class="container-fluid">
       <div class="d-flex flex-row mb-3">
-        <a href="{% url 'currency_edit' currency.id %}" class="btn btn-primary mr-1">Редактировать вид</a>
+        <a href="{% url 'branch_edit' branch.id %}" class="btn btn-primary mr-1">Редактировать вид</a>
 
         <form method="POST" id="delete-form" class="mr-1">
             {% csrf_token %}
@@ -24,9 +24,9 @@
                 <div class="card-body">
                     <table class="table {% comment %}table-bordered{% endcomment %} table-striped projects">
                         <tbody>
-                        <tr><th>ID</th><td>{{ currency.id }}</td></tr>
-                        <tr><th>Название</th><td>{{ currency.name }}</td></tr>
-                        <tr><th>Код</th><td>{{ currency.code }}</td></tr>
+                        <tr><th>ID</th><td>{{ branch.id }}</td></tr>
+                        <tr><th>Название</th><td>{{ branch.name }}</td></tr>
+                        <tr><th>Код</th><td>{{ branch.code }}</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -61,10 +61,10 @@
                 let forms = {};
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'delete';
-                forms.id = {{ currency.id }};
+                forms.id = {{ branch.id }};
 
                 $.ajax({
-                    url: '/api/currency/',
+                    url: '/api/branch/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
@@ -73,7 +73,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/spravochniki/currency/');
+                            window.location.replace('/spravochniki/branch/');
                         }
                     }
                 });

@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers
+from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
+    Vid
 
 @login_required
 def home(request):
@@ -97,3 +98,31 @@ def currency(request):
 @login_required
 def currency_add(request):
     return render(request, "spravochniki/currency/add.html")
+
+
+@login_required
+def currency_edit(request, id):
+    currency = Currency.objects.filter(id=id).first()
+    return render(request, "spravochniki/currency/edit.html", { 'currency': currency })
+
+
+@login_required
+def view(request):
+    return render(request, "spravochniki/view/index.html")
+
+
+@login_required
+def view_add(request):
+    return render(request, "spravochniki/view/add.html")
+
+
+@login_required
+def view_show(request, id):
+    view = Vid.objects.filter(id=id).first()
+    return render(request, "spravochniki/view/show.html", { 'view': view })
+
+
+@login_required
+def view_edit(request, id):
+    view = Vid.objects.filter(id=id).first()
+    return render(request, "spravochniki/view/edit.html", { 'view': view })

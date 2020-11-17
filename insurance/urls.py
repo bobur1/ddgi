@@ -52,6 +52,11 @@ urlpatterns = [
                   path('user/add', controller.user, name='user_add'),
                   path('spravochniki/currency/', controller.currency, name='currency'),
                   path('spravochniki/currency/add/', controller.currency_add, name='currency_add'),
+                  path('spravochniki/currency/<int:id>/edit/', controller.currency_edit, name='currency_edit'),
+                  path('spravochniki/view/', controller.view, name='view'),
+                  path('spravochniki/view/add/', controller.view_add, name='view_add'),
+                  path('spravochniki/view/<int:id>/', controller.view_show, name='view_show'),
+                  path('spravochniki/view/<int:id>/edit/', controller.view_edit, name='view_edit'),
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

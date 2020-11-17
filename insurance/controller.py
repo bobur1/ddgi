@@ -101,6 +101,12 @@ def currency_add(request):
 
 
 @login_required
+def currency_show(request, id):
+    currency = Currency.objects.filter(id=id).first()
+    return render(request, "spravochniki/currency/show.html", { 'currency': currency })
+
+
+@login_required
 def currency_edit(request, id):
     currency = Currency.objects.filter(id=id).first()
     return render(request, "spravochniki/currency/edit.html", { 'currency': currency })

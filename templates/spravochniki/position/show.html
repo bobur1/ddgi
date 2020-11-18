@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Юридический клиент: {{ client.name }}{% endblock %}
+{% block title %}Должность: {{ position.name }}{% endblock %}
 {% block content %}
   <div class="content-header">
     <div class="container-fluid">
@@ -10,7 +10,7 @@
 <div class="content">
   <div class="container-fluid">
       <div class="d-flex flex-row mb-3">
-        <a href="{% url 'legal_client_edit' client.id %}" class="btn btn-primary mr-1">Редактировать клиента</a>
+        <a href="{% url 'position_edit' position.id %}" class="btn btn-primary mr-1">Редактировать Должность</a>
 
         <form method="POST" id="delete-form" class="mr-1">
             {% csrf_token %}
@@ -24,13 +24,8 @@
                 <div class="card-body">
                     <table class="table {% comment %}table-bordered{% endcomment %} table-striped projects">
                         <tbody>
-                        <tr><th>ID</th><td>{{ client.id }}</td></tr>
-                        <tr><th>Название</th><td>{{ client.name }}</td></tr>
-                        <tr><th>Адрес</th><td>{{ client.address }}</td></tr>
-                        <tr><th>Номер телефона</th><td>{{ client.phone_number }}</td></tr>
-                        <tr><th>Должность</th><td>{{ client.position.name }}</td></tr>
-{#                        <tr><th>МФО</th><td>{{ client.mfo }}</td></tr>#}
-{#                        <tr><th>ИНН</th><td>{{ client.inn }}</td></tr>#}
+                        <tr><th>ID</th><td>{{ position.id }}</td></tr>
+                        <tr><th>Название</th><td>{{ position.name }}</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -65,10 +60,10 @@
                 let forms = {};
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'delete';
-                forms.id = {{ client.id }};
+                forms.id = {{ position.id }};
 
                 $.ajax({
-                    url: '/api/client-legal/',
+                    url: '/api/position/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
@@ -77,7 +72,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/legal-client/');
+                            window.location.replace('/spravochniki/position/');
                         }
                     }
                 });

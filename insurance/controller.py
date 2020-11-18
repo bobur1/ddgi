@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    Vid
+    Vid, IndividualClient, LegalClient, Position
 
 @login_required
 def home(request):
@@ -17,8 +17,21 @@ def individual_client(request):
 @login_required
 def individual_client_add(request):
     currency_list = Currency.objects.all()
-    return render(request, "individual_client/add.html", {'curr_list': currency_list,
-                                                          'name': 'Shohrux'})
+    return render(request, "individual_client/add.html", {'curr_list': currency_list})
+
+
+@login_required
+def individual_client_show(request, id):
+    client = IndividualClient.objects.filter(id=id).first()
+    return render(request, "individual_client/show.html", { 'client': client })
+
+
+@login_required
+def individual_client_edit(request, id):
+    client = IndividualClient.objects.filter(id=id).first()
+    return render(request, "individual_client/edit.html", {
+        'client': client,
+    })
 
 
 @login_required
@@ -28,7 +41,26 @@ def legal_client(request):
 
 @login_required
 def legal_client_add(request):
-    return render(request, "legal_client/add.html")
+    positions = Position.objects.all()
+    return render(request, "legal_client/add.html", {
+        'positions': positions,
+    })
+
+
+@login_required
+def legal_client_show(request, id):
+    client = LegalClient.objects.filter(id=id).first()
+    return render(request, "legal_client/show.html", { 'client': client })
+
+
+@login_required
+def legal_client_edit(request, id):
+    client = LegalClient.objects.filter(id=id).first()
+    users = User.objects.get()
+    return render(request, "legal_client/edit.html", {
+        'client': client,
+        'users': users
+    })
 
 
 @login_required

@@ -66,6 +66,18 @@ urlpatterns = [
                   path('spravochniki/branch/add/', controller.branch_add, name='branch_add'),
                   path('spravochniki/branch/<int:id>/', controller.branch_show, name='branch_show'),
                   path('spravochniki/branch/<int:id>/edit/', controller.branch_edit, name='branch_edit'),
+                  path('spravochniki/klass/', controller.klass, name='klass'),
+                  path('spravochniki/klass/add/', controller.klass_add, name='klass_add'),
+                  path('spravochniki/klass/<int:id>/', controller.klass_show, name='klass_show'),
+                  path('spravochniki/klass/<int:id>/edit/', controller.klass_edit, name='klass_edit'),
+                  path('spravochniki/group/', controller.group, name='group'),
+                  path('spravochniki/group/add/', controller.group_add, name='group_add'),
+                  path('spravochniki/group/<int:id>/', controller.group_show, name='group_show'),
+                  path('spravochniki/group/<int:id>/edit/', controller.group_edit, name='group_edit'),
+                  path('spravochniki/position/', controller.position, name='position'),
+                  path('spravochniki/position/add/', controller.position_add, name='position_add'),
+                  path('spravochniki/position/<int:id>/', controller.position_show, name='position_show'),
+                  path('spravochniki/position/<int:id>/edit/', controller.position_edit, name='position_edit'),
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

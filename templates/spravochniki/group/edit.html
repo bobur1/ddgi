@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Редактировать клиента{% endblock %}
+{% block title %}Редактировать группу{% endblock %}
 {% block content %}
   <div class="content-header">
   <div class="container-fluid">
@@ -9,12 +9,12 @@
 
 <div class="content">
   <div class="container-fluid">
-    <form method="post" id="client-client-form">
+    <form method="post" id="group-form">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Редактировать клиента</h3>
+              <h3 class="card-title">Редактировать группу</h3>
               <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                       <i class="fas fa-minus"></i>
@@ -26,79 +26,14 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <div class="form-group">
                     <label for="name" class="col-form-label">Название</label>
                     <input
                       id="name"
                       class="form-control"
                       name="name"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="address" class="col-form-label">Адрес</label>
-                    <input
-                      id="address"
-                      class="form-control"
-                      name="address"
-                      required
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="phone_number" class="col-form-label">Номер телефона</label>
-                    <input
-                      id="phone_number"
-                      class="form-control"
-                      name="phone_number"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="position_id" class="col-form-label">Должность</label>
-                    <select
-                        id="position_id"
-                        class="form-control"
-                        name="position_id"
-                        required
-                    >
-                      <option selected></option>
-                      {% for position in positions %}
-                          <option value="{{ position.id }}">{{ position.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="mfo" class="col-form-label">МФО</label>
-                    <input
-                      id="mfo"
-                      class="form-control"
-                      name="mfo"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="inn" class="col-form-label">ИНН</label>
-                    <input
-                      id="inn"
-                      class="form-control"
-                      name="inn"
+                      value="{{ group.name }}"
                       required
                     >
                   </div>
@@ -109,10 +44,9 @@
         </div>
       </div>
 
-
       <div class="card-footer">
         <div class="form-group">
-            <button type="submit" id="submit-button" class="btn btn-primary float-right">Добавить</button>
+            <button type="submit" id="submit-button" class="btn btn-primary float-right">Редактировать</button>
         </div>
       </div>
     </form>
@@ -127,7 +61,7 @@
 
     <script>
         let submitButton = $('#submit-button');
-        let form = $('#client-client-form');
+        let form = $('#group-form');
 
         $(document).ready(function () {
             submitButton.click(function (e) {
@@ -152,7 +86,7 @@
                 forms.params = params;
 
                 $.ajax({
-                    url: '/api/client-legal/',
+                    url: '/api/group/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
@@ -161,7 +95,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/legal-client/' + {{ client.id }} + '/');
+                            window.location.replace('/spravochniki/group/' + {{ group.id }} + '/');
                         }
                     }
                 });

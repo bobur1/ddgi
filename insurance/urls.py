@@ -33,6 +33,7 @@ urlpatterns = [
                   path('api/product-fields/', views.product_fields),
                   path('api/policy-series/', views.policy_series),
                   path('api/deactivate-policy/', views.deactivate_policy),
+                  path('api/create-office/', views.create_office),
                   # path('api/get-my-workers/', views.get_my_workers),
                   # path('api/get-my-branches/', views.get_my_branches),
                   path('individual-client/', controller.individual_client, name='individual_client'),

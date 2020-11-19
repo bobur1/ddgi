@@ -200,12 +200,22 @@ class Bank(models.Model):
         return "{} {}".format(self.name, self.mfo)
 
 
-class Region(models.Model):
-    name = models.CharField(max_length=512)
-    is_exist = models.BooleanField(default=True)
+class LocationType(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=1024)
 
     def __str__(self):
         return self.name
+
+
+class Location(models.Model):
+    series = models.CharField(max_length=10, default=None, blank=False)
+    name = models.CharField(max_length=512)
+    type = models.ForeignKey(LocationType, on_delete=models.SET_NULL, blank=False, null=True, default=None)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.series} - {self.name}'
 
 
 class OfficeType(models.Model):
@@ -221,18 +231,16 @@ class InsuranceOffice(models.Model):
 
     name = models.CharField(verbose_name="Наименование", max_length=255)
 
-    is_branch = models.BooleanField(verbose_name="Это филиал?", default=False)
-
     director = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name='insurance_director')
 
-    parent_id = models.IntegerField(null=True, blank=True, default=None)
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
-    type = models.ForeignKey(OfficeType, on_delete=models.SET_NULL, null=True, blank=True)
+    office_type = models.ForeignKey(OfficeType, on_delete=models.SET_NULL, null=True, blank=True)
 
     location = models.CharField(verbose_name="Местонахождение", max_length=1024, default='')
 
-    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
+    region = models.ForeignKey(Location, on_delete=models.SET_NULL, null=True, blank=True)
 
     founded_date = models.DateField(verbose_name="Основан", blank=False, null=True)
 
@@ -433,15 +441,6 @@ class ProductField(models.Model):
         return self.name
 
 
-class District(models.Model):
-    region = models.ForeignKey(Region, on_delete=models.CASCADE)
-    name = models.CharField(max_length=128)
-    is_exist = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
-
-
 class Insurer(models.Model):
     person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
     fax_number = models.CharField(max_length=32)
@@ -472,8 +471,20 @@ class ClientRequestType(models.Model):
         return self.title
 
 
-# class ClientRequest(models.Model):
-#     request_type = models.ForeignKey(ClientRequestType, verbose_name='Тип запроса', on_delete=models.SET_NULL, null=True, blank=True)
-#     policy_number = models.CharField(max_length=100, null=False, blank=False)
-#     policy_series = models.CharField(max_length=100, null=False, blank=Flase)
-#     reason = models.CharField(verbose_name='Причина увеличения лимитов', max_length=4000)
+class ClientRequest(models.Model):
+    request_type = models.ForeignKey(ClientRequestType, verbose_name='Тип запроса', on_delete=models.SET_NULL, null=True, blank=True)
+    policy_number = models.CharField(max_length=100, null=False, blank=False)
+    policy_series = models.CharField(max_length=100, null=False, blank=False)
+    reason = models.CharField(verbose_name='Причина увеличения лимитов', max_length=4000)
+    file = models.FileField(verbose_name="Документ", upload_to='client_requests', blank=True, null=True, default=None)
+    comment = models.CharField(verbose_name='Комментарий', max_length=4000)
+
+    is_approved = models.BooleanField(verbose_name='Одобрено', default=False)
+
+    assigned_to = models.ForeignKey(User, verbose_name='Назначен', on_delete=models.SET_NULL, default=None, null=True,
+                                    blank=True)
+
+    cr_on = models.DateTimeField(auto_now_add=True)
+    up_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
+                              related_name='client_request_updated_by')
+    up_on = models.DateTimeField(auto_now_add=True)

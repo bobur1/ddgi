@@ -234,14 +234,8 @@ class ProductFieldsSerializer(serializers.ModelSerializer):
 
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Region
-        fields = ['id', 'name']
-
-
-class DistrictSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = District
-        fields = ['id', 'region', 'name']
+        model = Location
+        fields = ['id', 'name', 'type', 'is_active']
 
 
 class VidSerializer(serializers.ModelSerializer):

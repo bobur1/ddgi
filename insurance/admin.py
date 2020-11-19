@@ -231,3 +231,24 @@ class PolicyRetransferAdmin(admin.ModelAdmin):
         'id', 'transfer', 'to_user', 'cr_on', 'cr_by'
     )
 
+
+@admin.register(OfficeType)
+class OfficeTypeAdmin(admin.ModelAdmin):
+    list_display = (
+        'title', 'description'
+    )
+
+
+@admin.register(Location)
+class RegionAdmin(admin.ModelAdmin):
+    list_display = (str, )
+
+
+@admin.register(LocationType)
+class LocationTypeAdmin(admin.ModelAdmin):
+    list_display = (str, )
+
+
+@admin.register(ClientRequest)
+class ClientRequestAdmin(admin.ModelAdmin):
+    pass

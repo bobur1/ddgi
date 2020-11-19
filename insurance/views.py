@@ -11,7 +11,7 @@ from insurance.serializers import ActSerializer
 from django.core.paginator import Paginator
 from rest_framework import viewsets
 import json
-import datetime
+from datetime import datetime
 
 
 @api_view(['POST'])
@@ -23,29 +23,6 @@ def test_view(request):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
-
-def is_valid_policies_range(is_freely_generated, series, from_number, to_number):
-    s_id = 'NULL'
-    if series != '' and series is not None:
-        s_id = int(series)
-    query = 'SELECT * FROM insurance_policy where series_id is {} AND policy_number>={}'.format(s_id, from_number)
-    objs = Policy.objects.raw(raw_query=query)
-    result = objs.__len__() == 0
-    return result
-
-
-def generate_policies(from_number, to_number, is_free_generated, series, session):
-    for i in range(int(from_number), int(to_number) + 1):
-        s = None
-        if series != '' and series is not None:
-            s = PolicySeriesType.objects.get(id=series)
-
-        Policy.objects.create(policy_number=i,
-                              series=s,
-                              is_free_generated=is_free_generated,
-                              is_active=True,
-                              income_session=session).save()
 
 
 def product_fields(request):
@@ -69,7 +46,6 @@ def policy_series(request):
 
 
 @api_view(['POST'])
-# @permission_classes([])
 def deactivate_policy(request):
     response = {}
     try:
@@ -84,49 +60,42 @@ def deactivate_policy(request):
     return JsonResponse(response)
 
 
+@api_view(['POST'])
+def create_office(request):
+    response = {}
+    try:
+        series = request.data.get('series')
+        director_id = request.data.get('director_id')
+        director = User.objects.get(id=director_id)
+        created_by = request.user
+        office_type = OfficeType.objects.get(id=request.data.get('office_type'))
+        parent_id = request.data.get('parent_id', None)
+
+        parent = None
+        if parent_id is not None:
+            parent = InsuranceOffice.objects.get(id=parent_id)
+
+        name = request.data.get('title')
+        address = request.data.get('address')
+        founded_date = request.data.get('founded_date')
+        if founded_date is None:
+            founded_date = datetime.now().date()
+        region = Location.objects.get(id=request.data.get('region_id'))
+
+        create_insurance_office(series=series, name=name, location=address, region=region, director=director,
+                                created_by=created_by, office_type=office_type, parent=parent, funded=founded_date)
+        response['success'] = True
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+
+    return JsonResponse(response)
+
+
 def generate_page_size(page=None, size=None):
     if page is None or size is None:
         return [0, 0]
     return [page, size]
-
-# WARNING - DO not delete yet
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def get_my_workers(request):
-#     response = {}
-#     try:
-#         objs = OfficeWorkers.objects.filter(office__director=request.user)
-#         serializer = OfficeWorkersSerializer(objs, many=True)
-#
-#         response = {
-#             'data': serializer.data,
-#             'success': True
-#         }
-#
-#     except Exception as e:
-#         response['success'] = False
-#         response['error_msg'] = e.__str__()
-#
-#     return JsonResponse(response)
-
-
-# WARNING - DO not delete yet
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated, ])
-# def get_my_branches(request):
-#     response = {}
-#     try:
-#         objs = InsuranceOffice.objects.filter(director=request.user.id)
-#         serializer = BranchSerializer(objs, many=True)
-#         response = {
-#             'data': serializer.data,
-#             'success': True
-#         }
-#     except Exception as e:
-#         response['error_msg'] = e.__str__()
-#         response['success'] = False
-#
-#     return Response(response)
 
 
 class PolicyViewSet(viewsets.ViewSet):

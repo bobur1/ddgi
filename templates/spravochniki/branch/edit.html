@@ -28,11 +28,12 @@
               <div class="row">
                 <div class="col-sm-4">
                   <div class="form-group">
-                    <label for="name" class="col-form-label">Название</label>
+                    <label for="title" class="col-form-label">Название</label>
                     <input
-                      id="name"
+                      id="title"
                       class="form-control"
-                      name="name"
+                      name="title"
+                      value="{{ branch.name }}"
                       required
                       >
                   </div>
@@ -44,6 +45,7 @@
                       id="series"
                       class="form-control"
                       name="series"
+                      value="{{ branch.series }}"
                       required
                       >
                   </div>
@@ -56,7 +58,8 @@
                       id="founded_at"
                       class="form-control"
                       placeholder="yyyy-mm-dd"
-                      name="founded_at"
+                      name="founded_date"
+                      value="{{ branch.founded_at }}"
                       required
                       >
                   </div>
@@ -64,7 +67,23 @@
               </div>
 
               <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
+                  <div class="form-group" id="form-group-1">
+                    <label for="parent_id" class="col-form-label">Материнский офис</label>
+                    <select
+                      id="parent_id"
+                      class="form-control"
+                      name="parent_id"
+                    >
+                      <option ></option>
+                      {% for parent in parentBranches %}
+                        <option value="{{ parent.id }}" {% if branch.id == parent.id %}selected="selected"{% endif %}>{{ parent.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
                   <div class="form-group" id="form-group-1">
                     <label for="region_id" class="col-form-label">Регион</label>
                     <select
@@ -81,7 +100,7 @@
                   </div>
                 </div>
 
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                   <div class="form-group" id="form-group-1">
                     <label for="director" class="col-form-label">Директор</label>
                     <select
@@ -90,10 +109,10 @@
                         name="director"
                         required
                     >
-                        <option selected="selected"></option>
-                        {% for user in users %}
-                            <option value="{{ user.id }}">{{ user.username }}</option>
-                        {% endfor %}
+                      <option selected="selected"></option>
+                      {% for user in users %}
+                        <option value="{{ user.id }}" {% if branch.director == user %}selected="selected"{% endif %}>{{ user.username }}</option>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -107,6 +126,7 @@
                         id="address"
                         class="form-control"
                         name="address"
+                        value="{{ branch.address }}"
                         required
                       >
                   </div>
@@ -119,6 +139,7 @@
                         id="phone_number"
                         class="form-control"
                         name="phone_number"
+                        value="{{ branch.phone_number }}"
                         required
                       >
                   </div>
@@ -136,9 +157,9 @@
                       name="type"
                     >
                       <option selected="selected"></option>
-                      <option>Департамент</option>
-                      <option>Филиал</option>
-                      <option>Центр страхования</option>
+                      {% for type in officeTypes %}
+                        <option value="{{ type.id }}" {% if branch.office_type == type %}selected="selected"{% endif %}>{{ type.title }}</option>
+                      {% endfor %}
                     </select>
                   </div>
                 </div>
@@ -150,6 +171,7 @@
                       id="code_by_office"
                       class="form-control"
                       name="code_by_office"
+                      value="{{ branch.code_by_office }}"
                       required
                       >
                   </div>
@@ -162,6 +184,7 @@
                       id="code_by_type"
                       class="form-control"
                       name="code_by_type"
+                      value="{{ branch.code_by_type }}"
                       required
                       >
                   </div>
@@ -175,6 +198,7 @@
                       type="number"
                       class="form-control"
                       name="hierarchy"
+                      value="{{ branch.hierarchy }}"
                       required
                       >
                   </div>
@@ -201,6 +225,9 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
+        $('#parent_id').select2();
+        $('#region_id').select2();
+        $('#director').select2();
         let submitButton = $('#submit-button');
         let form = $('#currency-form');
 
@@ -217,17 +244,14 @@
                 });
 
                 let forms = {};
-                let params = {}
                 forms.csrfmiddlewaretoken = csrftoken;
-                forms.action = 'update';
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
-                forms.params = params;
 
                 $.ajax({
-                    url: '/api/currency/',
+                    url: '/api/edit-office/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',

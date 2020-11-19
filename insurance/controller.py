@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    Vid, IndividualClient, LegalClient, Position, ProductTypeClass, Group
+    Vid, IndividualClient, LegalClient, Position, ProductTypeClass, Group, OfficeType
 
 @login_required
 def home(request):
@@ -240,7 +240,14 @@ def branch(request):
 @login_required
 def branch_add(request):
     users = User.objects.all()
-    return render(request, "spravochniki/branch/add.html", { 'users': users })
+    officeTypes = OfficeType.objects.all()
+    parentBranches = InsuranceOffice.objects.all()
+    # regions = Region.objects.all()
+    return render(request, "spravochniki/branch/add.html", {
+        'users': users,
+        'officeTypes': officeTypes,
+        'parentBranches': parentBranches,
+    })
 
 
 @login_required
@@ -253,7 +260,11 @@ def branch_show(request, id):
 def branch_edit(request, id):
     branch = InsuranceOffice.objects.filter(id=id).first()
     users = User.objects.get()
+    officeTypes = OfficeType.objects.all()
+    parentBranches = InsuranceOffice.objects.exclude(id=id)
     return render(request, "spravochniki/branch/edit.html", {
         'branch': branch,
-        'users': users
+        'users': users,
+        'officeTypes': officeTypes,
+        'parentBranches': parentBranches,
     })

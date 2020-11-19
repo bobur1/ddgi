@@ -200,12 +200,42 @@ class Bank(models.Model):
         return "{} {}".format(self.name, self.mfo)
 
 
+class Region(models.Model):
+    name = models.CharField(max_length=512)
+    is_exist = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class OfficeType(models.Model):
+    title = models.CharField(verbose_name='Название', max_length=1024)
+    description = models.CharField(verbose_name='Описание', max_length=2048)
+
+    def __str__(self):
+        return self.title
+
+
 class InsuranceOffice(models.Model):
     series = models.CharField(verbose_name="Серии", max_length=10, default="AAA")
+
     name = models.CharField(verbose_name="Наименование", max_length=255)
+
     is_branch = models.BooleanField(verbose_name="Это филиал?", default=False)
+
     director = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
                                  related_name='insurance_director')
+
+    parent_id = models.IntegerField(null=True, blank=True, default=None)
+
+    type = models.ForeignKey(OfficeType, on_delete=models.SET_NULL, null=True, blank=True)
+
+    location = models.CharField(verbose_name="Местонахождение", max_length=1024, default='')
+
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
+
+    founded_date = models.DateField(verbose_name="Основан", blank=False, null=True)
+
     cr_on = models.DateTimeField(auto_now_add=True)
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='office_cr_by')
     up_on = models.DateTimeField(auto_now=True)
@@ -403,14 +433,6 @@ class ProductField(models.Model):
         return self.name
 
 
-class Region(models.Model):
-    name = models.CharField(max_length=512)
-    is_exist = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
-
-
 class District(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
@@ -440,3 +462,18 @@ class PolicyFields(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ClientRequestType(models.Model):
+    title = models.CharField(verbose_name='Название', max_length=1024)
+    description = models.CharField(verbose_name='Описание', max_length=2048)
+
+    def __str__(self):
+        return self.title
+
+
+# class ClientRequest(models.Model):
+#     request_type = models.ForeignKey(ClientRequestType, verbose_name='Тип запроса', on_delete=models.SET_NULL, null=True, blank=True)
+#     policy_number = models.CharField(max_length=100, null=False, blank=False)
+#     policy_series = models.CharField(max_length=100, null=False, blank=Flase)
+#     reason = models.CharField(verbose_name='Причина увеличения лимитов', max_length=4000)

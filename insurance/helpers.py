@@ -15,3 +15,13 @@ def is_user_director_of_office(office_id, user):
 
 def is_user_worker_of_director(director, user_id):
     return OfficeWorkers.objects.get(office__director=director, user_id=user_id) is not None
+
+
+def get_all_policies():
+    return Policy.objects.all()
+
+
+def get_all_active_policies():
+    return Policy.objects.filter(is_active=True)
+
+

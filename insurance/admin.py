@@ -231,3 +231,9 @@ class PolicyRetransferAdmin(admin.ModelAdmin):
         'id', 'transfer', 'to_user', 'cr_on', 'cr_by'
     )
 
+
+@admin.register(OfficeType)
+class OfficeTypeAdmin(admin.ModelAdmin):
+    list_display = (
+        'title', 'description'
+    )

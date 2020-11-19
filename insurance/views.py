@@ -89,6 +89,36 @@ def generate_page_size(page=None, size=None):
         return [0, 0]
     return [page, size]
 
+# class InsuranceOffice(models.Model):
+#     series = models.CharField(verbose_name="Серии", max_length=10, default="AAA")
+#
+#     name = models.CharField(verbose_name="Наименование", max_length=255)
+#
+#     is_branch = models.BooleanField(verbose_name="Это филиал?", default=False)
+#
+#     director = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True,
+#                                  related_name='insurance_director')
+#
+#     type = models.ForeignKey(OfficeType, on_delete=models.SET_NULL, null=True, blank=True)
+#
+#     location = models.CharField(verbose_name="Местонахождение", max_length=1024, default='')
+#
+#     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True)
+#
+#     founded_date = models.DateField(verbose_name="Основан", blank=False, null=True)
+#
+#     cr_on = models.DateTimeField(auto_now_add=True)
+#     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='office_cr_by')
+#     up_on = models.DateTimeField(auto_now=True)
+#     up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name='office_up_by')
+#     is_exist = models.BooleanField(default=True)
+
+# def create_office(request):
+#     series = request.data.get('series', None)
+#     name = request.data.get('name', None)
+#     is_branch = request.data.get('is_branch', True)
+#     director = request.user
+#     type = request.data.get('office_type', )
 # WARNING - DO not delete yet
 # @api_view(['GET'])
 # @permission_classes([IsAuthenticated])

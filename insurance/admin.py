@@ -148,12 +148,7 @@ class IndividualClientAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Group)
-class GroupAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(ProductTypeClass)
+@admin.register(ProductTypeCode)
 class KlassAdmin(admin.ModelAdmin):
     pass
 
@@ -186,7 +181,10 @@ class ProductFieldInline(admin.TabularInline):
 
 @admin.register(ProductType)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'klass', 'group', 'vid')
+    model = ProductType
+    # class_code = model.classes..code
+    code = model.code
+    list_display = ('id', 'name', 'vid')
     inlines = [ProductFieldInline]
 
 

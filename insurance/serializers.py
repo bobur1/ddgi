@@ -50,15 +50,15 @@ class PoliciesIncomeSerializer(serializers.ModelSerializer):
                   'is_free_policy', 'from_user', 'document']
 
 
-class KlassSerializer(serializers.ModelSerializer):
+class ClassifiersSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductTypeClass
+        model = ProductTypeCode
         fields = ['id', 'name']
 
 
 class GroupSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductTypeClass
+        model = ProductTypeCode
         fields = ['id', 'name']
 
 
@@ -69,7 +69,7 @@ class VidSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    klass = KlassSerializer()
+    klass = ClassifiersSerializer()
     group = GroupSerializer()
     vid = VidSerializer()
 
@@ -199,22 +199,16 @@ class CurrencySerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'code']
 
 
-class GroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Group
-        fields = ['id', 'name']
-
-
 class KlassSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductTypeClass
+        model = ProductTypeCode
         fields = ['id', 'name']
 
 
 class BankSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bank
-        fields = ['id', 'name', 'mfo', 'inn',
+        fields = ['id', 'name', 'branch_name', 'mfo', 'inn',
                   'address', 'phone_number', 'checking_account']
 
 

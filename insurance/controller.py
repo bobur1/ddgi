@@ -38,6 +38,7 @@ def polis_registration(request):
 @login_required
 def polis_registration_add(request):
     polis_series = PolicySeriesType.objects.all()
+
     return render(request, "polis_registration/add.html", {
         'policy': None,
         'polis_series': polis_series,

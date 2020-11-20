@@ -16,12 +16,10 @@ router.register('grid', viewset=views.GridViewSet)
 router.register('client-individual', viewset=views.IndividualClientViewSet)
 router.register('client-legal', viewset=views.LegalClientViewSet)
 router.register('currency', viewset=views.CurrencyViewset)
-router.register('group', viewset=views.GroupViewset)
-router.register('klass', viewset=views.KlassViewset)
-router.register('vid', viewset=views.VidViewset)
-router.register('bank', viewset=views.BankViewset)
+router.register('klass', viewset=views.ClassifiersViewSet)
+router.register('vid', viewset=views.VidViewSet)
+router.register('bank', viewset=views.BankViewSet)
 router.register('branch', viewset=views.BranchViewSet)
-router.register('product', viewset=views.ProductViewSet)
 router.register('policies-incomes', viewset=views.PolicyIncomeViewSet)
 router.register('policies', viewset=views.PolicyViewSet)
 router.register('policy-transfers', viewset=views.TransferPoliciesViewSet)
@@ -34,8 +32,6 @@ urlpatterns = [
                   path('api/policy-series/', views.policy_series),
                   path('api/deactivate-policy/', views.deactivate_policy),
                   path('api/create-office/', views.create_office),
-                  # path('api/get-my-workers/', views.get_my_workers),
-                  # path('api/get-my-branches/', views.get_my_branches),
                   path('individual-client/', controller.individual_client, name='individual_client'),
                   path('individual-client/add/', controller.individual_client_add, name='individual_client_add'),
                   path('login/', authview.LoginView.as_view(template_name='login.html'), name='login'),

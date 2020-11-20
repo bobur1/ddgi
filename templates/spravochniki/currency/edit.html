@@ -93,6 +93,7 @@
                 let params = {}
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'update';
+                forms.id = {{ currency.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     params[serializedForm[i]['name']] = serializedForm[i]['value'];

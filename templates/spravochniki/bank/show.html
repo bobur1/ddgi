@@ -64,7 +64,7 @@
                 forms.id = {{ branch.id }};
 
                 $.ajax({
-                    url: '/api/delete-office/',
+                    url: '/api/branch/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',

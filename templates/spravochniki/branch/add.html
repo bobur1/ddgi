@@ -237,6 +237,7 @@
 
                 let forms = {};
                 forms.csrfmiddlewaretoken = csrftoken;
+                forms.reason = 1;
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     forms[serializedForm[i]['name']] = serializedForm[i]['value'];

@@ -245,13 +245,15 @@
 
                 let forms = {};
                 forms.csrfmiddlewaretoken = csrftoken;
+                forms.reason = 2;
+                forms.office_id = {{ branch.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
 
                 $.ajax({
-                    url: '/api/edit-office/',
+                    url: '/api/update-office/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',

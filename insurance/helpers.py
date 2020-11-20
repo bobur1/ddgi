@@ -55,4 +55,11 @@ def create_insurance_office(series, name, director, parent, office_type, locatio
                                    location=location, region=region,
                                    office_type=office_type,
                                    founded_date=funded, cr_on=datetime.now(), cr_by=created_by,
-                                   is_exist = True)
+                                   is_exist=True)
+
+
+def edit_insurance_office(office_id, series, name, director, parent, office_type, location, region):
+    InsuranceOffice.objects.update_or_create(id=office_id, series=series, name=name, director=director,
+                                             location=location, region=region,
+                                             office_type=office_type,
+                                             is_exist=True)

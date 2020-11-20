@@ -92,16 +92,10 @@ class PermissionUser(models.Model):
         return self.permission.__str__() + ' ' + self.user.__str__()
 
 
-class Group(models.Model):
-    name = models.CharField(verbose_name="Наименование", max_length=255)
-    is_exist = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
-
-
-class ProductTypeClass(models.Model):
-    name = models.CharField(verbose_name="Наименование", max_length=255)
+class ProductTypeCode(models.Model):
+    code = models.CharField(verbose_name="Класс", max_length=15)
+    name = models.CharField(verbose_name="Продукт", max_length=255)
+    description = models.CharField(verbose_name="Описание", max_length=6000)
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
@@ -169,11 +163,18 @@ class PoliciesIncome(models.Model):
 
 
 class ProductType(models.Model):
+    code = models.CharField(verbose_name="Код", max_length=15, null=True, blank=False)
     name = models.CharField(verbose_name="Наименование", max_length=255)
-    klass = models.ForeignKey(ProductTypeClass, on_delete=models.CASCADE, null=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, null=True)
+    classes = models.ManyToManyField(ProductTypeCode, null=True, blank=False, max_length=3)
     vid = models.ForeignKey(Vid, on_delete=models.CASCADE, null=True)
     is_exist = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f'{self.name, self.vid}'
+
+    def _code_(self):
+        code = self.classes[0].code
+        return f'{self.code}{code}'
 
 
 class Human(models.Model):
@@ -188,12 +189,13 @@ class Human(models.Model):
 
 
 class Bank(models.Model):
-    name = models.CharField(verbose_name="Имя", max_length=128, default=None)
-    mfo = models.CharField(max_length=6, null=True)
+    name = models.CharField(verbose_name="Наименования банка", max_length=128, default=None)
+    branchName = models.CharField(verbose_name="Наименования филиала", max_length=128, default=None, null=True)
     inn = models.CharField(max_length=20, null=True)
-    phone_number = models.CharField(verbose_name="Номер телефона", max_length=14, default=None)
+    mfo = models.CharField(max_length=6, null=True, default=None)
+    phone_number = models.CharField(verbose_name="Номер телефона", max_length=14, default=None, null=True)
     address = models.CharField(verbose_name="Адрес", max_length=1024, default=None)
-    checking_account = models.CharField(verbose_name="Расчётный счёт", max_length=30)
+    checking_account = models.CharField(verbose_name="Расчётный счёт", max_length=30, default=None, null=True)
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
@@ -338,7 +340,9 @@ class Pledger(models.Model):
 
 class Policy(models.Model):
     series = models.ForeignKey(PolicySeriesType, on_delete=models.SET_NULL, null=True, blank=True)
+
     is_free_generated = models.BooleanField(default=False, verbose_name="Свободный")
+
     policy_number = models.PositiveIntegerField(verbose_name="Номер")
 
     product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True, blank=True, default=None)
@@ -488,3 +492,8 @@ class ClientRequest(models.Model):
     up_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True,
                               related_name='client_request_updated_by')
     up_on = models.DateTimeField(auto_now_add=True)
+
+
+# class Contract(models.Model):
+#     user =
+#     pass

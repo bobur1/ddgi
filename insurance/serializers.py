@@ -1,9 +1,7 @@
-from abc import ABC
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from insurance import util
-from django.contrib.auth.models import User
 from insurance.models import *
 
 

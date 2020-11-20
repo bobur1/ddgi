@@ -16,7 +16,7 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Добавить банк</h3>
+              <h3 class="card-title">Редактировать банк</h3>
               <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                       <i class="fas fa-minus"></i>
@@ -35,6 +35,7 @@
                       id="code"
                       class="form-control"
                       name="code"
+                      value="{{ bank.code }}"
                       required
                     >
                   </div>
@@ -46,6 +47,7 @@
                       id="bank_name"
                       class="form-control"
                       name="bank_name"
+                      value="{{ bank.bank_name }}"
                       required
                     >
                   </div>
@@ -60,6 +62,7 @@
                       id="branch_name"
                       class="form-control"
                       name="branch_name"
+                      value="{{ bank.branch_name }}"
                       required
                     >
                   </div>
@@ -71,6 +74,7 @@
                       id="address"
                       class="form-control"
                       name="address"
+                      value="{{ bank.address }}"
                       required
                     >
                   </div>
@@ -85,6 +89,7 @@
                       id="inn"
                       class="form-control"
                       name="inn"
+                      value="{{ bank.inn }}"
                       required
                     >
                   </div>
@@ -96,6 +101,7 @@
                       id="account_number"
                       class="form-control"
                       name="account_number"
+                      value="{{ bank.account_number }}"
                       required
                     >
                   </div>
@@ -108,8 +114,8 @@
                       class="form-control"
                       name="status"
                     >
-                      <option value="1">Неактивный</option>
-                      <option value="2">Активный</option>
+                      <option value="1" {% if bank.status == 1 %}selected="selected"{% endif %}>Неактивный</option>
+                      <option value="2" {% if bank.status == 2 %}selected="selected"{% endif %}>Активный</option>
                     </select>
                   </div>
                 </div>
@@ -155,7 +161,8 @@
                 let forms = {};
                 let params = {}
                 forms.csrfmiddlewaretoken = csrftoken;
-                forms.action = 'create';
+                forms.action = 'edit';
+                forms.id = {{ bank.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     params[serializedForm[i]['name']] = serializedForm[i]['value'];

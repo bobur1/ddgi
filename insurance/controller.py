@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    Vid, IndividualClient, LegalClient, Position, ProductTypeClass, Group, OfficeType
+    Vid, IndividualClient, LegalClient, Position, ProductTypeClass, Group, OfficeType, Bank
 
 @login_required
 def home(request):
@@ -112,14 +112,31 @@ def polis_retransfer(request):
 def request(request):
     return render(request, "request/add.html")
 
-
-@login_required
-def spravochnik_bank (request):
-    return render(request, "spravochniki/bank/add.html")
-
 @login_required
 def user (request):
     return render(request, "user/add.html")
+
+
+@login_required
+def bank(request):
+    return render(request, "spravochniki/bank/index.html")
+
+
+@login_required
+def bank_add(request):
+    return render(request, "spravochniki/bank/add.html")
+
+
+@login_required
+def bank_show(request, id):
+    bank = Bank.objects.filter(id=id).first()
+    return render(request, "spravochniki/bank/show.html", { 'bank': bank })
+
+
+@login_required
+def bank_edit(request, id):
+    bank = Bank.objects.filter(id=id).first()
+    return render(request, "spravochniki/bank/edit.html", { 'bank': bank })
 
 
 @login_required

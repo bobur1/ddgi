@@ -61,9 +61,11 @@ def deactivate_policy(request):
 
 
 @api_view(['POST'])
-def create_office(request):
+def create_update_office(request):
     response = {}
     try:
+        reason = request.data.get('reason', 1)
+        office_id = request.data.get('office_id', None)
         series = request.data.get('series')
         director_id = request.data.get('director_id')
         director = User.objects.get(id=director_id)
@@ -82,8 +84,12 @@ def create_office(request):
             founded_date = datetime.now().date()
         region = Location.objects.get(id=request.data.get('region_id'))
 
-        create_insurance_office(series=series, name=name, location=address, region=region, director=director,
-                                created_by=created_by, office_type=office_type, parent=parent, funded=founded_date)
+        if reason == 1:
+            create_insurance_office(series=series, name=name, location=address, region=region, director=director,
+                                    created_by=created_by, office_type=office_type, parent=parent, funded=founded_date)
+        else:
+            edit_insurance_office(office_id=office_id, series=series, name=name, location=address, region=region, director=director,
+                                  office_type=office_type, parent=parent)
         response['success'] = True
     except Exception as e:
         response['success'] = False

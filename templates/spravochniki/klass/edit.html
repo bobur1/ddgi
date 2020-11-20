@@ -26,7 +26,19 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="code" class="col-form-label">Код</label>
+                    <input
+                      id="code"
+                      class="form-control"
+                      name="code"
+                      value="{{ klass.code }}"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="name" class="col-form-label">Название</label>
                     <input
@@ -36,6 +48,17 @@
                       value="{{ klass.name }}"
                       required
                     >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="description" class="col-form-label">Описание</label>
+                    <textarea
+                      id="description"
+                      class="form-control"
+                      name="description"
+                      required
+                    >{{ klass.description }}</textarea>
                   </div>
                 </div>
               </div>

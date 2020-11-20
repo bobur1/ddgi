@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    Vid, IndividualClient, LegalClient, Position, ProductTypeClass, Group, OfficeType, Bank
+    Vid, IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank
 
 @login_required
 def home(request):
@@ -196,36 +196,36 @@ def klass_add(request):
 
 @login_required
 def klass_show(request, id):
-    klass = ProductTypeClass.objects.filter(id=id).first()
+    klass = ProductTypeCode.objects.filter(id=id).first()
     return render(request, "spravochniki/klass/show.html", { 'klass': klass })
 
 
 @login_required
 def klass_edit(request, id):
-    klass = ProductTypeClass.objects.filter(id=id).first()
+    klass = ProductTypeCode.objects.filter(id=id).first()
     return render(request, "spravochniki/klass/edit.html", { 'klass': klass })
-
-
-@login_required
-def group(request):
-    return render(request, "spravochniki/view/index.html")
-
-
-@login_required
-def group_add(request):
-    return render(request, "spravochniki/group/add.html")
-
-
-@login_required
-def group_show(request, id):
-    group = Group.objects.filter(id=id).first()
-    return render(request, "spravochniki/group/show.html", { 'group': group })
-
-
-@login_required
-def group_edit(request, id):
-    group = Group.objects.filter(id=id).first()
-    return render(request, "spravochniki/group/edit.html", { 'group': group })
+#
+#
+# @login_required
+# def group(request):
+#     return render(request, "spravochniki/view/index.html")
+#
+#
+# @login_required
+# def group_add(request):
+#     return render(request, "spravochniki/group/add.html")
+#
+#
+# @login_required
+# def group_show(request, id):
+#     group = Group.objects.filter(id=id).first()
+#     return render(request, "spravochniki/group/show.html", { 'group': group })
+#
+#
+# @login_required
+# def group_edit(request, id):
+#     group = Group.objects.filter(id=id).first()
+#     return render(request, "spravochniki/group/edit.html", { 'group': group })
 
 
 @login_required

@@ -1,0 +1,177 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Редактировать продукт{% endblock %}
+{% block content %}
+  <div class="content-header">
+  <div class="container-fluid">
+  </div>
+</div>
+
+<div class="content">
+  <div class="container-fluid">
+    <form method="post" id="product-form">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Редактировать продукт</h3>
+              <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
+                      <i class="fas fa-times"></i>
+                  </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="name" class="col-form-label">Название</label>
+                    <input
+                      id="name"
+                      class="form-control"
+                      name="name"
+                      value="{{ product.name }}"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="code" class="col-form-label">Код</label>
+                    <input
+                      id="code"
+                      class="form-control"
+                      name="code"
+                      value="{{ product.code }}"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="group_id" class="col-form-label">Группа</label>
+                    <select
+                        id="group_id"
+                        class="form-control"
+                        name="group_id"
+                    >
+                      <option></option>
+                      {% for group in groups %}
+                        <option value="{{ group.id }}" {% if product.group_id == group.id %}selected="selected"{% endif %}>{{ group.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="klass_id" class="col-form-label">Класс</label>
+                    <select
+                        id="klass_id"
+                        class="form-control"
+                        name="klass_id"
+                    >
+                      {% for klass in klasses %}
+                        <option value="{{ klass.id }}" {% if product.klass_id == klass.id %}selected="selected"{% endif %}>{{ klass.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="view_id" class="col-form-label">Вид</label>
+                    <select
+                      id="view_id"
+                      class="form-control"
+                      name="view_id"
+                    >
+                      {% for view in views %}
+                        <option value="{{ view.id }}" {% if product.view_id == view.id %}selected="selected"{% endif %}>{{ view.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="has_pledger" class="col-form-label">Имеет залогодателя?</label>
+                    <input
+                      id="has_pledger"
+                      type="checkbox"
+                      class="form-control"
+                      name="has_pledger"
+                       {% if product.has_pledger == true %}checked="checked"{% endif %}
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="form-group">
+            <button type="submit" id="submit-button" class="btn btn-primary float-right">Редактировать</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'custom/js/csrftoken.js' %}"></script>
+
+    <script>
+        let submitButton = $('#submit-button');
+        let form = $('#product-form');
+
+        $(document).ready(function () {
+            submitButton.click(function (e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+
+                let forms = {};
+                let params = {}
+                forms.csrfmiddlewaretoken = csrftoken;
+                forms.action = 'update';
+                forms.id = {{ product.id }};
+                let serializedForm = form.serializeArray();
+                for (let i = 0; i < serializedForm.length; i++) {
+                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                }
+                forms.params = params;
+
+                $.ajax({
+                    url: '/api/product/',
+                    data: JSON.stringify(forms),
+                    {#processData: false,#}
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        if (data.success === true) {
+                            console.log(data);
+                            window.location.replace('/product/' + {{ product.id }} + '/');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

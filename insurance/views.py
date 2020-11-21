@@ -71,6 +71,8 @@ def create_update_office(request):
         director = User.objects.get(id=director_id)
         created_by = request.user
         office_type = OfficeType.objects.get(id=request.data.get('office_type'))
+        bank_ids = request.data.get('bank_ids', [])
+        contact = request.data.get('phone_number', None)
         parent_id = request.data.get('parent_id', None)
 
         parent = None
@@ -80,6 +82,7 @@ def create_update_office(request):
         name = request.data.get('title')
         address = request.data.get('address')
         founded_date = request.data.get('founded_date')
+
         if founded_date is None:
             founded_date = datetime.now().date()
         region = Location.objects.get(id=request.data.get('region_id'))
@@ -89,7 +92,7 @@ def create_update_office(request):
                                     created_by=created_by, office_type=office_type, parent=parent, funded=founded_date)
         else:
             edit_insurance_office(office_id=office_id, series=series, name=name, location=address, region=region, director=director,
-                                  office_type=office_type, parent=parent)
+                                  office_type=office_type, parent=parent, bank_ids=bank_ids, phone_number=contact)
         response['success'] = True
     except Exception as e:
         response['success'] = False

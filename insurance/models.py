@@ -238,6 +238,10 @@ class InsuranceOffice(models.Model):
 
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
+    contact = models.CharField(verbose_name='Contact', max_length=50,null=True, blank=True, default=None)
+
+    bank = models.ManyToManyField(Bank, on_delete=models.SET_NULL, blank=True, default=None, null=True)
+
     office_type = models.ForeignKey(OfficeType, on_delete=models.SET_NULL, null=True, blank=True)
 
     location = models.CharField(verbose_name="Местонахождение", max_length=1024, default='')

@@ -50,16 +50,28 @@ def generate_policies(from_number, to_number, is_free_generated, series, session
                               income_session=session).save()
 
 
-def create_insurance_office(series, name, director, parent, office_type, location, region, funded, created_by):
+def create_insurance_office(series, name, director, parent, office_type, location, region, funded, created_by, bank_ids,
+                            phone_number):
+    banks = Bank.objects.filter(id in bank_ids)
+
     InsuranceOffice.objects.create(series=series, name=name, director=director, parent=parent,
                                    location=location, region=region,
                                    office_type=office_type,
                                    founded_date=funded, cr_on=datetime.now(), cr_by=created_by,
-                                   is_exist=True)
+                                   is_exist=True,
+                                   banks=banks,
+                                   contact=phone_number)
 
 
-def edit_insurance_office(office_id, series, name, director, parent, office_type, location, region):
-    InsuranceOffice.objects.update_or_create(id=office_id, series=series, name=name, director=director,
+def edit_insurance_office(office_id, series, name, director, parent, office_type, location, region, funded, created_by,
+                          bank_ids,
+                          phone_number):
+    banks = Bank.objects.filter(id in bank_ids)
+
+    InsuranceOffice.objects.update_or_create(id=office_id, series=series, name=name, director=director, parent=parent,
                                              location=location, region=region,
                                              office_type=office_type,
-                                             is_exist=True)
+                                             founded_date=funded, cr_on=datetime.now(), cr_by=created_by,
+                                             is_exist=True,
+                                             banks=banks,
+                                             contact=phone_number)

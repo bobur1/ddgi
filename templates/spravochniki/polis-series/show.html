@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Класс: {{ klass.name }}{% endblock %}
+{% block title %}Серия полисов: {{ polisSeries.name }}{% endblock %}
 {% block content %}
   <div class="content-header">
     <div class="container-fluid">
@@ -10,7 +10,7 @@
 <div class="content">
   <div class="container-fluid">
       <div class="d-flex flex-row mb-3">
-        <a href="{% url 'klass_edit' klass.id %}" class="btn btn-primary mr-1">Редактировать класс</a>
+        <a href="{% url 'polis_series_edit' polisSeries.id %}" class="btn btn-primary mr-1">Редактировать серию полисов</a>
 
         <form method="POST" id="delete-form" class="mr-1">
             {% csrf_token %}
@@ -24,10 +24,8 @@
                 <div class="card-body">
                     <table class="table {% comment %}table-bordered{% endcomment %} table-striped projects">
                         <tbody>
-                        <tr><th>ID</th><td>{{ klass.id }}</td></tr>
-                        <tr><th>Название</th><td>{{ klass.name }}</td></tr>
-                        <tr><th>Код</th><td>{{ klass.code }}</td></tr>
-                        <tr><th>Описание</th><td>{{ klass.description }}</td></tr>
+                        <tr><th>ID</th><td>{{ polisSeries.id }}</td></tr>
+                        <tr><th>Код</th><td>{{ polisSeries.code }}</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -62,10 +60,10 @@
                 let forms = {};
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'delete';
-                forms.id = {{ klass.id }};
+                forms.id = {{ polisSeries.id }};
 
                 $.ajax({
-                    url: '/api/klass/',
+                    url: '/api/polis-series/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
@@ -74,7 +72,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/spravochniki/klass/');
+                            window.location.replace('/spravochniki/polis-series/');
                         }
                     }
                 });

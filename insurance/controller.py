@@ -186,7 +186,7 @@ def view_edit(request, id):
 
 @login_required
 def klass(request):
-    return render(request, "spravochniki/view/index.html")
+    return render(request, "spravochniki/klass/index.html")
 
 
 @login_required
@@ -203,7 +203,29 @@ def klass_show(request, id):
 @login_required
 def klass_edit(request, id):
     klass = ProductTypeCode.objects.filter(id=id).first()
-    return render(request, "spravochniki/klass/edit.html", { 'klass': klass })
+    return render(request, "spravochniki/polis-series/edit.html", { 'klass': klass })
+
+
+@login_required
+def polis_series(request):
+    return render(request, "spravochniki/polis-series/index.html")
+
+
+@login_required
+def polis_series_add(request):
+    return render(request, "spravochniki/polis-series/add.html")
+
+
+@login_required
+def polis_series_show(request, id):
+    polisSeries = PolicySeriesType.objects.filter(id=id).first()
+    return render(request, "spravochniki/polis-series/show.html", { 'polisSeries': polisSeries })
+
+
+@login_required
+def polis_series_edit(request, id):
+    polisSeries = PolicySeriesType.objects.filter(id=id).first()
+    return render(request, "spravochniki/klass/edit.html", { 'polisSeries': polisSeries })
 #
 #
 # @login_required

@@ -1,4 +1,5 @@
 from insurance.helpers import *
+from insurance.auth_helpers import *
 
 from django.http import HttpResponse, JsonResponse
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -91,7 +92,8 @@ def create_update_office(request):
             create_insurance_office(series=series, name=name, location=address, region=region, director=director,
                                     created_by=created_by, office_type=office_type, parent=parent, funded=founded_date)
         else:
-            edit_insurance_office(office_id=office_id, series=series, name=name, location=address, region=region, director=director,
+            edit_insurance_office(office_id=office_id, series=series, name=name, location=address, region=region,
+                                  director=director,
                                   office_type=office_type, parent=parent, bank_ids=bank_ids, phone_number=contact)
         response['success'] = True
     except Exception as e:
@@ -105,6 +107,20 @@ def generate_page_size(page=None, size=None):
     if page is None or size is None:
         return [0, 0]
     return [page, size]
+
+
+@api_view(['POST'])
+def is_login_exists(request):
+    response = {}
+    try:
+        login = request.data.get('login')
+        is_free_login(login=login)
+        response['success'] = True
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+
+    return JsonResponse(response)
 
 
 class PolicyViewSet(viewsets.ViewSet):
@@ -250,7 +266,7 @@ class PolicyIncomeViewSet(viewsets.ViewSet):
                 series = params['policy_series']
                 policy_series_type = None
 
-                is_free_policy = bool(params['is_free_policy'])
+                is_free_policy = request.data.get('is_free_policy', None)  # bool(params['is_free_policy'])
 
                 if series != '' and series is not None:
                     policy_series_type = PolicySeriesType.objects.get(id=series)
@@ -264,7 +280,7 @@ class PolicyIncomeViewSet(viewsets.ViewSet):
 
                 new_object = PoliciesIncome.objects.create(
                     act_number=params['act_number'],
-                    act_date=datetime.datetime.now(),
+                    act_date=datetime.now(),
                     policy_series=policy_series_type,
                     document=request.FILES['file'],
                     from_user=from_user,
@@ -279,11 +295,6 @@ class PolicyIncomeViewSet(viewsets.ViewSet):
                                   series=series, is_free_generated=is_free_policy, session=new_object)
 
                 response['success'] = True
-            # elif self.request.method == 'GET':
-            #     items = PoliciesIncome.objects.all()
-            #     serializer = PoliciesIncomeSerializer(items, many=True)
-            #     response['data'] = serializer
-            #     response['success'] = True
             else:
                 response['success'] = False
         except Exception as e:
@@ -670,3 +681,63 @@ class LegalClientViewSet(viewsets.ModelViewSet):
             response['error_msg'] = str(e)
         return Response(response)
 
+
+class UserViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated, ]
+    queryset = User.objects.all()
+
+    # serializer_class = PoliciesIncomeSerializer
+
+    def create(self, request, *args, **kwargs):
+        response = {}
+        try:
+            # create user
+            if self.request.method == 'POST':
+                login = request.data.get('login')
+                email = request.data.get('email', None)
+                password = request.data.get('password')
+                phone_number = request.data.get('phone_number', None)
+                status = request.data.get('is_active', None)
+                position = Position.objects.get(id=request.data.get('position_id'))
+                first_name = request.data.get('first_name')
+                last_name = request.data.get('last_name')
+                middle_name = request.data.get('middle_name', None)
+                passport_number = request.data.get('passport_number')
+                passport_series = request.data.get('passport_series')
+                document = request.FILES['file']
+                image = request.FILES.get('image', None)
+                created_by = request.user
+
+                new_user = create_user(login=login, email=email, password=password, is_active=status,
+                                       first_name=first_name,
+                                       last_name=last_name, )
+
+                create_status = register_user_profile(user=new_user,
+                                                      position=position,
+                                                      middle_name=middle_name,
+                                                      phone_number=phone_number,
+                                                      passport_number=passport_number,
+                                                      passport_series=passport_series,
+                                                      document=document,
+                                                      created_by=created_by, image=image)
+
+                print(f'new user create status {create_status}')
+
+                response['success'] = True
+
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.args
+            print(e)
+        return Response(response)
+
+    def put(self, request, *args, **kwargs):
+        response = {}
+        try:
+            edit_profile(self.request)
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.args
+            print(e)
+        return Response(response)

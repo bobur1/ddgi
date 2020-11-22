@@ -11,6 +11,7 @@
   <div class="container-fluid">
       <div class="d-flex flex-row mb-3">
         <a href="{% url 'product_edit' product.id %}" class="btn btn-primary mr-1">Редактировать продукт</a>
+        <a href="{% url 'product_field_add' product.id %}" class="btn btn-green mr-1">Добавить поле продукта</a>
 
         <form method="POST" id="delete-form" class="mr-1">
             {% csrf_token %}
@@ -37,6 +38,56 @@
             </div>
         </div>
     </div>
+
+    <div class="card" id="values">
+      <div class="card-header card-green with-border">Поля продукта</div>
+      <div class="card-body">
+        <p><a href="{% url 'product_field_add' product.id %}" class="btn btn-success">Добавить поле продукта</a></p>
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>Название</th>
+            <th>Тип</th>
+            <th>Порядок</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          {% for field in product.fields %}
+            <tr>
+              <td><a href="{% url 'product_field_show' product.id field.id %}">{{ field.name }}</a></td>
+              {#       TODO: add order apis and fix type names         #}
+              <td>{{ field.type }}</td>
+              <td>{{ field.order }}</td>
+              <td>
+{#                <div class="d-flex flex-row">#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.first', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-up"></span></button>#}
+{#                  </form>#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.up', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-up"></span></button>#}
+{#                  </form>#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.down', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-down"></span></button>#}
+{#                  </form>#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.last', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-down"></span></button>#}
+{#                  </form>#}
+{#                </div>#}
+              </td>
+            </tr>
+          {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 </div>
 

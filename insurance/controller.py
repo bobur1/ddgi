@@ -330,3 +330,50 @@ def product_show(request, id):
 def product_edit(request, id):
     product = ProductType.objects.filter(id=id).first()
     return render(request, "product/edit.html", { 'product': product })
+
+
+@login_required
+def product_field(request):
+    return render(request, "product/index.html")
+
+
+@login_required
+def product_field_add(request, product_id):
+    product = ProductType.objects.filter(id=product_id).first()
+    types = [
+        {'key': 1, 'name': 'Строка'},
+        {'key': 2, 'name': 'Целое число'},
+        {'key': 3, 'name': 'Дробное число'},
+        {'key': 4, 'name': 'Дата'},
+    ]
+    return render(request, "product/add.html", {
+        'product': product,
+        'types': types
+    })
+
+
+@login_required
+def product_field_show(request, product_id, id):
+    product = ProductType.objects.filter(id=product_id).first()
+    field = ProductField.objects.filter(id=id).first()
+    return render(request, "product/show.html", {
+        'product': product,
+        'field': field,
+    })
+
+
+@login_required
+def product_field_edit(request, product_id, id):
+    product = ProductType.objects.filter(id=product_id).first()
+    field = ProductField.objects.filter(id=id).first()
+    types = [
+        {'key': 1, 'name': 'Строка'},
+        {'key': 2, 'name': 'Целое число'},
+        {'key': 3, 'name': 'Дробное число'},
+        {'key': 4, 'name': 'Дата'},
+    ]
+    return render(request, "product/edit.html", {
+        'product': product,
+        'field': field,
+        'types': types,
+    })

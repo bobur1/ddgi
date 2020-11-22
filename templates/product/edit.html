@@ -98,6 +98,19 @@
                 </div>
                 <div class="col-md-2">
                   <div class="form-group">
+                    <label for="has_beneficiary" class="col-form-label">Имеет выгодоприобретателя?</label>
+                    <input
+                      id="has_beneficiary"
+                      type="checkbox"
+                      class="form-control"
+                      name="has_beneficiary"
+                      {% if product.has_beneficiary == true %}checked="checked"{% endif %}
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
                     <label for="has_pledger" class="col-form-label">Имеет залогодателя?</label>
                     <input
                       id="has_pledger"

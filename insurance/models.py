@@ -240,7 +240,7 @@ class InsuranceOffice(models.Model):
 
     contact = models.CharField(verbose_name='Contact', max_length=50,null=True, blank=True, default=None)
 
-    bank = models.ManyToManyField(Bank, on_delete=models.SET_NULL, blank=True, default=None, null=True)
+    bank = models.ManyToManyField(Bank, blank=True, default=None, max_length=3)
 
     office_type = models.ForeignKey(OfficeType, on_delete=models.SET_NULL, null=True, blank=True)
 

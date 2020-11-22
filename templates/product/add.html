@@ -66,7 +66,7 @@
               </div>
 
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="klass_id" class="col-form-label">Класс</label>
                     <select
@@ -81,7 +81,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="view_id" class="col-form-label">Вид</label>
                     <select
@@ -94,6 +94,18 @@
                         <option value="{{ view.id }}">{{ view.name }}</option>
                       {% endfor %}
                     </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="has_beneficiary" class="col-form-label">Имеет выгодоприобретателя?</label>
+                    <input
+                      id="has_beneficiary"
+                      type="checkbox"
+                      class="form-control"
+                      name="has_beneficiary"
+                      required
+                    >
                   </div>
                 </div>
                 <div class="col-md-2">

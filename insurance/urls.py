@@ -89,6 +89,9 @@ urlpatterns = [
                   path('product/add/', controller.product_add, name='product_add'),
                   path('product/<int:id>/', controller.product_show, name='product_show'),
                   path('product/<int:id>/edit/', controller.product_edit, name='product_edit'),
+                  path('product/<int:product_id>/field/add/', controller.product_field_add, name='product_field_add'),
+                  path('product/<int:product_id>/field/<int:id>/', controller.product_field_show, name='product_field_show'),
+                  path('product/<int:product_id>/field/<int:id>/edit/', controller.product_field_edit, name='product_field_edit'),
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

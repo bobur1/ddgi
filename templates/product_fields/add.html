@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Добавить продукт{% endblock %}
+{% block title %}Добавить поле продукта{% endblock %}
 {% block content %}
   <div class="content-header">
   <div class="container-fluid">
@@ -9,12 +9,12 @@
 
 <div class="content">
   <div class="container-fluid">
-    <form method="post" id="product-form">
+    <form method="post" id="product-field-form">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Добавить продукт</h3>
+              <h3 class="card-title">Добавить поле продукта</h3>
               <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                       <i class="fas fa-minus"></i>
@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="name" class="col-form-label">Название</label>
                     <input
@@ -37,28 +37,17 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="code" class="col-form-label">Код</label>
-                    <input
-                      id="code"
-                      class="form-control"
-                      name="code"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="group_id" class="col-form-label">Группа</label>
+                    <label for="type" class="col-form-label">Тип</label>
                     <select
-                        id="group_id"
+                        id="type"
                         class="form-control"
-                        name="group_id"
+                        name="type"
                     >
                       <option selected="selected"></option>
-                      {% for group in groups %}
-                        <option value="{{ group.id }}">{{ group.name }}</option>
+                      {% for type in types %}
+                        <option value="{{ type.key }}">{{ type.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -66,44 +55,36 @@
               </div>
 
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="klass_id" class="col-form-label">Класс</label>
-                    <select
-                        id="klass_id"
-                        class="form-control"
-                        name="klass_id"
-                    >
-                      <option selected="selected"></option>
-                      {% for klass in klasses %}
-                        <option value="{{ klass.id }}">{{ klass.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label for="view_id" class="col-form-label">Вид</label>
-                    <select
-                      id="view_id"
-                      class="form-control"
-                      name="view_id"
-                    >
-                      <option selected="selected"></option>
-                      {% for view in views %}
-                        <option value="{{ view.id }}">{{ view.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label for="has_pledger" class="col-form-label">Имеет залогодателя?</label>
+                    <label for="default" class="col-form-label">По умолчанию</label>
                     <input
-                      id="has_pledger"
-                      type="checkbox"
+                      id="default"
                       class="form-control"
-                      name="has_pledger"
+                      name="default"
+                    >
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="order" class="col-form-label">Порядок</label>
+                    <input
+                      id="order"
+                      class="form-control"
+                      type="number"
+                      name="order"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="required" class="col-form-label">Обязательное поле</label>
+                    <input
+                      id="required"
+                      class="form-control"
+                      type="checkbox"
+                      name="required"
                       required
                     >
                   </div>
@@ -130,11 +111,8 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
-        $('#group_id').select2();
-        $('#klass_id').select2();
-        $('#view_id').select2();
         let submitButton = $('#submit-button');
-        let form = $('#product-form');
+        let form = $('#product-field-form');
 
         $(document).ready(function () {
             submitButton.click(function (e) {
@@ -159,7 +137,7 @@
                 forms.params = params;
 
                 $.ajax({
-                    url: '/api/product/',
+                    url: '/api/product/' + {{ product.id }} + '/field/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
@@ -168,7 +146,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/product/');
+                            window.location.replace('/product/' + {{ product.id }} + 'field/');
                         }
                     }
                 });

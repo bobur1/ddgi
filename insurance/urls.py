@@ -24,6 +24,9 @@ router.register('policies-incomes', viewset=views.PolicyIncomeViewSet)
 router.register('policies', viewset=views.PolicyViewSet)
 router.register('policy-transfers', viewset=views.TransferPoliciesViewSet)
 router.register('user_creat_update', viewset=views.UserViewSet)
+router.register('product_type', viewset=views.ProductTypeViewSet)
+router.register('product_type_codes', viewset=views.ProductTypeCodeViewSet)
+
 
 urlpatterns = [
     path('api/product-fields/', views.product_fields),

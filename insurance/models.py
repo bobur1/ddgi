@@ -5,7 +5,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from insurance.enum import ContractType, InputType
+from insurance.enum import ContractType, InputType, ClientType
 
 
 class Position(models.Model):
@@ -36,6 +36,8 @@ class Profile(models.Model):
     image = models.ImageField(verbose_name='Фото', upload_to='users', null=True, blank=True)
     passport_number = models.CharField(verbose_name='Паспорт номер', max_length=50, null=True, blank=True)
     passport_series = models.CharField(verbose_name='Паспортная серия', max_length=50, null=True, blank=True)
+    passport_given_date = models.DateField(verbose_name='Дата выдачи паспорта', blank=True, null=True)
+    passport_given_by = models.CharField(verbose_name='Паспорт выдан', blank=True, null=True, max_length=128)
     is_active = models.BooleanField(verbose_name='Active', default=True)
     document = models.FileField(upload_to='user/documents', null=True, blank=True, verbose_name='Document')
 
@@ -44,7 +46,6 @@ class Profile(models.Model):
 
     updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True,
                                    related_name='profile_updated_by')
-    # created_on = models.DateTimeField(verbose_name='Created date', null=True)
 
     def __str__(self):
         return self.user.username
@@ -106,7 +107,7 @@ class PermissionUser(models.Model):
 
 class ProductTypeCode(models.Model):
     code = models.CharField(verbose_name="Класс", max_length=15)
-    name = models.CharField(verbose_name="Продукт", max_length=255)
+    name = models.CharField(verbose_name="Наименование", max_length=255)
     description = models.CharField(verbose_name="Описание", max_length=6000)
     is_exist = models.BooleanField(default=True)
 
@@ -176,11 +177,18 @@ class PoliciesIncome(models.Model):
 
 class ProductType(models.Model):
     code = models.CharField(verbose_name="Код", max_length=15, null=True, blank=False)
+
     name = models.CharField(verbose_name="Наименование", max_length=255)
+
+    client_type = models.CharField(verbose_name='Тип клиента', choices=ClientType.__list__,
+                                   default=ClientType.LEGAL_PERSON, max_length=50)
+
     classes = models.ManyToManyField(ProductTypeCode, default=[], blank=True, max_length=3)
-    vid = models.ForeignKey(Vid, on_delete=models.CASCADE, null=True)
+
     has_beneficiary = models.BooleanField(verbose_name='Has beneficiary', default=False)
+
     has_pledger = models.BooleanField(verbose_name='Has pledger', default=False,)
+
     min_acceptable_amount = models.FloatField(verbose_name="Minimum acceptable amount", default=0, blank=False,
                                               null=False)
     max_acceptable_amount = models.FloatField(verbose_name="Minimum acceptable amount", default=9999, blank=False,
@@ -188,7 +196,7 @@ class ProductType(models.Model):
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{self.name, self.vid}'
+        return f'{self.name, self.code}'
 
     def _code_(self):
         code = self.classes[0].code

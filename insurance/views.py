@@ -513,6 +513,61 @@ class ClassifiersViewSet(viewsets.ModelViewSet):
         return Response(response)
 
 
+class ProductTypeViewSet(viewsets.ViewSet):
+    queryset = ProductType.objects.all()
+    permission_classes = [IsAuthenticated, ]
+
+    @staticmethod
+    def __handle_request(req):
+        response = {}
+        try:
+            create_update_product_type(request=req)
+            response['success'] = True
+        except Exception as e:
+            response['error_msg'] = e.__str__()
+            response['success'] = False
+        return Response(response)
+
+    def create(self, request, *args, **kwargs):
+        return self.__handle_request(req=request)
+
+    def put(self, request, *args, **kwargs):
+        return self.__handle_request(req=request)
+
+
+class ProductTypeCodeViewSet(viewsets.ViewSet):
+    queryset = ProductTypeCode.objects.all()
+    permission_classes = [IsAuthenticated, ]
+    serializer_class = ProductTypeCodeSerializer
+
+    @staticmethod
+    def __handle_request(req):
+        response = {}
+        try:
+            create_update_product_type_code(request=req)
+            response['success'] = True
+        except Exception as e:
+            response['error_msg'] = e.__str__()
+            response['success'] = False
+        return Response(response)
+
+    def create(self, request, *args, **kwargs):
+        return self.__handle_request(req=request)
+
+    def put(self, request, *args, **kwargs):
+        return self.__handle_request(req=request)
+
+    def get(self, request, *args, **kwargs):
+        serializer = ProductTypeCodeSerializer(ProductTypeCode.objects.all(), many=True)
+
+        response = {
+            'data': serializer.data,
+            'success': True
+        }
+
+        return JsonResponse(response)
+    # def get(self, request, *args, **kwargs)
+
 class VidViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = Vid.objects.filter(is_exist=True)
@@ -741,3 +796,5 @@ class UserViewSet(viewsets.ViewSet):
             response['error_msg'] = e.args
             print(e)
         return Response(response)
+
+

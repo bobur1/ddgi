@@ -24,3 +24,10 @@ class CurrencyType:
     USD = (2, 'USD')
 
     __list__ = (SUM, USD)
+
+
+class ClientType:
+    INDIVIDUAL = (1, 'Физическое лицо')
+    LEGAL_PERSON = (2, 'Юридик лицо')
+
+    __list__ = (INDIVIDUAL, LEGAL_PERSON)

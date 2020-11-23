@@ -154,11 +154,6 @@ class IndividualClientAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(ProductTypeCode)
-class KlassAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(Bank)
 class BankAdmin(admin.ModelAdmin):
     pass
@@ -189,7 +184,7 @@ class ProductFieldInline(admin.TabularInline):
 class ProductAdmin(admin.ModelAdmin):
     model = ProductType
     code = model.code
-    list_display = ('id', 'name', 'vid')
+    list_display = ('id', 'name', 'code')
     inlines = [ProductFieldInline]
 
 
@@ -255,3 +250,10 @@ class LocationTypeAdmin(admin.ModelAdmin):
 @admin.register(ClientRequest)
 class ClientRequestAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(ProductTypeCode)
+class ProductTypeCodeAdmin(admin.ModelAdmin):
+    list_display = (
+        'code', 'name', 'description', 'is_exist'
+    )

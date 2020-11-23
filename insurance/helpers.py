@@ -75,3 +75,48 @@ def edit_insurance_office(office_id, series, name, director, parent, office_type
                                              is_exist=True,
                                              banks=banks,
                                              contact=phone_number)
+
+
+def create_update_product_type(request):
+    type_id = request.data.get('id', None)
+    code = request.data.get('code')
+    name = request.data.get('name')
+    client_type = request.data.get('client_type')
+    product_type_codes = request.data.get('product_code_types', [])
+    has_beneficiary = request.data.get('has_beneficiary', False)
+    has_pledger = request.data.get('has_pledger', False)
+    min_acceptable_amount = request.data.get('min_acceptable_amount')
+    max_acceptable_amount = request.data.get('max_acceptable_amount')
+    is_exist = request.data.get('is_active', True)
+    if type_id is None:
+        ProductType.objects.create(code=code,
+                                   name=name,
+                                   client_type=client_type,
+                                   product_type_codes=product_type_codes,
+                                   has_beneficiary=has_beneficiary,
+                                   has_pledger=has_pledger,
+                                   min_acceptable_amount=min_acceptable_amount,
+                                   max_acceptable_amount=max_acceptable_amount)
+    else:
+        product = ProductType.objects.get(id=type_id)
+        product.code = code
+        product.name = name
+        product.client_type = client_type
+        product.classes = product_type_codes
+        product.has_beneficiary = has_beneficiary
+        product.has_pledger = has_pledger
+        product.min_acceptable_amount = min_acceptable_amount
+        product.max_acceptable_amount = max_acceptable_amount
+        product.is_exist = is_exist
+        product.save()
+
+
+def create_update_product_type_code(request):
+    code_id = request.data.get('id', None)
+    code = request.data.get('code')
+    name = request.data.get('name')
+    description = request.data.get('description')
+    is_active = request.data.get('is_active', True)
+    obj, created = ProductTypeCode.objects.update_or_create(id=code_id, defaults={'code': code, 'name': name,
+                                                                   'description': description, 'is_exist': is_active})
+    print(f'created {created}')

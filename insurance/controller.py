@@ -113,9 +113,27 @@ def polis_retransfer(request):
 def request(request):
     return render(request, "request/add.html")
 
+
 @login_required
-def user (request):
+def user(request):
+    return render(request, "user/index.html")
+
+
+@login_required
+def user_add(request):
     return render(request, "user/add.html")
+
+
+@login_required
+def user_show(request, id):
+    user = User.objects.filter(id=id).first()
+    return render(request, "user/show.html", { 'user': user })
+
+
+@login_required
+def user_edit(request, id):
+    user = User.objects.filter(id=id).first()
+    return render(request, "user/edit.html", { 'user': user })
 
 
 @login_required

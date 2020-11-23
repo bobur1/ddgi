@@ -5,6 +5,8 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from insurance.enum import ContractType, InputType
+
 
 class Position(models.Model):
     name = models.CharField(verbose_name='Наименование', max_length=50)
@@ -177,6 +179,12 @@ class ProductType(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
     classes = models.ManyToManyField(ProductTypeCode, default=[], blank=True, max_length=3)
     vid = models.ForeignKey(Vid, on_delete=models.CASCADE, null=True)
+    has_beneficiary = models.BooleanField(verbose_name='Has beneficiary', default=False)
+    has_pledger = models.BooleanField(verbose_name='Has pledger', default=False,)
+    min_acceptable_amount = models.FloatField(verbose_name="Minimum acceptable amount", default=0, blank=False,
+                                              null=False)
+    max_acceptable_amount = models.FloatField(verbose_name="Minimum acceptable amount", default=9999, blank=False,
+                                              null=False)
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
@@ -454,8 +462,11 @@ class GridCols(models.Model):
 class ProductField(models.Model):
     product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     type = models.CharField(max_length=128)
+    input_type = models.CharField(max_length=128, choices=InputType.__list__, default=InputType.TEXT)
+    is_required = models.BooleanField(default=False)
     name = models.CharField(max_length=128)
     value = models.CharField(max_length=4096)
+
     order = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
@@ -511,6 +522,13 @@ class ClientRequest(models.Model):
     up_on = models.DateTimeField(auto_now_add=True)
 
 
-# class Contract(models.Model):
-#     user =
-#     pass
+class ApplicationForm(models.Model):
+    product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING, blank=False, null=False)
+    legal_client = models.ForeignKey(LegalClient, on_delete=models.CASCADE, blank=True, null=True)
+    individual_client = models.ForeignKey(IndividualClient, on_delete=models.CASCADE, blank=True, null=True)
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, blank=True, null=True)
+    pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, blank=True, null=True)
+    from_time = models.DateField(verbose_name='From date')
+    to_time = models.DateField(verbose_name='To date')
+    contract_type = models.CharField(max_length=20, choices=ContractType.__list__, default=ContractType.CONTRACT)
+    fields = models.ManyToManyField(ProductField, blank=True, null=True)

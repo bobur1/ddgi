@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Создать пользователя{% endblock %}
+{% block title %}Редактировать пользователя{% endblock %}
 {% block css %}
     {{ block.super }}
     <link rel="stylesheet" href="{% static 'plugins/bootstrap-fileinput/css/fileinput.min.css' %}">
@@ -30,7 +30,7 @@
                 <select id="position_id" class="form-control select2" name="position_id" style="width: 100%;" required>
                   <option selected="selected"></option>
                   {% for position in positions %}
-                    <option value="{{ position.id }}">{{ position.name }}</option>
+                    <option value="{{ position.id }}" {% if position.id == user.profile.position_id %}selected="selected"{% endif %}>{{ position.name }}</option>
                   {% endfor %}
                 </select>
               </div>
@@ -39,19 +39,40 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="last_name">Фамилия</label>
-                    <input id="last_name" type="text" class="form-control" name="last_name" placeholder="Введите ...">
+                    <input
+                        id="last_name"
+                        type="text"
+                        class="form-control"
+                        name="last_name"
+                        value="{{ user.last_name }}"
+                        placeholder="Введите ..."
+                    >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="first_name">Имя</label>
-                    <input id="first_name" type="text" class="form-control" name="first_name" placeholder="Введите ..." >
+                    <input
+                        id="first_name"
+                        type="text"
+                        class="form-control"
+                        name="first_name"
+                        value="{{ user.first_name }}"
+                        placeholder="Введите ..."
+                    >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="middle_name">Отчество</label>
-                    <input id="middle_name" type="text" class="form-control" name="middle_name" placeholder="Введите ..." >
+                    <input
+                        id="middle_name"
+                        type="text"
+                        class="form-control"
+                        name="middle_name"
+                        value="{{ user.profile.middle_name }}"
+                        placeholder="Введите ..."
+                    >
                   </div>
                 </div>
               </div>
@@ -60,13 +81,27 @@
                 <div class="col-md-3">
                   <div class="form-group">
                     <label for="passport_series">Серия паспорта</label>
-                    <input type="text" id="passport_series" class="form-control" name="passport_series" placeholder="Введите ...">
+                    <input
+                        type="text"
+                        id="passport_series"
+                        class="form-control"
+                        name="passport_series"
+                        value="{{ user.profile.passport_series }}"
+                        placeholder="Введите ..."
+                    >
                   </div>
                 </div>
                 <div class="col-md-5">
                   <div class="form-group">
                     <label for="passport_number">Номер паспорта</label>
-                    <input type="text" id="passport_number" class="form-control" name="passport_number" placeholder="Введите ..." >
+                    <input
+                        type="text"
+                        id="passport_number"
+                        class="form-control"
+                        name="passport_number"
+                        value="{{ user.profile.passport_number }}"
+                        placeholder="Введите ..."
+                    >
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -76,7 +111,8 @@
                        type="date"
                        id="passport_data"
                        class="form-control"
-                       name="passport_data"
+                       name="passport_given_date"
+                       value="{{ user.profile.passport_data }}"
                        placeholder="Введите ..."
                     >
                   </div>
@@ -87,13 +123,27 @@
                 <div class="col-md-8">
                   <div class="form-group">
                     <label for="passport_given_by">Кем выдан</label>
-                    <input type="text" id="passport_given_by" class="form-control" name="passport_given_by" placeholder="Введите ..." >
+                    <input
+                        type="text"
+                        id="passport_given_by"
+                        class="form-control"
+                        name="passport_given_by"
+                        value="{{ user.profile.passport_given_by }}"
+                        placeholder="Введите ..."
+                    >
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="phone_number">Телефон</label>
-                    <input type="text" id="phone_number" class="form-control" name="phone_number" placeholder="Введите ..." >
+                    <input
+                        type="text"
+                        id="phone_number"
+                        class="form-control"
+                        name="phone_number"
+                        value="{{ user.profile.phone }}"
+                        placeholder="Введите ..."
+                    >
                   </div>
                 </div>
               </div>
@@ -136,13 +186,29 @@
             <div class="col-md-2">
               <div class="form-group">
                 <label for="login">Логин</label>
-                <input id="login" type="text" class="form-control" name="login" placeholder="Введите ..." required>
+                <input
+                    id="login"
+                    type="text"
+                    class="form-control"
+                    name="login"
+                    value="{{ user.username }}"
+                    placeholder="Введите ..."
+                    required
+                >
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group">
                 <label for="email">Эл. почта</label>
-                <input type="email" id="email" class="form-control" name="email" placeholder="Введите ..." required>
+                <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    name="email"
+                    value="{{ user.email }}"
+                    placeholder="Введите ..."
+                    required
+                >
               </div>
             </div>
             <div class="col-md-4">
@@ -155,8 +221,8 @@
               <div class="form-group">
                 <label for="status">Статус</label>
                 <select id="status" class="form-control select2" style="width: 100%;" required>
-                  <option selected="selected" value="2">Активен</option>
-                  <option value="1">Не активен</option>
+                  <option value="2" {% if user.is_active %}selected="selected"{% endif %}>Активен</option>
+                  <option value="1" {% ifnotequal user.is_active 1 %}selected="selected"{% endifnotequal %}>Не активен</option>
                 </select>
               </div>
             </div>
@@ -272,6 +338,8 @@
 
                 let formData = new FormData(form[0]);
                 formData.append('is_active', status.children("option:selected").val() === '2' ? 1 : 0);
+                formData.append('user_id', {{ user.id }});
+                console.log(...formData);
 
                 $.ajax({
                     url: '/api/user_creat_update/',

@@ -121,7 +121,8 @@ def user(request):
 
 @login_required
 def user_add(request):
-    return render(request, "user/add.html")
+    positions = Position.objects.all()
+    return render(request, "user/add.html", { 'positions': positions })
 
 
 @login_required
@@ -133,7 +134,11 @@ def user_show(request, id):
 @login_required
 def user_edit(request, id):
     user = User.objects.filter(id=id).first()
-    return render(request, "user/edit.html", { 'user': user })
+    positions = Position.objects.all()
+    return render(request, "user/edit.html", {
+        'user': user,
+        'positions': positions,
+    })
 
 
 @login_required

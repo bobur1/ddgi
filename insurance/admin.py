@@ -3,6 +3,12 @@ from insurance.models import *
 from django.contrib.auth.admin import UserAdmin
 
 
+@admin.register(ApplicationForm)
+class ApplicationFormAdmin(admin.ModelAdmin):
+    model = ApplicationForm
+    list_display = ('product_type', 'from_time', 'to_time', 'contract_type')
+
+
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -148,11 +154,6 @@ class IndividualClientAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(ProductTypeCode)
-class KlassAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(Bank)
 class BankAdmin(admin.ModelAdmin):
     pass
@@ -176,15 +177,14 @@ class LegalClientAdmin(admin.ModelAdmin):
 class ProductFieldInline(admin.TabularInline):
     model = ProductField
     extra = 0
-    fields = ('type', 'name', 'value', 'order')
+    fields = ('type', 'input_type', 'is_required', 'name', 'value', 'order')
 
 
 @admin.register(ProductType)
 class ProductAdmin(admin.ModelAdmin):
     model = ProductType
-    # class_code = model.classes..code
     code = model.code
-    list_display = ('id', 'name', 'vid')
+    list_display = ('id', 'name', 'code')
     inlines = [ProductFieldInline]
 
 
@@ -250,3 +250,10 @@ class LocationTypeAdmin(admin.ModelAdmin):
 @admin.register(ClientRequest)
 class ClientRequestAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(ProductTypeCode)
+class ProductTypeCodeAdmin(admin.ModelAdmin):
+    list_display = (
+        'code', 'name', 'description', 'is_exist'
+    )

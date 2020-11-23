@@ -313,3 +313,8 @@ class OfficeWorkersSerializer(serializers.ModelSerializer):
         model = OfficeWorkers
         fields = ['id', 'user', 'office', 'cr_on']
 
+
+class ProductTypeCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductTypeCode
+        fields = ['code', 'name', 'description', 'is_exist']

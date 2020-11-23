@@ -23,16 +23,24 @@ router.register('branch', viewset=views.BranchViewSet)
 router.register('policies-incomes', viewset=views.PolicyIncomeViewSet)
 router.register('policies', viewset=views.PolicyViewSet)
 router.register('policy-transfers', viewset=views.TransferPoliciesViewSet)
+router.register('user_creat_update', viewset=views.UserViewSet)
+router.register('product_type', viewset=views.ProductTypeViewSet)
+router.register('product_type_codes', viewset=views.ProductTypeCodeViewSet)
+
 
 urlpatterns = [
+    path('api/product-fields/', views.product_fields),
+    path('api/policy-series/', views.policy_series),
+    path('api/deactivate-policy/', views.deactivate_policy),
+    path('api/create-office/', views.create_update_office),
+    path('api/update-office/', views.create_update_office),
+    path('api/check_login/', views.is_free_login),
+]
+
+urlpatterns += [
                   path('', controller.home),
                   path('test/', views.test_view),
                   path('api/', include(router.urls)),
-                  path('api/product-fields/', views.product_fields),
-                  path('api/policy-series/', views.policy_series),
-                  path('api/deactivate-policy/', views.deactivate_policy),
-                  path('api/create-office/', views.create_update_office),
-                  path('api/update-office/', views.create_update_office),
                   path('individual-client/', controller.individual_client, name='individual_client'),
                   path('individual-client/add/', controller.individual_client_add, name='individual_client_add'),
                   path('login/', authview.LoginView.as_view(template_name='login.html'), name='login'),

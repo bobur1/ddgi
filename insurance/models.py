@@ -1,12 +1,15 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from insurance.enum import ContractType, InputType, ClientType
+
 
 class Position(models.Model):
-    name = models.CharField(verbose_name='Имя', max_length=50)
+    name = models.CharField(verbose_name='Наименование', max_length=50)
     is_exist = models.BooleanField(default=True)
 
     class Meta:
@@ -31,8 +34,18 @@ class Profile(models.Model):
     middle_name = models.CharField(verbose_name='Отчество', max_length=50, null=True, blank=True)
     phone = models.CharField(verbose_name='Тел', max_length=15, null=True, blank=True)
     image = models.ImageField(verbose_name='Фото', upload_to='users', null=True, blank=True)
-    passport = models.CharField(verbose_name='Паспорт', max_length=50, null=True, blank=True)
+    passport_number = models.CharField(verbose_name='Паспорт номер', max_length=50, null=True, blank=True)
+    passport_series = models.CharField(verbose_name='Паспортная серия', max_length=50, null=True, blank=True)
+    passport_given_date = models.DateField(verbose_name='Дата выдачи паспорта', blank=True, null=True)
+    passport_given_by = models.CharField(verbose_name='Паспорт выдан', blank=True, null=True, max_length=128)
     is_active = models.BooleanField(verbose_name='Active', default=True)
+    document = models.FileField(upload_to='user/documents', null=True, blank=True, verbose_name='Document')
+
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True,
+                                   related_name='profile_created_by')
+
+    updated_by = models.ForeignKey(User, on_delete=models.SET_NULL, default=None, null=True,
+                                   related_name='profile_updated_by')
 
     def __str__(self):
         return self.user.username
@@ -94,7 +107,7 @@ class PermissionUser(models.Model):
 
 class ProductTypeCode(models.Model):
     code = models.CharField(verbose_name="Класс", max_length=15)
-    name = models.CharField(verbose_name="Продукт", max_length=255)
+    name = models.CharField(verbose_name="Наименование", max_length=255)
     description = models.CharField(verbose_name="Описание", max_length=6000)
     is_exist = models.BooleanField(default=True)
 
@@ -164,13 +177,26 @@ class PoliciesIncome(models.Model):
 
 class ProductType(models.Model):
     code = models.CharField(verbose_name="Код", max_length=15, null=True, blank=False)
+
     name = models.CharField(verbose_name="Наименование", max_length=255)
-    classes = models.ManyToManyField(ProductTypeCode, null=True, blank=False, max_length=3)
-    vid = models.ForeignKey(Vid, on_delete=models.CASCADE, null=True)
+
+    client_type = models.CharField(verbose_name='Тип клиента', choices=ClientType.__list__,
+                                   default=ClientType.LEGAL_PERSON, max_length=50)
+
+    classes = models.ManyToManyField(ProductTypeCode, default=[], blank=True, max_length=3)
+
+    has_beneficiary = models.BooleanField(verbose_name='Has beneficiary', default=False)
+
+    has_pledger = models.BooleanField(verbose_name='Has pledger', default=False,)
+
+    min_acceptable_amount = models.FloatField(verbose_name="Minimum acceptable amount", default=0, blank=False,
+                                              null=False)
+    max_acceptable_amount = models.FloatField(verbose_name="Minimum acceptable amount", default=9999, blank=False,
+                                              null=False)
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
-        return f'{self.name, self.vid}'
+        return f'{self.name, self.code}'
 
     def _code_(self):
         code = self.classes[0].code
@@ -183,9 +209,11 @@ class Human(models.Model):
     last_name = models.CharField(verbose_name="Фамилия", max_length=128, default=None)
     middle_name = models.CharField(verbose_name="Отчество", max_length=128, default=None)
     address = models.CharField(verbose_name="Адрес", max_length=1024, default=None)
+    passport_series = models.CharField(verbose_name='Паспортная серия', max_length=3, default=None)
+    passport_number = models.CharField(verbose_name='Паспортная серия', max_length=10, default=None)
 
     def __str__(self):
-        return self.first_name + ' ' + self.last_name
+        return f'{self.first_name} {self.last_name} - {self.passport_series}|{self.passport_number}'
 
 
 class Bank(models.Model):
@@ -298,7 +326,7 @@ class Beneficiary(models.Model):
     checking_account = models.CharField(max_length=64, null=True)
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, related_name='beneficiary_bank', null=True)
     inn = models.CharField(max_length=20, null=True)
-    mfo = models.CharField(max_length=6, null=True)
+    mfo = models.CharField(max_length=6, null=True, default=None, blank=True)
 
     def __str__(self):
         return self.person.__str__() + ' ' + self.inn
@@ -308,6 +336,7 @@ class LegalClient(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
     address = models.CharField(verbose_name="Адрес", max_length=150)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
+    mfo = models.CharField(verbose_name="MFO", max_length=6, null=True, default=None, blank=True)
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
     up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by')
@@ -441,8 +470,11 @@ class GridCols(models.Model):
 class ProductField(models.Model):
     product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     type = models.CharField(max_length=128)
+    input_type = models.CharField(max_length=128, choices=InputType.__list__, default=InputType.TEXT)
+    is_required = models.BooleanField(default=False)
     name = models.CharField(max_length=128)
     value = models.CharField(max_length=4096)
+
     order = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
@@ -498,6 +530,13 @@ class ClientRequest(models.Model):
     up_on = models.DateTimeField(auto_now_add=True)
 
 
-# class Contract(models.Model):
-#     user =
-#     pass
+class ApplicationForm(models.Model):
+    product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING, blank=False, null=False)
+    legal_client = models.ForeignKey(LegalClient, on_delete=models.CASCADE, blank=True, null=True)
+    individual_client = models.ForeignKey(IndividualClient, on_delete=models.CASCADE, blank=True, null=True)
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, blank=True, null=True)
+    pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, blank=True, null=True)
+    from_time = models.DateField(verbose_name='From date')
+    to_time = models.DateField(verbose_name='To date')
+    contract_type = models.CharField(max_length=20, choices=ContractType.__list__, default=ContractType.CONTRACT)
+    fields = models.ManyToManyField(ProductField, blank=True, null=True)

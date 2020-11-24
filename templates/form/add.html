@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Добавить класс{% endblock %}
+{% block title %}Создать Анкету{% endblock %}
 {% block content %}
   <div class="content-header">
     <div class="container-fluid">
@@ -12,7 +12,7 @@
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
             <li class="breadcrumb-item active"><a href="{% url 'form' %}">Анкеты</a></li>
-            <li class="breadcrumb-item active">Редактирование Анкеты</li>
+            <li class="breadcrumb-item active">Создать Анкету</li>
           </ol>
         </div>
       </div>
@@ -33,28 +33,30 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="icheck-success">
-                <input type="radio" name="r3" checked id="radioSuccess1">
-                <label for="radioSuccess1">физ. лицо</label>
+                <input type="radio" name="r3" checked id="client-type-radio-1">
+                <label for="client-type-radio-1">физ. лицо</label>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="icheck-success">
-                <input type="radio" name="r3" id="radioSuccess2">
-                <label for="radioSuccess2">юр. лицо</label>
+                <input type="radio" name="r3" id="client-type-radio-2">
+                <label for="client-type-radio-2">юр. лицо</label>
               </div>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <select class="form-control select2" style="width: 100%;">
-            <option selected="selected">Авто страхование</option>
-            <option></option>
+          <select class="form-control select2" name="product_id" style="width: 100%;">
+            <option selected="selected"></option>
+            {% for product in products %}
+              <option value="{{ product.id }}">{{ product.name }}</option>
+            {% endfor %}
           </select>
         </div>
       </div>
     </div>
 
-      <div class="card  card-info anketa">
+      <div class="card card-info anketa">
         <div class="card-header">
           <h3 class="card-title">Анкета</h3>
           <div class="card-tools">
@@ -63,62 +65,62 @@
           </div>
         </div>
         <div class="card-body">
-          <!-- Default box -->
           <div class="card card-success">
             <div class="card-header">
               <h3 class="card-title">Общие Сведения</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fas fa-minus"></i></button>
+                  <i class="fas fa-minus"></i>
+                </button>
               </div>
             </div>
             <div class="card-body">
-                <div class="row client-fullname">
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label>Имя страхователя</label>
-                      <input name="straxovatel_name" type="text" class="form-control" placeholder="Имя">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label>Фамилия страхователя</label>
-                      <input name="straxovatel_surname" type="text" class="form-control" placeholder="Фамилия">
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label>Отчество страхователя</label>
-                      <input name="straxovatel_middlename" type="text" class="form-control" placeholder="Отчество">
-                    </div>
+              <div class="row client-fullname" id="client-row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="insurer_first_name">Имя страхователя</label>
+                    <input id="insurer_first_name" name="insurer_first_name" type="text" class="form-control" placeholder="Имя">
                   </div>
                 </div>
-
-                <div class="form-group">
-                  <label>Выгодоприобретатель</label>
-                  <input name="vigodopreobritatel" type="text" class="form-control" placeholder="Полное имя">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="insurer_surname">Фамилия страхователя</label>
+                    <input id="insurer_surname" name="insurer_surname" type="text" class="form-control" placeholder="Фамилия">
+                  </div>
                 </div>
-
-              <div class="form-group client-address">
-                <label>Юридический адрес страхователя</label>
-                <input type="text" class="form-control" placeholder="Город, Область, Район, Улица, Дом, Номер Квартиры">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="insurer_middle_name">Отчество страхователя</label>
+                    <input id="insurer_middle_name" name="insurer_middle_name" type="text" class="form-control" placeholder="Отчество">
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
-                <label>Телефон</label>
-                <input type="text" class="form-control" placeholder="+998911322482">
+                <label for="beneficiary_name">Выгодоприобретатель</label>
+                <input type="text" id="beneficiary_name" name="beneficiary_name" class="form-control" placeholder="Полное имя">
+              </div>
+
+              <div class="form-group client-address">
+                <label for="address">Юридический адрес страхователя</label>
+                <input type="text" id="address" name="address" class="form-control" placeholder="Город, Область, Район, Улица, Дом, Номер Квартиры">
+              </div>
+
+              <div class="form-group">
+                <label for="phone_number">Телефон</label>
+                <input type="text" id="phone_number" class="form-control" placeholder="+998911322482">
               </div>
 
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label>Реквизиты страхователя</label>
+                    <label for="checking_account">Реквизиты страхователя</label>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Расчетный счёт</span>
                       </div>
-                      <input type="text" class="form-control">
+                      <input type="text" id="checking_account" name="checking_account" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -128,7 +130,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">ИНН</span>
                       </div>
-                      <input type="text" class="form-control">
+                      <input type="text" id="inn" name="inn" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -141,7 +143,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">МФО</span>
                       </div>
-                      <input type="text" class="form-control">
+                      <input type="text" id="mfo" name="mfo" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -151,7 +153,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">ОКОНХ</span>
                       </div>
-                      <input type="text" class="form-control">
+                      <input type="text" id="okonh" name="okonh" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -160,12 +162,12 @@
               <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label>Период страхования</label>
+                      <label for="insurance_from">Период страхования</label>
                       <div class="input-group mb-3">
                         <div class="input-group-prepend">
                           <span class="input-group-text">с</span>
                         </div>
-                        <input name="insurance_from" type="date" class="form-control">
+                        <input id="insurance_from" name="insurance_from" type="date" class="form-control">
                       </div>
                     </div>
                   </div>
@@ -175,7 +177,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text">до</span>
                         </div>
-                        <input name="insurance_to" type="date" class="form-control">
+                        <input id="insurance_to" name="insurance_to" type="date" class="form-control">
                       </div>
                     </div>
                   </div>

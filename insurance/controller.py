@@ -4,6 +4,7 @@ from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
     IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank, ProductType, ProductField, \
     ApplicationForm
+from insurance.enum import InputType, ContractType, CurrencyType, ClientType
 
 @login_required
 def home(request):
@@ -369,13 +370,14 @@ def product_field(request):
 @login_required
 def product_field_add(request, product_id):
     product = ProductType.objects.filter(id=product_id).first()
-    types = [
-        {'key': 1, 'name': 'Строка'},
-        {'key': 2, 'name': 'Целое число'},
-        {'key': 3, 'name': 'Дробное число'},
-        {'key': 4, 'name': 'Дата'},
-    ]
-    return render(request, "product/add.html", {
+    types = InputType.__list__
+    # types = [
+    #     {'key': 1, 'name': 'Строка'},
+    #     {'key': 2, 'name': 'Целое число'},
+    #     {'key': 3, 'name': 'Дробное число'},
+    #     {'key': 4, 'name': 'Дата'},
+    # ]
+    return render(request, "product_fields/add.html", {
         'product': product,
         'types': types
     })
@@ -385,7 +387,7 @@ def product_field_add(request, product_id):
 def product_field_show(request, product_id, id):
     product = ProductType.objects.filter(id=product_id).first()
     field = ProductField.objects.filter(id=id).first()
-    return render(request, "product/show.html", {
+    return render(request, "product_fields/show.html", {
         'product': product,
         'field': field,
     })
@@ -395,13 +397,14 @@ def product_field_show(request, product_id, id):
 def product_field_edit(request, product_id, id):
     product = ProductType.objects.filter(id=product_id).first()
     field = ProductField.objects.filter(id=id).first()
-    types = [
-        {'key': 1, 'name': 'Строка'},
-        {'key': 2, 'name': 'Целое число'},
-        {'key': 3, 'name': 'Дробное число'},
-        {'key': 4, 'name': 'Дата'},
-    ]
-    return render(request, "product/edit.html", {
+    types = InputType.__list__
+    # types = [
+    #     {'key': 1, 'name': 'Строка'},
+    #     {'key': 2, 'name': 'Целое число'},
+    #     {'key': 3, 'name': 'Дробное число'},
+    #     {'key': 4, 'name': 'Дата'},
+    # ]
+    return render(request, "product_fields/edit.html", {
         'product': product,
         'field': field,
         'types': types,

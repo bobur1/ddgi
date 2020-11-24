@@ -796,7 +796,7 @@ class ApplicationFormViewSet(viewsets.ViewSet):
     def create(self, request):
         response = {}
         try:
-
+            product_type = request.data.get('product_type')
             response['success']=True
         except Exception as e:
             response['error_msg'] = e.__str__()

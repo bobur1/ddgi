@@ -3,12 +3,6 @@ from insurance.models import *
 from django.contrib.auth.admin import UserAdmin
 
 
-@admin.register(ApplicationForm)
-class ApplicationFormAdmin(admin.ModelAdmin):
-    model = ApplicationForm
-    list_display = ('product_type', 'from_time', 'to_time', 'contract_type')
-
-
 class ProfileInline(admin.StackedInline):
     model = Profile
     can_delete = False
@@ -178,6 +172,19 @@ class ProductFieldInline(admin.TabularInline):
     model = ProductField
     extra = 0
     fields = ('type', 'input_type', 'is_required', 'name', 'value', 'order')
+
+
+class ApplicationFieldInline(admin.TabularInline):
+    model = ProductApplicationField
+    extra = 0
+    fields = ('type', 'input_type', 'is_required', 'name', 'value', 'order')
+
+
+@admin.register(ApplicationForm)
+class ApplicationFormAdmin(admin.ModelAdmin):
+    model = ApplicationForm
+    list_display = ('product_type', 'from_time', 'to_time', 'contract_type')
+    inlines = [ApplicationFieldInline]
 
 
 @admin.register(ProductType)

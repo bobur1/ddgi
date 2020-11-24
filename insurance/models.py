@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
@@ -5,7 +7,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.core.validators import MaxValueValidator, MinValueValidator
 
-from insurance.enum import ContractType, InputType, ClientType
+from insurance.enum import ContractType, InputType, ClientType, ApplicationFormStatus
 
 
 class Position(models.Model):
@@ -173,13 +175,13 @@ class ProductType(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
 
     client_type = models.PositiveIntegerField(verbose_name='Тип клиента', choices=ClientType.__list__,
-                                   default=ClientType.LEGAL_PERSON)
+                                              default=ClientType.LEGAL_PERSON)
 
     classes = models.ManyToManyField(ProductTypeCode, default=[], blank=True, max_length=3)
 
     has_beneficiary = models.BooleanField(verbose_name='Has beneficiary', default=False)
 
-    has_pledger = models.BooleanField(verbose_name='Has pledger', default=False,)
+    has_pledger = models.BooleanField(verbose_name='Has pledger', default=False, )
 
     min_acceptable_amount = models.FloatField(verbose_name="Minimum acceptable amount", default=0, blank=False,
                                               null=False)
@@ -258,7 +260,7 @@ class InsuranceOffice(models.Model):
 
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
-    contact = models.CharField(verbose_name='Contact', max_length=50,null=True, blank=True, default=None)
+    contact = models.CharField(verbose_name='Contact', max_length=50, null=True, blank=True, default=None)
 
     bank = models.ManyToManyField(Bank, blank=True, default=None, max_length=3)
 
@@ -322,7 +324,7 @@ class Beneficiary(models.Model):
                                help_text='This field should be set if beneficiary is legal client')
 
     phone = models.CharField(verbose_name="Номер телефона", max_length=14, default=None, null=True,
-                               help_text='This field should be set if beneficiary is legal client')
+                             help_text='This field should be set if beneficiary is legal client')
 
     fax_number = models.CharField(max_length=64, null=True)
 
@@ -539,13 +541,33 @@ class ClientRequest(models.Model):
 
 class ApplicationForm(models.Model):
     product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING, blank=False, null=False)
+
     legal_client = models.ForeignKey(LegalClient, on_delete=models.CASCADE, blank=True, null=True)
+
     individual_client = models.ForeignKey(IndividualClient, on_delete=models.CASCADE, blank=True, null=True)
+
     beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, blank=True, null=True)
+
     pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, blank=True, null=True)
+
     from_time = models.DateField(verbose_name='From date')
+
     to_time = models.DateField(verbose_name='To date')
 
     contract_type = models.PositiveIntegerField(choices=ContractType.__list__,
                                                 default=ContractType.CONTRACT)
-    fields = models.ManyToManyField(ProductField, blank=True, null=True)
+
+    form_status = models.PositiveIntegerField(choices=ApplicationFormStatus.__list__,
+                                              default=ApplicationFormStatus.ACTIVE)
+
+    cr_on = models.DateTimeField(verbose_name='created on', default=timezone.now())
+
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, default=None,
+                                   related_name='application_form_created_by')
+
+    edited_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, default=None,
+                                  related_name='application_form_edited_by')
+
+
+class ProductApplicationField(ProductField):
+    application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)

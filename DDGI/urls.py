@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path, include
+
 from insurance.views import MyTokenObtainPairView
 from django.contrib.auth import views as authview
 from django.conf.urls.static import static

@@ -123,6 +123,36 @@ def is_login_exists(request):
     return JsonResponse(response)
 
 
+@api_view(['GET'])
+def get_product_type_list(request):
+    client_type = request.query_params.get('client_type', '1')
+    response = {}
+    try:
+        objs = ProductType.objects.filter(client_type=client_type)
+        serializer = ProductSerializer(objs, many=True)
+        response['data'] = serializer.data
+        response['success'] = True
+    except Exception as e:
+        response['error_msg'] = e.__str__()
+        response['success'] = False
+    return JsonResponse(response)
+
+
+@api_view(['GET'])
+def get_product_type_fileds(request):
+    type_id = request.query_params.get('product_type_id', None)
+    response = {}
+    try:
+        objs = ProductField.objects.filter(product_id=type_id)
+        serializer = ProductFieldsSerializer(objs, many=True)
+        response['data'] = serializer.data
+        response['success'] = True
+    except Exception as e:
+        response['error_msg'] = e.__str__()
+        response['success'] = False
+    return JsonResponse(response)
+
+
 class PolicyViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = Policy.objects.all()
@@ -568,43 +598,6 @@ class ProductTypeCodeViewSet(viewsets.ViewSet):
         return JsonResponse(response)
     # def get(self, request, *args, **kwargs)
 
-class VidViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated, ]
-    queryset = Vid.objects.filter(is_exist=True)
-    serializer_class = VidSerializer
-
-    def create(self, request, *args, **kwargs):
-        response = {}
-        try:
-            if self.request.data['action'] == 'create':
-                params = self.request.data['params']
-                Vid.objects.create(
-                    name=params['name']
-                ).save()
-                response['success'] = True
-            elif self.request.data['action'] == 'get':
-                item_id = self.request.data['id']
-                item = Vid.objects.get(id=item_id)
-                serializer = VidSerializer(item)
-                response['data'] = serializer.data
-                response['success'] = True
-            elif self.request.data['action'] == 'update':
-                params = self.request.data['params']
-                Vid.objects.filter(id=params['id']).update(
-                    name=params['name']
-                )
-                response['success'] = True
-            elif self.request.data['action'] == 'delete':
-                item_id = self.request.data['id']
-                Vid.objects.filter(id=item_id).update(
-                    is_exixst=False
-                )
-
-        except Exception as e:
-            response['success'] = False
-            response['error_msg'] = str(e)
-        return Response(response)
-
 
 class BankViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
@@ -741,8 +734,6 @@ class UserViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = User.objects.all()
 
-    # serializer_class = PoliciesIncomeSerializer
-
     def create(self, request, *args, **kwargs):
         response = {}
         try:
@@ -798,3 +789,16 @@ class UserViewSet(viewsets.ViewSet):
         return Response(response)
 
 
+class ApplicationFormViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated, ]
+    queryset = ApplicationForm.objects.all()
+
+    def create(self, request):
+        response = {}
+        try:
+
+            response['success']=True
+        except Exception as e:
+            response['error_msg'] = e.__str__()
+            response['success'] = False
+        return Response(response)

@@ -1,4 +1,3 @@
-
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import serializers
 from insurance import util
@@ -51,29 +50,22 @@ class PoliciesIncomeSerializer(serializers.ModelSerializer):
 class ClassifiersSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductTypeCode
-        fields = ['id', 'name']
+        fields = ['id', 'code', 'name', 'description', 'is_exist']
 
 
-class GroupSerializer(serializers.ModelSerializer):
+class ProductFieldsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = ProductTypeCode
-        fields = ['id', 'name']
-
-
-class VidSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Vid
-        fields = ['id', 'name']
+        model = ProductField
+        fields = ['id', 'product', 'input_type', 'name', 'value', 'order']
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    klass = ClassifiersSerializer()
-    group = GroupSerializer()
-    vid = VidSerializer()
+    classes = ClassifiersSerializer(many=True)
 
     class Meta:
         model = ProductType
-        fields = ['id', 'name', 'klass', 'group', 'vid']
+        fields = ['id', 'code', 'name', 'classes', 'client_type', 'has_beneficiary', 'has_pledger',
+                  'min_acceptable_amount', 'max_acceptable_amount']
 
 
 class PoliciesSerializer(serializers.ModelSerializer):
@@ -177,7 +169,7 @@ class HumanSerializer(serializers.ModelSerializer):
 
 
 class IndividualClientSerializer(serializers.ModelSerializer):
-    #person = HumanSerializer()
+    # person = HumanSerializer()
     person_first_name = serializers.CharField(source='person.first_name')
 
     class Meta:
@@ -218,22 +210,10 @@ class BranchSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'is_branch', 'director']
 
 
-class ProductFieldsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProductField
-        fields = ['id', 'product', 'type', 'name', 'value', 'order']
-
-
 class RegionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Location
         fields = ['id', 'name', 'type', 'is_active']
-
-
-class VidSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Vid
-        fields = ['id', 'name']
 
 
 class BeneficiarySerializer(serializers.ModelSerializer):
@@ -280,6 +260,7 @@ class PolicySeriesTypeSerializer(serializers.ModelSerializer):
 
 class PoliciesSimpleSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
+
     # income_session = PoliciesIncomeSerializer()
 
     class Meta:

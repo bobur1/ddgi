@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="name" class="col-form-label">Название</label>
                     <input
@@ -37,7 +37,7 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="code" class="col-form-label">Код</label>
                     <input
@@ -48,25 +48,10 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="group_id" class="col-form-label">Группа</label>
-                    <select
-                        id="group_id"
-                        class="form-control"
-                        name="group_id"
-                    >
-                      <option selected="selected"></option>
-                      {% for group in groups %}
-                        <option value="{{ group.id }}">{{ group.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
               </div>
 
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="klass_id" class="col-form-label">Класс</label>
                     <select
@@ -81,22 +66,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="view_id" class="col-form-label">Вид</label>
-                    <select
-                      id="view_id"
-                      class="form-control"
-                      name="view_id"
-                    >
-                      <option selected="selected"></option>
-                      {% for view in views %}
-                        <option value="{{ view.id }}">{{ view.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="has_beneficiary" class="col-form-label">Имеет выгодоприобретателя?</label>
                     <input
@@ -108,7 +78,7 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="has_pledger" class="col-form-label">Имеет залогодателя?</label>
                     <input

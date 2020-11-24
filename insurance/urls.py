@@ -17,7 +17,6 @@ router.register('client-individual', viewset=views.IndividualClientViewSet)
 router.register('client-legal', viewset=views.LegalClientViewSet)
 router.register('currency', viewset=views.CurrencyViewset)
 router.register('klass', viewset=views.ClassifiersViewSet)
-router.register('vid', viewset=views.VidViewSet)
 router.register('bank', viewset=views.BankViewSet)
 router.register('branch', viewset=views.BranchViewSet)
 router.register('policies-incomes', viewset=views.PolicyIncomeViewSet)
@@ -35,6 +34,9 @@ urlpatterns = [
     path('api/create-office/', views.create_update_office),
     path('api/update-office/', views.create_update_office),
     path('api/check_login/', views.is_free_login),
+    path('api/get_product_type_list/', views.get_product_type_list),
+    path('api/get_product_type_fileds/', views.get_product_type_fileds),
+
 ]
 
 urlpatterns += [

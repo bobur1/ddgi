@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    Vid, IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank, ProductType, ProductField, \
+    IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank, ProductType, ProductField, \
     ApplicationForm
 
 @login_required
@@ -184,28 +184,28 @@ def currency_show(request, id):
 def currency_edit(request, id):
     currency = Currency.objects.filter(id=id).first()
     return render(request, "references/currency/edit.html", { 'currency': currency })
-
-
-@login_required
-def view(request):
-    return render(request, "references/view/index.html")
-
-
-@login_required
-def view_add(request):
-    return render(request, "references/view/add.html")
-
-
-@login_required
-def view_show(request, id):
-    view = Vid.objects.filter(id=id).first()
-    return render(request, "references/view/show.html", { 'view': view })
-
-
-@login_required
-def view_edit(request, id):
-    view = Vid.objects.filter(id=id).first()
-    return render(request, "references/view/edit.html", { 'view': view })
+#
+#
+# @login_required
+# def view(request):
+#     return render(request, "references/view/index.html")
+#
+#
+# @login_required
+# def view_add(request):
+#     return render(request, "references/view/add.html")
+#
+#
+# @login_required
+# def view_show(request, id):
+#     view = Vid.objects.filter(id=id).first()
+#     return render(request, "references/view/show.html", { 'view': view })
+#
+#
+# @login_required
+# def view_edit(request, id):
+#     view = Vid.objects.filter(id=id).first()
+#     return render(request, "references/view/edit.html", { 'view': view })
 
 
 @login_required
@@ -341,7 +341,8 @@ def product(request):
 
 @login_required
 def product_add(request):
-    return render(request, "product/add.html")
+    klasses = ProductTypeCode.objects.all()
+    return render(request, "product/add.html", { 'klasses': klasses })
 
 
 @login_required
@@ -353,7 +354,11 @@ def product_show(request, id):
 @login_required
 def product_edit(request, id):
     product = ProductType.objects.filter(id=id).first()
-    return render(request, "product/edit.html", { 'product': product })
+    klasses = ProductTypeCode.objects.all()
+    return render(request, "product/edit.html", {
+        'product': product,
+        'klasses': klasses,
+    })
 
 
 @login_required

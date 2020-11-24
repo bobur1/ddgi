@@ -5,7 +5,7 @@ class ContractType:
     LEASING = (1, 'Leasing')
     CONTRACT = (2, 'Loan')
 
-    __list__ = (LEASING, CONTRACT)
+    __list__ = [LEASING, CONTRACT]
 
 
 class InputType:
@@ -16,7 +16,7 @@ class InputType:
     CURRENCY = (5, 'Currency')
     DATE = (6, 'Date')
 
-    __list__ = (TEXT, NUMBER, SINGLE_SELECTION, MULTI_SELECTION, CURRENCY)
+    __list__ = [TEXT, NUMBER, SINGLE_SELECTION, MULTI_SELECTION, CURRENCY]
 
 
 class CurrencyType:
@@ -30,4 +30,10 @@ class ClientType:
     INDIVIDUAL = (1, 'Физическое лицо')
     LEGAL_PERSON = (2, 'Юридик лицо')
 
-    __list__ = (INDIVIDUAL, LEGAL_PERSON)
+    __list__ = [INDIVIDUAL, LEGAL_PERSON]
+
+    @staticmethod
+    def client_type_by(type_id):
+        if type_id == 1 or '1':
+            return True
+        return False

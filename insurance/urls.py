@@ -38,7 +38,7 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-                  path('', controller.home),
+                  path('', controller.home, name='home'),
                   path('test/', views.test_view),
                   path('api/', include(router.urls)),
                   path('individual-client/', controller.individual_client, name='individual_client'),
@@ -103,6 +103,10 @@ urlpatterns += [
                   path('product/<int:product_id>/field/add/', controller.product_field_add, name='product_field_add'),
                   path('product/<int:product_id>/field/<int:id>/', controller.product_field_show, name='product_field_show'),
                   path('product/<int:product_id>/field/<int:id>/edit/', controller.product_field_edit, name='product_field_edit'),
+                  path('form', controller.form, name='form'),
+                  path('form/add', controller.form_add, name='form_add'),
+                  path('form/<int:id>', controller.form_show, name='form_show'),
+                  path('form/<int:id>/edit', controller.form_edit, name='form_edit'),
               ] + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 )

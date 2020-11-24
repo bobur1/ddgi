@@ -2,7 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    Vid, IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank, ProductType, ProductField
+    Vid, IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank, ProductType, ProductField, \
+    ApplicationForm
 
 @login_required
 def home(request):
@@ -399,4 +400,31 @@ def product_field_edit(request, product_id, id):
         'product': product,
         'field': field,
         'types': types,
+    })
+
+
+@login_required
+def form(request):
+    return render(request, "form/index.html")
+
+
+@login_required
+def form_add(request):
+    return render(request, "form/add.html", {
+
+    })
+
+
+@login_required
+def form_show(request, id):
+    form = ApplicationForm.objects.filter(id=id).first()
+    return render(request, "form/show.html", { 'form': form })
+
+
+@login_required
+def form_edit(request, id):
+    form = ApplicationForm.objects.filter(id=id).first()
+    return render(request, "form/edit.html", {
+        'form': form,
+
     })

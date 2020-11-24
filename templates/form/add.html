@@ -1,0 +1,984 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Добавить класс{% endblock %}
+{% block content %}
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'home' %}">Главная</a></li>
+            <li class="breadcrumb-item active"><a href="{% url 'form' %}">Анкеты</a></li>
+            <li class="breadcrumb-item active">Редактирование Анкеты</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="card card-success product-type">
+      <div class="card-header">
+        <h3 class="card-title">Вид продукта</h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fas fa-minus"></i></button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="form-group clearfix">
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="icheck-success">
+                <input type="radio" name="r3" checked id="radioSuccess1">
+                <label for="radioSuccess1">физ. лицо</label>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="icheck-success">
+                <input type="radio" name="r3" id="radioSuccess2">
+                <label for="radioSuccess2">юр. лицо</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <select class="form-control select2" style="width: 100%;">
+            <option selected="selected">Авто страхование</option>
+            <option></option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+      <div class="card  card-info anketa">
+        <div class="card-header">
+          <h3 class="card-title">Анкета</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Default box -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Общие Сведения</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="row client-fullname">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Имя страхователя</label>
+                      <input name="straxovatel_name" type="text" class="form-control" placeholder="Имя">
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Фамилия страхователя</label>
+                      <input name="straxovatel_surname" type="text" class="form-control" placeholder="Фамилия">
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Отчество страхователя</label>
+                      <input name="straxovatel_middlename" type="text" class="form-control" placeholder="Отчество">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Выгодоприобретатель</label>
+                  <input name="vigodopreobritatel" type="text" class="form-control" placeholder="Полное имя">
+                </div>
+
+              <div class="form-group client-address">
+                <label>Юридический адрес страхователя</label>
+                <input type="text" class="form-control" placeholder="Город, Область, Район, Улица, Дом, Номер Квартиры">
+              </div>
+
+              <div class="form-group">
+                <label>Телефон</label>
+                <input type="text" class="form-control" placeholder="+998911322482">
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label>Реквизиты страхователя</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Расчетный счёт</span>
+                      </div>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="input-group mb-3" style="margin-top: 33px">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">ИНН</span>
+                      </div>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="input-group mb-3" style="margin-top: 33px">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">МФО</span>
+                      </div>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="input-group mb-3" style="margin-top: 33px">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">ОКОНХ</span>
+                      </div>
+                      <input type="text" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Период страхования</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">с</span>
+                        </div>
+                        <input name="insurance_from" type="date" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group mb-3" style="margin-top: 33px">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">до</span>
+                        </div>
+                        <input name="insurance_to" type="date" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <div class="form-group">
+                <label>Использование транспортного средства на основании:</label>
+                <input type="text" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label>Географическая зона:</label>
+                <input type="text" class="form-control">
+              </div>
+
+              </div>
+          </div>
+
+            <!-- Default box -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Сведени о трансортных средствах</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <button type="button" onclick="addRow()" class="btn btn-primary ">Добавить</button>
+                </div>
+                <div class="table-responsive p-0 " style="max-height: 300px;">
+                  <table class="table table-hover table-head-fixed" id="empTable">
+                    <thead>
+                    <tr>
+                      <th class="text-nowrap">Марка, модель, модификация</th>
+                      <th class="text-nowrap">Год выпуска</th>
+                      <th class="text-nowrap">Гос. номер</th>
+                      <th class="text-nowrap">№ тех. паспорта</th>
+                      <th class="text-nowrap">№ двигателя</th>
+                      <th class="text-nowrap">№ кузова</th>
+                      <th class="text-nowrap">№ кузова</th>
+                      <th class="text-nowrap">Страховая стоимость</th>
+                      <th class="text-nowrap">Страховая сумма</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="date" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control forsum2"></td>
+                      <td><input type="text" class="form-control forsum"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="7" style="text-align: right"><label class="text-bold">Итого</label></td>
+                      <td><input readonly type="text" class="form-control overall-sum2"/></td>
+                      <td><input readonly type="text" class="form-control overall-sum"/></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="form-group">
+                  <label>При наружном осмотре ТС дефекты и повреждения</label>
+                  <div class="form-check">
+                    <input class="form-check-input defects" value="no" type="radio" name="defects" checked>
+                    <label class="form-check-label">Нет</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input defects" value="yes" type="radio" name="defects">
+                    <label class="form-check-label">Да</label>
+                  </div>
+                </div>
+                <div class="form-group defects_images" style="display:none">
+                  <label>Фотографии дефектов ТС</label>
+                  <input class="form-control" type="file" multiple name="defects_images">
+                </div>
+                <div class="form-group">
+                  <label>Цель использования</label>
+                  <input type="text" class="form-control">
+                </div>
+              </div>
+            </div>
+
+            <!-- Default box -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Перечень дополнительного оборудования</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="form-group">
+                  <button type="button" onclick="addRow2()" class="btn btn-primary ">Добавить</button>
+                </div>
+                <div class="table-responsive p-0 " style="max-height: 300px;">
+                  <table class="table table-hover table-head-fixed" id="empTable2">
+                    <thead>
+                    <tr>
+                      <th class="text-nowrap">Марка, модель, модификация ТС</th>
+                      <th>Наименование оборудования</th>
+                      <th>Серийный №</th>
+                      <th>Страховая сумма</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3"><label class="text-bold">Итого</label></td>
+                      <td><input type="text" class="form-control"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Default box -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Сведени о трансортных средствах</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="form-group">
+                  <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
+                  <div class="form-check">
+                    <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance" value="yes">
+                    <label class="form-check-label">Да</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="no">
+                    <label class="form-check-label">Нет</label>
+                  </div>
+                </div>
+                <div class="form-group other_insurance_info" style="display:none">
+                  <label>Укажите название и адрес страховой организации и номер Полиса</label>
+                  <input class="form-control" type="text" name="other_insurance_info">
+                </div>
+              </div>
+            </div>
+
+            <!-- Default box -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Страховые покрытия по видам опасностей </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="form-group">
+                  <label>Раздел I. Гибель или повреждение транспортного средства</label>
+                  <div class="row">
+                    <div class="col-sm-1">
+                      <div class="checkbox icheck-success">
+                        <input type="radio" name="ch1" checked id="radioSuccess3">
+                        <label for="radioSuccess3">
+                          Да
+                        </label>
+                      </div>
+                      <div class="checkbox icheck-success">
+                        <input type="radio" name="ch1" id="radioSuccess4">
+                        <label for="radioSuccess4">
+                          Нет
+                        </label>
+                      </div>
+                    </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Сумма</span>
+                        </div>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Премия</span>
+                        </div>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Франшиза</span>
+                        </div>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class=>Раздел II. Автогражданская ответственность</label>
+                  <div class="row">
+                    <div class="col-sm-1">
+                      <div class="checkbox icheck-success">
+                        <input type="radio" name="ch2" checked id="radioSuccess5">
+                        <label for="radioSuccess5">
+                          Да
+                        </label>
+                      </div>
+                      <div class="checkbox icheck-success">
+                        <input type="radio" name="ch2" id="radioSuccess6">
+                        <label for="radioSuccess6">
+                          Нет
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Сумма</span>
+                          </div>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Премия</span>
+                          </div>
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="form-group col-sm-6">
+                  <label>Общий лимит ответственности </label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+                  <label>Общая страховая сумма ТС</label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="form-group">
+                  <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="ch3" value="yes">
+                    <label class="form-check-label">Да</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="ch3" value="no">
+                    <label class="form-check-label">Нет</label>
+                  </div>
+                </div>
+                <div class="table-responsive p-0 ">
+                  <table class="table table-hover table-head-fixed">
+                    <thead>
+                    <tr>
+                      <th>Объекты страхования </th>
+                      <th>Количество водителей /пассажиров</th>
+                      <th>Страховая сумма на одного лица</th>
+                      <th>Страховая сумма</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td><label>Водитель(и)</label></td>
+                      <td><input type="number" class="form-control"></td>
+                      <td><div class="input-group mb-4">
+                        <input type="text" class="form-control">
+                        <div class="input-group-append">
+                          <select class="form-control success" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
+                      </div></td>
+                      <td><input type="number" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td><label>Пассажиры</label></td>
+                      <td><input type="number" class="form-control"></td>
+                      <td><div class="input-group mb-4">
+                        <input type="text" class="form-control">
+                        <div class="input-group-append">
+                          <select class="form-control success" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
+                      </div>
+                      </td>
+                      <td><input type="number" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td><label class="text-bold">Общий Лимит</label></td>
+                      <td><input type="number" class="form-control"></td>
+                      <td><div class="input-group mb-4">
+                        <input type="text" class="form-control">
+                        <div class="input-group-append">
+                          <select class="form-control success" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
+                      </div></td>
+                      <td><input type="number" class="form-control"></td>
+                    </tr>
+                    <tr>
+                      <td colspan="3"><label class="text-bold">Итого</label></td>
+                      <td><input type="number" class="form-control"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="form-group col-sm-8">
+                  <label>Общий лимит ответственности </label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Default box -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Дополнительное страховое покрытие</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="form-group">
+                  <label>Покрытие террористических актов с ТС </label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Покрытие террористических актов с застрахованными лицами </label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Покрытие дополнительного оборудования</label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Покрытие расходы по эвакуации</label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Default box -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Условия оплаты страховой премии</h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+
+                <div class="form-group form-inline justify-content-between">
+                  <div class="col-sm-5">
+                  <label>Оплата страховой премии в</label>
+                  <select class="form-control" style="width: 100%; text-align: center">
+                    <option selected="selected">UZS</option>
+                    <option>USD</option>
+                    <option>Евро</option>
+                  </select>
+                  </div>
+                  <div class="col-sm-5">
+                  <label>Другая валюта</label>
+                  <input type="text" style="width: 100%" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group form-inline justify-content-between">
+                  <div class="col-sm-5">
+                    <label>Порядок оплаты страховой премии</label>
+                    <select class="form-control payment-schedule" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
+                      <option value="1">Единовременно</option>
+                      <option value="2">Полугодовой</option>
+                      <option value="other">Другое</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="other-payment-schedule" style="display: none">
+                <div class="form-group">
+                  <button type="button" onclick="addRow3()" class="btn btn-primary ">Добавить</button>
+                </div>
+                <div class="table-responsive p-0 " style="max-height: 300px;">
+                  <table class="table table-hover table-head-fixed" id="empTable3">
+                    <thead>
+                    <tr>
+                      <th class="text-nowrap">Сумма</th>
+                      <th class="text-nowrap">До</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td><input type="text" class="form-control"></td>
+                      <td><input type="date" class="form-control"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary float-right">Сохранить</button>
+        </div>
+      </div>
+      <!-- dogovor box -->
+      <div class="card  card-info dogovor">
+        <div class="card-header">
+          <h3 class="card-title">Договор</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Шапка -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Шапка:</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                        title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <form role="form">
+
+                <div class="row">
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Номер утвверждение</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">номер</span>
+                        </div>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <div class="input-group mb-3" style="margin-top: 33px">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">от</span>
+                        </div>
+                        <input type="date" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <label>Город</label>
+                      <div class="input-group mb-3">
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <div class="input-group mb-3" style="margin-top: 33px">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">дата</span>
+                        </div>
+                        <input type="date" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="row insurance-duration">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label>Срок действия договора страхования</label>
+                      <div class="row">
+                        <div class="col-sm-6">
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">с</span>
+                        </div>
+                        <input type="date" class="form-control">
+                      </div>
+                        </div>
+                      <div class="col-sm-6">
+                          <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">до</span>
+                            </div>
+                            <input type="date" class="form-control">
+                          </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+
+              <!-- /.card-footer-->
+            </div>
+
+
+            <!-- /.card-footer-->
+          </div>
+
+          <!-- Default box -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Сведения о застрахованном ТС</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <form role="form">
+                <div class="form-group">
+                  <label>Грузоподъемность/ число посадочных мест, вкл. Водителя</label>
+                  <input type="text" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label>№ кузова</label>
+                  <input type="text" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label>№ двигателя</label>
+                  <input type="text" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label>Год выпуска</label>
+                  <input type="date" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label>№ технического паспорта</label>
+                  <input type="text" class="form-control">
+                </div>
+
+
+                <div class="form-group">
+                  <label>Страховая стоимость ТС</label>
+                  <div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Ответственный Агент</label>
+                  <select class="form-control select2" style="width: 100%;">
+                    <option selected="selected">Ф.И.О агента</option>
+                    <option></option>
+                  </select>
+                </div>
+              </form>
+
+              <!-- /.card-footer-->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary float-right">Сохранить</button>
+        </div>
+      </div>
+
+      <!-- polis box -->
+      <div class="card  card-info polis">
+        <div class="card-header">
+          <h3 class="card-title">Полис</h3>
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+              <i class="fas fa-minus"></i></button>
+          </div>
+        </div>
+        <div class="card-body">
+          <!-- Default box -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 class="card-title">Общие Сведения:</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i></button>
+              </div>
+            </div>
+            <div class="card-body">
+              <form role="form">
+                <div class="row policy">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label>Полис</label>
+                      <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">номер</span>
+                        </div>
+                        <input type="text" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <div class="input-group mb-3" style="margin-top: 33px">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">от</span>
+                        </div>
+                        <input type="date" class="form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <dt class="col-sm-4 total-insurance-premium">Общая страховая премия</dt>
+                  <dd class="col-sm-8">100 000 000 сум</dd>
+                  <dt class="col-sm-4 payment-term-until">Оплаченная страховая премия (СТРАХОВОЙ ВЗНОС)</dt>
+                  <dd class="col-sm-4"><div class="input-group mb-4">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                      <select class="form-control success" style="width: 100%;">
+                        <option selected="selected">UZS</option>
+                        <option>USD</option>
+                      </select>
+                    </div>
+                  </div></dd>
+                </div>
+
+                <div class="form-group">
+                  <label>Ответственный Агент</label>
+                  <select class="form-control select2" style="width: 100%;">
+                    <option selected="selected">Ф.И.О агента</option>
+                    <option></option>
+                  </select>
+                </div>
+              </form>
+
+              <!-- /.card-footer-->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary float-right">Сохранить</button>
+        </div>
+      </div>
+    </section>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'custom/js/csrftoken.js' %}"></script>
+
+    <script>
+        let submitButton = $('#submit-button');
+        let form = $('#klass-form');
+
+        $(document).ready(function () {
+            submitButton.click(function (e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+
+                let forms = {};
+                let params = {}
+                forms.csrfmiddlewaretoken = csrftoken;
+                forms.action = 'create';
+                let serializedForm = form.serializeArray();
+                for (let i = 0; i < serializedForm.length; i++) {
+                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                }
+                forms.params = params;
+
+                $.ajax({
+                    url: '/api/klass/',
+                    data: JSON.stringify(forms),
+                    {#processData: false,#}
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        if (data.success === true) {
+                            console.log(data);
+                            window.location.replace('/references/klass/');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

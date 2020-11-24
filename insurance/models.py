@@ -180,7 +180,7 @@ class ProductType(models.Model):
 
     name = models.CharField(verbose_name="Наименование", max_length=255)
 
-    client_type = models.CharField(verbose_name='Тип клиента', choices=ClientType.__list__,
+    client_type = models.PositiveIntegerField(verbose_name='Тип клиента', choices=ClientType.__list__,
                                    default=ClientType.LEGAL_PERSON, max_length=50)
 
     classes = models.ManyToManyField(ProductTypeCode, default=[], blank=True, max_length=3)
@@ -470,7 +470,7 @@ class GridCols(models.Model):
 class ProductField(models.Model):
     product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     type = models.CharField(max_length=128)
-    input_type = models.CharField(max_length=128, choices=InputType.__list__, default=InputType.TEXT)
+    input_type = models.PositiveIntegerField(max_length=128, choices=InputType.__list__, default=InputType.TEXT)
     is_required = models.BooleanField(default=False)
     name = models.CharField(max_length=128)
     value = models.CharField(max_length=4096)
@@ -538,5 +538,6 @@ class ApplicationForm(models.Model):
     pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, blank=True, null=True)
     from_time = models.DateField(verbose_name='From date')
     to_time = models.DateField(verbose_name='To date')
-    contract_type = models.CharField(max_length=20, choices=ContractType.__list__, default=ContractType.CONTRACT)
+    contract_type = models.PositiveIntegerField(max_length=20, choices=ContractType.__list__, default=ContractType.CONTRACT)
     fields = models.ManyToManyField(ProductField, blank=True, null=True)
+

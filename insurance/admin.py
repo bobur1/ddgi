@@ -78,13 +78,14 @@ class PermissionRoleInline(admin.TabularInline):
 @admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):
     list_display = ('title', 'is_active')
-    inlines = (PermissionRoleInline, )
+    inlines = (PermissionRoleInline,)
 
 
 @admin.register(UserRole)
 class UserRoleAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'role')
-    #readonly_fields = ('cr_by', 'cr_on')
+
+    # readonly_fields = ('cr_by', 'cr_on')
 
     def save_model(self, request, obj, form, change):
         if change:
@@ -114,7 +115,6 @@ class UserRoleAdmin(admin.ModelAdmin):
 @admin.register(PermissionRole)
 class PermissionRoleAdmin(admin.ModelAdmin):
     list_display = ('role', 'permission')
-
 
     def save_model(self, request, obj, form, change):
         if change:
@@ -239,12 +239,12 @@ class OfficeTypeAdmin(admin.ModelAdmin):
 
 @admin.register(Location)
 class RegionAdmin(admin.ModelAdmin):
-    list_display = (str, )
+    list_display = (str,)
 
 
 @admin.register(LocationType)
 class LocationTypeAdmin(admin.ModelAdmin):
-    list_display = (str, )
+    list_display = (str,)
 
 
 @admin.register(ClientRequest)

@@ -115,14 +115,6 @@ class ProductTypeCode(models.Model):
         return self.name
 
 
-class Vid(models.Model):
-    name = models.CharField(max_length=256)
-    is_exist = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
-
-
 class PolicySeriesType(models.Model):
     code = models.CharField(verbose_name="Код", max_length=24)
 
@@ -181,7 +173,7 @@ class ProductType(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
 
     client_type = models.PositiveIntegerField(verbose_name='Тип клиента', choices=ClientType.__list__,
-                                   default=ClientType.LEGAL_PERSON, max_length=50)
+                                   default=ClientType.LEGAL_PERSON)
 
     classes = models.ManyToManyField(ProductTypeCode, default=[], blank=True, max_length=3)
 
@@ -321,15 +313,29 @@ class BasicTariffRate(models.Model):
 
 
 class Beneficiary(models.Model):
-    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
+    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True, blank=True)
+
+    legal_client_title = models.CharField(verbose_name="Наименование", max_length=128, default=None, null=True,
+                                          help_text='This field should be set if beneficiary is legal client')
+
+    address = models.CharField(verbose_name="Адрес", max_length=1024, default=None, null=True,
+                               help_text='This field should be set if beneficiary is legal client')
+
+    phone = models.CharField(verbose_name="Номер телефона", max_length=14, default=None, null=True,
+                               help_text='This field should be set if beneficiary is legal client')
+
     fax_number = models.CharField(max_length=64, null=True)
+
     checking_account = models.CharField(max_length=64, null=True)
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, related_name='beneficiary_bank', null=True)
     inn = models.CharField(max_length=20, null=True)
     mfo = models.CharField(max_length=6, null=True, default=None, blank=True)
 
     def __str__(self):
-        return self.person.__str__() + ' ' + self.inn
+        left_text = self.person.__str__()
+        if self.person is None:
+            left_text = self.legal_client_title
+        return left_text + ' ' + self.inn
 
 
 class LegalClient(models.Model):
@@ -470,10 +476,10 @@ class GridCols(models.Model):
 class ProductField(models.Model):
     product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
     type = models.CharField(max_length=128)
-    input_type = models.PositiveIntegerField(max_length=128, choices=InputType.__list__, default=InputType.TEXT)
+    input_type = models.PositiveIntegerField(choices=InputType.__list__, default=InputType.TEXT)
     is_required = models.BooleanField(default=False)
     name = models.CharField(max_length=128)
-    value = models.CharField(max_length=4096)
+    value = models.CharField(max_length=4096, null=True, blank=True, default=None)
 
     order = models.IntegerField(null=True, blank=True)
 
@@ -497,7 +503,7 @@ class PolicyFields(models.Model):
     product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
     order = models.IntegerField(null=True)
     name = models.CharField(max_length=128, null=True)
-    value = models.CharField(max_length=4096, null=True, blank=True)
+    value = models.CharField(max_length=4096, null=True, blank=True, default=None)
 
     def __str__(self):
         return self.name
@@ -512,7 +518,8 @@ class ClientRequestType(models.Model):
 
 
 class ClientRequest(models.Model):
-    request_type = models.ForeignKey(ClientRequestType, verbose_name='Тип запроса', on_delete=models.SET_NULL, null=True, blank=True)
+    request_type = models.ForeignKey(ClientRequestType, verbose_name='Тип запроса', on_delete=models.SET_NULL,
+                                     null=True, blank=True)
     policy_number = models.CharField(max_length=100, null=False, blank=False)
     policy_series = models.CharField(max_length=100, null=False, blank=False)
     reason = models.CharField(verbose_name='Причина увеличения лимитов', max_length=4000)
@@ -538,6 +545,7 @@ class ApplicationForm(models.Model):
     pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, blank=True, null=True)
     from_time = models.DateField(verbose_name='From date')
     to_time = models.DateField(verbose_name='To date')
-    contract_type = models.PositiveIntegerField(max_length=20, choices=ContractType.__list__, default=ContractType.CONTRACT)
-    fields = models.ManyToManyField(ProductField, blank=True, null=True)
 
+    contract_type = models.PositiveIntegerField(choices=ContractType.__list__,
+                                                default=ContractType.CONTRACT)
+    fields = models.ManyToManyField(ProductField, blank=True, null=True)

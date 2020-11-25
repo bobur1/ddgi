@@ -1,59 +1,48 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Добавить клиента{% endblock %}
+{% block title %}Банк{% endblock %}
+
 {% block content %}
   <div class="content-header">
   <div class="container-fluid">
   </div>
 </div>
 
-<div class="content">
+<!-- Main content -->
+   <div class="content">
   <div class="container-fluid">
-    <form method="post" id="individual-client-form">
+    <form method="post" id="bank-form">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Добавить клиента</h3>
+              <h3 class="card-title">Добавить банк</h3>
               <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                      <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                      <i class="fas fa-times"></i>
-                  </button>
+                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
               </div>
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="first_name" class="col-form-label">Имя</label>
+                    <label for="code" class="col-form-label">Код банка</label>
                     <input
-                      id="first_name"
+                      id="code"
                       class="form-control"
-                      name="first_name"
+                      name="code"
                       required
                     >
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="middle_name" class="col-form-label">Отчество</label>
+                    <label for="bank_name" class="col-form-label">Наименование банка</label>
                     <input
-                      id="middle_name"
+                      id="bank_name"
                       class="form-control"
-                      name="middle_name"
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="last_name" class="col-form-label">Фамилия</label>
-                    <input
-                      id="last_name"
-                      class="form-control"
-                      name="last_name"
+                      name="bank_name"
                       required
                     >
                   </div>
@@ -63,7 +52,18 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="address" class="col-form-label">Адрес</label>
+                    <label for="branch_name" class="col-form-label">Наименование филиала</label>
+                    <input
+                      id="branch_name"
+                      class="form-control"
+                      name="branch_name"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="address" class="col-form-label">Адрес банка</label>
                     <input
                       id="address"
                       class="form-control"
@@ -72,40 +72,42 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="phone_number" class="col-form-label">Номер телефона</label>
-                    <input
-                      id="phone_number"
-                      class="form-control"
-                      name="phone_number"
-                      required
-                    >
-                  </div>
-                </div>
               </div>
 
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label for="passport_series" class="col-form-label">Серия паспорта</label>
+                    <label for="inn" class="col-form-label">ИНН банка</label>
                     <input
-                      id="passport_series"
+                      id="inn"
                       class="form-control"
-                      name="passport_series"
+                      name="inn"
                       required
                     >
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label for="passport_number" class="col-form-label">Номер паспорта</label>
+                    <label for="account_number" class="col-form-label">Расчетный счет банка</label>
                     <input
-                      id="passport_number"
+                      id="account_number"
                       class="form-control"
-                      name="passport_number"
+                      name="account_number"
                       required
                     >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="status" class="col-form-label">Статус</label>
+                    <select
+                      id="status"
+                      class="form-control"
+                      name="status"
+                    >
+                      <option value="1">Неактивный</option>
+                      <option value="2">Активный</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -113,19 +115,14 @@
           </div>
         </div>
       </div>
-
-
       <div class="card-footer">
         <div class="form-group">
-            <button type="submit" id="submit-button" class="btn btn-primary float-right">Добавить</button>
+          <button type="submit" id="submit-button" class="btn btn-primary float-right">Добавить</button>
         </div>
       </div>
     </form>
   </div>
 </div>
-    <script>
-        
-    </script>
 
 {% endblock %}
 
@@ -134,8 +131,11 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
+        $('#parent_id').select2();
+        $('#region_id').select2();
+        $('#director').select2();
         let submitButton = $('#submit-button');
-        let form = $('#individual-client-form');
+        let form = $('#bank-form');
 
         $(document).ready(function () {
             submitButton.click(function (e) {
@@ -160,7 +160,7 @@
                 forms.params = params;
 
                 $.ajax({
-                    url: '/api/client-individual/',
+                    url: '/api/bank/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
@@ -169,7 +169,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/individual-client/' + {{ client.id }} + '/');
+                            window.location.replace('/references/bank/');
                         }
                     }
                 });

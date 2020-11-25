@@ -1,0 +1,88 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Вид: {{ client.name }}{% endblock %}
+{% block content %}
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+<div class="content">
+  <div class="container-fluid">
+      <div class="d-flex flex-row mb-3">
+        <a href="{% url 'legal_client_edit' client.id %}" class="btn btn-primary mr-1">Редактировать клиента</a>
+
+        <form method="POST" id="delete-form" class="mr-1">
+            {% csrf_token %}
+            <button id="delete-button" class="btn btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary card-outline">
+                <div class="card-body">
+                    <table class="table {% comment %}table-bordered{% endcomment %} table-striped projects">
+                        <tbody>
+                        <tr><th>ID</th><td>{{ client.id }}</td></tr>
+                        <tr><th>Имя</th><td>{{ client.first_name }}</td></tr>
+                        <tr><th>Фамилия</th><td>{{ client.last_name }}</td></tr>
+                        <tr><th>Отчество</th><td>{{ client.middle_name }}</td></tr>
+                        <tr><th>Адрес</th><td>{{ client.address }}</td></tr>
+                        <tr><th>Номер телефона</th><td>{{ client.phone_number }}</td></tr>
+                        <tr><th>Серия паспорта</th><td>{{ client.passport_series }}</td></tr>
+                        <tr><th>Номер паспорта</th><td>{{ client.passport_number }}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'custom/js/csrftoken.js' %}"></script>
+
+    <script>
+        let deleteButton = $('#delete-button');
+        let form = $('#delete-form');
+
+        $(document).ready(function () {
+            deleteButton.click(function (e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+
+                let forms = {};
+                forms.csrfmiddlewaretoken = csrftoken;
+                forms.action = 'delete';
+                forms.id = {{ client.id }};
+
+                $.ajax({
+                    url: '/api/client-individual/',
+                    data: JSON.stringify(forms),
+                    {#processData: false,#}
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        if (data.success === true) {
+                            console.log(data);
+                            window.location.replace('/individual-client/');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

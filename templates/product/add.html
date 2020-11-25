@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Добавить клиента{% endblock %}
+{% block title %}Добавить продукт{% endblock %}
 {% block content %}
   <div class="content-header">
   <div class="container-fluid">
@@ -9,12 +9,12 @@
 
 <div class="content">
   <div class="container-fluid">
-    <form method="post" id="individual-client-form">
+    <form method="post" id="product-form">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Добавить клиента</h3>
+              <h3 class="card-title">Добавить продукт</h3>
               <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                       <i class="fas fa-minus"></i>
@@ -26,34 +26,24 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="first_name" class="col-form-label">Имя</label>
+                    <label for="name" class="col-form-label">Название</label>
                     <input
-                      id="first_name"
+                      id="name"
                       class="form-control"
-                      name="first_name"
+                      name="name"
                       required
                     >
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
-                    <label for="middle_name" class="col-form-label">Отчество</label>
+                    <label for="code" class="col-form-label">Код</label>
                     <input
-                      id="middle_name"
+                      id="code"
                       class="form-control"
-                      name="middle_name"
-                    >
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="last_name" class="col-form-label">Фамилия</label>
-                    <input
-                      id="last_name"
-                      class="form-control"
-                      name="last_name"
+                      name="code"
                       required
                     >
                   </div>
@@ -63,47 +53,39 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="address" class="col-form-label">Адрес</label>
+                    <label for="klass_id" class="col-form-label">Класс</label>
+                    <select
+                        id="klass_id"
+                        class="form-control"
+                        name="klass_id"
+                    >
+                      <option selected="selected"></option>
+                      {% for klass in klasses %}
+                        <option value="{{ klass.id }}">{{ klass.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="has_beneficiary" class="col-form-label">Имеет выгодоприобретателя?</label>
                     <input
-                      id="address"
+                      id="has_beneficiary"
+                      type="checkbox"
                       class="form-control"
-                      name="address"
+                      name="has_beneficiary"
                       required
                     >
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <div class="form-group">
-                    <label for="phone_number" class="col-form-label">Номер телефона</label>
+                    <label for="has_pledger" class="col-form-label">Имеет залогодателя?</label>
                     <input
-                      id="phone_number"
+                      id="has_pledger"
+                      type="checkbox"
                       class="form-control"
-                      name="phone_number"
-                      required
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="passport_series" class="col-form-label">Серия паспорта</label>
-                    <input
-                      id="passport_series"
-                      class="form-control"
-                      name="passport_series"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="passport_number" class="col-form-label">Номер паспорта</label>
-                    <input
-                      id="passport_number"
-                      class="form-control"
-                      name="passport_number"
+                      name="has_pledger"
                       required
                     >
                   </div>
@@ -114,7 +96,6 @@
         </div>
       </div>
 
-
       <div class="card-footer">
         <div class="form-group">
             <button type="submit" id="submit-button" class="btn btn-primary float-right">Добавить</button>
@@ -123,9 +104,6 @@
     </form>
   </div>
 </div>
-    <script>
-        
-    </script>
 
 {% endblock %}
 
@@ -134,8 +112,11 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
+        $('#group_id').select2();
+        $('#klass_id').select2();
+        $('#view_id').select2();
         let submitButton = $('#submit-button');
-        let form = $('#individual-client-form');
+        let form = $('#product-form');
 
         $(document).ready(function () {
             submitButton.click(function (e) {
@@ -160,7 +141,7 @@
                 forms.params = params;
 
                 $.ajax({
-                    url: '/api/client-individual/',
+                    url: '/api/product_type_codes/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
@@ -169,7 +150,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/individual-client/' + {{ client.id }} + '/');
+                            window.location.replace('/product/');
                         }
                     }
                 });

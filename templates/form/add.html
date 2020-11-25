@@ -229,7 +229,8 @@
                       <th class="text-nowrap">№ тех. паспорта</th>
                       <th class="text-nowrap">№ двигателя</th>
                       <th class="text-nowrap">№ кузова</th>
-                      <th class="text-nowrap">№ кузова</th>
+                      <th class="text-nowrap">Грузоподъемность</th>
+                      <th class="text-nowrap">Количество посадочных мест</th>
                       <th class="text-nowrap">Страховая стоимость</th>
                       <th class="text-nowrap">Страховая сумма</th>
                       <th></th>
@@ -244,11 +245,12 @@
                       <td><input type="text" class="form-control"></td>
                       <td><input type="text" class="form-control"></td>
                       <td><input type="text" class="form-control"></td>
+                      <td><input type="text" class="form-control"></td>
                       <td><input type="text" class="form-control forsum2"></td>
                       <td><input type="text" class="form-control forsum"></td>
                     </tr>
                     <tr>
-                      <td colspan="7" style="text-align: right"><label class="text-bold">Итого</label></td>
+                      <td colspan="8" style="text-align: right"><label class="text-bold">Итого</label></td>
                       <td><input readonly type="text" class="form-control overall-sum2"/></td>
                       <td><input readonly type="text" class="form-control overall-sum"/></td>
                     </tr>
@@ -259,11 +261,11 @@
                   <label>При наружном осмотре ТС дефекты и повреждения</label>
                   <div class="form-check">
                     <input class="form-check-input defects" value="no" type="radio" name="defects" checked>
-                    <label class="form-check-label">Нет</label>
+                    <label class="form-check-label">Нет - не имеются</label>
                   </div>
                   <div class="form-check">
                     <input class="form-check-input defects" value="yes" type="radio" name="defects">
-                    <label class="form-check-label">Да</label>
+                    <label class="form-check-label">Да - присутствуют</label>
                   </div>
                 </div>
                 <div class="form-group defects_images" style="display:none">
@@ -601,19 +603,6 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Покрытие дополнительного оборудования</label>
-                  <div class="input-group mb-4">
-                    <input type="text" class="form-control">
-                    <div class="input-group-append">
-                      <select class="form-control success" style="width: 100%;">
-                        <option selected="selected">UZS</option>
-                        <option>USD</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="form-group">
                   <label>Покрытие расходы по эвакуации</label>
                   <div class="input-group mb-4">
                     <input type="text" class="form-control">
@@ -703,104 +692,10 @@
           </div>
         </div>
         <div class="card-body">
-          <!-- Шапка -->
-          <div class="card card-success">
-            <div class="card-header">
-              <h3 class="card-title">Шапка:</h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
-                        title="Collapse">
-                  <i class="fas fa-minus"></i></button>
-              </div>
-            </div>
-            <div class="card-body">
-              <form role="form">
-
-                <div class="row">
-
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label>Номер утвверждение</label>
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">номер</span>
-                        </div>
-                        <input type="text" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <div class="input-group mb-3" style="margin-top: 33px">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">от</span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <label>Город</label>
-                      <div class="input-group mb-3">
-                        <input type="text" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-sm-3">
-                    <div class="form-group">
-                      <div class="input-group mb-3" style="margin-top: 33px">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">дата</span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="row insurance-duration">
-                  <div class="col-sm-12">
-                    <div class="form-group">
-                      <label>Срок действия договора страхования</label>
-                      <div class="row">
-                        <div class="col-sm-6">
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">с</span>
-                        </div>
-                        <input type="date" class="form-control">
-                      </div>
-                        </div>
-                      <div class="col-sm-6">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">до</span>
-                            </div>
-                            <input type="date" class="form-control">
-                          </div>
-                      </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </form>
-
-              <!-- /.card-footer-->
-            </div>
-
-
-            <!-- /.card-footer-->
-          </div>
-
           <!-- Default box -->
           <div class="card card-success">
             <div class="card-header">
-              <h3 class="card-title">Сведения о застрахованном ТС</h3>
+              <h3 class="card-title">Общие сведения</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                   <i class="fas fa-minus"></i></button>
@@ -808,44 +703,6 @@
             </div>
             <div class="card-body">
               <form role="form">
-                <div class="form-group">
-                  <label>Грузоподъемность/ число посадочных мест, вкл. Водителя</label>
-                  <input type="text" class="form-control">
-                </div>
-
-                <div class="form-group">
-                  <label>№ кузова</label>
-                  <input type="text" class="form-control">
-                </div>
-
-                <div class="form-group">
-                  <label>№ двигателя</label>
-                  <input type="text" class="form-control">
-                </div>
-
-                <div class="form-group">
-                  <label>Год выпуска</label>
-                  <input type="date" class="form-control">
-                </div>
-
-                <div class="form-group">
-                  <label>№ технического паспорта</label>
-                  <input type="text" class="form-control">
-                </div>
-
-
-                <div class="form-group">
-                  <label>Страховая стоимость ТС</label>
-                  <div class="input-group mb-4">
-                    <input type="text" class="form-control">
-                    <div class="input-group-append">
-                      <select class="form-control success" style="width: 100%;">
-                        <option selected="selected">UZS</option>
-                        <option>USD</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
                 <div class="form-group">
                   <label>Ответственный Агент</label>
                   <select class="form-control select2" style="width: 100%;">

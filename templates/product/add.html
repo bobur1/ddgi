@@ -57,9 +57,9 @@
                     <select
                         id="klass_id"
                         class="form-control"
-                        name="klass_id"
+                        name="product_code_types"
+                        multiple
                     >
-                      <option selected="selected"></option>
                       {% for klass in klasses %}
                         <option value="{{ klass.id }}">{{ klass.name }}</option>
                       {% endfor %}
@@ -132,16 +132,25 @@
 
                 let forms = {};
                 let params = {}
+                let productTypeCodes = {};
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'create';
                 let serializedForm = form.serializeArray();
+                let j = 0;
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    if (serializedForm[i]['name'] === 'product_code_types') {
+                        productTypeCodes[j++] = serializedForm[i]['value'];
+                    } else {
+                        params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    }
                 }
+                params.product_code_types = productTypeCodes;
                 forms.params = params;
 
+                console.log(forms);
+
                 $.ajax({
-                    url: '/api/product_type_codes/',
+                    url: '/api/product_type/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',

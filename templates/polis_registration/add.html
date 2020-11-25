@@ -208,7 +208,6 @@
                     beforeSend: function(xhr, settings) {
                         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
                             xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                            xhr.setRequestHeader("Authorization", 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA1NDA4Mzk3LCJqdGkiOiIwMGQzMjUzNzZiM2Q0MmFmODQ4ZDljNTE1NjM4Yjc2NSIsInVzZXJfaWQiOjF9.st1ri35h1SvBc7ozrh6JuYDKBEKo4YB4pJJOpiPoqrI');
                         }
                     }
                 });

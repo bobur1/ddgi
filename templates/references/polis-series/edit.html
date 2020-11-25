@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Добавить валюту{% endblock %}
+{% block title %}Редактировать серию полисов{% endblock %}
 {% block content %}
   <div class="content-header">
   <div class="container-fluid">
@@ -9,12 +9,12 @@
 
 <div class="content">
   <div class="container-fluid">
-    <form method="post" id="currency-form">
+    <form method="post" id="polis-series-form">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Добавить валюту</h3>
+              <h3 class="card-title">Редактировать серию полисов</h3>
               <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                       <i class="fas fa-minus"></i>
@@ -26,28 +26,16 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="name" class="col-form-label">Название</label>
-                    <input
-                      id="name"
-                      class="form-control"
-                      name="name"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="code" class="col-form-label">Код</label>
-                    <div class="input-group">
-                      <input
-                        id="code"
-                        class="form-control"
-                        name="code"
-                        required
-                      >
-                    </div>
+                    <input
+                      id="code"
+                      class="form-control"
+                      name="code"
+                      value="{{ polisSeries.code }}"
+                      required
+                    >
                   </div>
                 </div>
               </div>
@@ -58,7 +46,7 @@
 
       <div class="card-footer">
         <div class="form-group">
-            <button type="submit" id="submit-button" class="btn btn-primary float-right">Распределить</button>
+            <button type="submit" id="submit-button" class="btn btn-primary float-right">Редактировать</button>
         </div>
       </div>
     </form>
@@ -73,7 +61,7 @@
 
     <script>
         let submitButton = $('#submit-button');
-        let form = $('#currency-form');
+        let form = $('#polis-series-form');
 
         $(document).ready(function () {
             submitButton.click(function (e) {
@@ -90,25 +78,25 @@
                 let forms = {};
                 let params = {}
                 forms.csrfmiddlewaretoken = csrftoken;
-                forms.action = 'create';
+                forms.action = 'update';
+                forms.id = {{ polisSeries.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     params[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
                 forms.params = params;
-                console.log(serializedForm);
-                console.log(forms);
 
                 $.ajax({
-                    url: '/api/currency/',
+                    url: '/api/polis-series/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
                     dataType: 'json',
                     type: "POST",
                     success: function (data) {
-                        if (data) {
+                        if (data.success === true) {
                             console.log(data);
+                            window.location.replace('/references/polis-series/' + {{ polisSeries.id }} + '/');
                         }
                     }
                 });

@@ -1,10 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Распределить полис{% endblock %}
-{% block css %}
-    {{ block.super }}
-    <link rel="stylesheet" href="{% static 'plugins/bootstrap-fileinput/css/fileinput.min.css' %}">
-{% endblock %}
+{% block title %}Добавить класс{% endblock %}
 {% block content %}
   <div class="content-header">
   <div class="container-fluid">
@@ -13,52 +9,51 @@
 
 <div class="content">
   <div class="container-fluid">
-    <form method="post" id="polis-transfer-form" enctype="multipart/form-data">
-      {% csrf_token %}
+    <form method="post" id="klass-form">
       <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Распределить полис</h3>
+              <h3 class="card-title">Добавить класс</h3>
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                   <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                  <i class="fas fa-times"></i>
                 </button>
               </div>
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label for="office" class="col-form-label">Офисы:</label>
-                    <select
-                        id="office"
-                        class="form-control"
-                        name="to_office"
+                    <label for="code" class="col-form-label">Код</label>
+                    <input
+                      id="code"
+                      class="form-control"
+                      name="code"
+                      required
                     >
-                      <option selected></option>
-                      {% for office in offices %}
-                        <option value="{{ office.id }}">{{ office.name }}</option>
-                      {% endfor %}
-                    </select>
                   </div>
                 </div>
-                <div class="col-md-12">
+                <div class="col-md-4">
                   <div class="form-group">
-                    <label for="polises" class="col-form-label">Полиса:</label>
-                    <select
-                        id="polises"
-                        class="form-control"
-                        name="policies[]"
-                        multiple
+                    <label for="name" class="col-form-label">Название</label>
+                    <input
+                      id="name"
+                      class="form-control"
+                      name="name"
+                      required
                     >
-                        {% for polis in polises %}
-                            <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>
-                        {% endfor %}
-                    </select>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="description" class="col-form-label">Описание</label>
+                    <textarea
+                      id="description"
+                      class="form-control"
+                      name="description"
+                      required
+                    ></textarea>
                   </div>
                 </div>
               </div>
@@ -68,7 +63,9 @@
       </div>
 
       <div class="card-footer">
-        <button type="submit" id="submit-button" class="btn btn-primary float-right">Распределить</button>
+        <div class="form-group">
+            <button type="submit" id="submit-button" class="btn btn-primary float-right">Добавить</button>
+        </div>
       </div>
     </form>
   </div>
@@ -81,12 +78,8 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
-        let office = $('#office');
-        let polises = $('#polises');
         let submitButton = $('#submit-button');
-        let form = $('#polis-transfer-form');
-        office.select2();
-        polises.select2();
+        let form = $('#klass-form');
 
         $(document).ready(function () {
             submitButton.click(function (e) {
@@ -101,20 +94,26 @@
                 });
 
                 let forms = {};
+                let params = {}
                 forms.csrfmiddlewaretoken = csrftoken;
-                forms.to_office = office.val();
-                forms.policies = polises.val();
+                forms.action = 'create';
+                let serializedForm = form.serializeArray();
+                for (let i = 0; i < serializedForm.length; i++) {
+                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                }
+                forms.params = params;
 
                 $.ajax({
-                    url: '/api/policy-transfers/',
+                    url: '/api/klass/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
                     dataType: 'json',
                     type: "POST",
                     success: function (data) {
-                        if (data) {
+                        if (data.success === true) {
                             console.log(data);
+                            window.location.replace('/references/klass/');
                         }
                     }
                 });

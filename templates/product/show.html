@@ -1,0 +1,138 @@
+{% extends "home.html" %}
+{% load static %}
+{% block title %}Продукт: {{ product.name }}{% endblock %}
+{% block content %}
+  <div class="content-header">
+    <div class="container-fluid">
+    </div>
+  </div>
+
+<div class="content">
+  <div class="container-fluid">
+      <div class="d-flex flex-row mb-3">
+        <a href="{% url 'product_edit' product.id %}" class="btn btn-primary mr-1">Редактировать продукт</a>
+        <a href="{% url 'product_field_add' product.id %}" class="btn btn-green mr-1">Добавить поле продукта</a>
+
+        <form method="POST" id="delete-form" class="mr-1">
+            {% csrf_token %}
+            <button id="delete-button" class="btn btn-danger" onclick="return confirm('Вы уверены?')">Удалить</button>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-primary card-outline">
+                <div class="card-body">
+                    <table class="table {% comment %}table-bordered{% endcomment %} table-striped projects">
+                        <tbody>
+                        <tr><th>ID</th><td>{{ product.id }}</td></tr>
+                        <tr><th>Название</th><td>{{ product.name }}</td></tr>
+                        <tr><th>Код</th><td>{{ product.code }}</td></tr>
+                        <tr><th>Группа</th><td>{{ product.group.name }}</td></tr>
+                        <tr><th>Класс</th><td>{{ product.classes.name }}</td></tr>
+                        <tr><th>Вид</th><td>{{ product.view.name }}</td></tr>
+                        <tr><th>Имеет залогодателя</th><td>{% if product.has_pledger == true %}Да{% else %}Нет{% endif %}</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" id="values">
+      <div class="card-header card-green with-border">Поля продукта</div>
+      <div class="card-body">
+        <p><a href="{% url 'product_field_add' product.id %}" class="btn btn-success">Добавить поле продукта</a></p>
+        <table class="table table-bordered table-striped">
+          <thead>
+          <tr>
+            <th>Название</th>
+            <th>Тип</th>
+            <th>Порядок</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+
+          {% for field in product.fields %}
+            <tr>
+              <td><a href="{% url 'product_field_show' product.id field.id %}">{{ field.name }}</a></td>
+              {#       TODO: add order apis and fix type names         #}
+              <td>{{ field.type }}</td>
+              <td>{{ field.order }}</td>
+              <td>
+{#                <div class="d-flex flex-row">#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.first', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-up"></span></button>#}
+{#                  </form>#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.up', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-up"></span></button>#}
+{#                  </form>#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.down', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-down"></span></button>#}
+{#                  </form>#}
+{#                  <form method="POST" action="{{ route('admin.shop.products.values.last', ['product' => $product, 'characteristic' => $characteristic]) }}" class="mr-1">#}
+{#                    @csrf#}
+{#                    <button class="btn btn-sm btn-outline-primary"><span class="fa fa-angle-double-down"></span></button>#}
+{#                  </form>#}
+{#                </div>#}
+              </td>
+            </tr>
+          {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="{% static 'custom/js/csrftoken.js' %}"></script>
+
+    <script>
+        let deleteButton = $('#delete-button');
+        let form = $('#delete-form');
+
+        $(document).ready(function () {
+            deleteButton.click(function (e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    beforeSend: function (xhr, settings) {
+                        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                        }
+                    }
+                });
+
+                let forms = {};
+                forms.csrfmiddlewaretoken = csrftoken;
+                forms.action = 'delete';
+                forms.id = {{ product.id }};
+
+                $.ajax({
+                    url: '/api/product/',
+                    data: JSON.stringify(forms),
+                    {#processData: false,#}
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        if (data.success === true) {
+                            console.log(data);
+                            window.location.replace('/product/');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

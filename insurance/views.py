@@ -750,6 +750,10 @@ class UserViewSet(viewsets.ViewSet):
                 middle_name = request.data.get('middle_name', None)
                 passport_number = request.data.get('passport_number')
                 passport_series = request.data.get('passport_series')
+
+                passport_given_by = request.data.get('passport_given_by', None)
+                passport_given_date = request.data.get('passport_given_date', None)
+
                 document = request.FILES['file']
                 image = request.FILES.get('image', None)
                 created_by = request.user
@@ -765,6 +769,8 @@ class UserViewSet(viewsets.ViewSet):
                                                       passport_number=passport_number,
                                                       passport_series=passport_series,
                                                       document=document,
+                                                      passport_given_date=passport_given_date,
+                                                      passport_given_by=passport_given_by,
                                                       created_by=created_by, image=image)
 
                 print(f'new user create status {create_status}')
@@ -796,6 +802,58 @@ class ApplicationFormViewSet(viewsets.ViewSet):
     def create(self, request):
         response = {}
         try:
+            product_type = ProductType.objects.get(id=request.data.get('product_type'))
+            is_legal_client = request.data.get('is_legal_client', False)
+            title = request.data.get('legal_client_title')
+
+            first_name = request.data.get('first_name')
+            last_name = request.data.get('last_name')
+
+            address = request.data.get('client_address')
+            client_number = request.data.get('client_number')
+            mfo = request.data.get('request')
+
+            is_beneficiary_legal = request.data.get('is_beneficiary_legal', False)
+            beneficiary_title = request.data.get('beneficiary_title', None)
+
+            beneficiary_first_name = request.data.get('beneficiary_first_name', None)
+            beneficiary_last_name = request.data.get('beneficiary_last_name', None)
+
+            beneficiary_passport_series = request.data.get('beneficiary_passport_series', None)
+            beneficiary_passport_number = request.data.get('beneficiary_passport_number', None)
+
+            beneficiary_address = request.data.get('beneficiary_address', None)
+            beneficiary_bank = None
+
+            beneficiary_bank_id = request.data.get('beneficiary_bank_id', None)
+
+            if beneficiary_bank_id is not None:
+                beneficiary_bank = Bank.objects.get()
+
+            beneficiary_number = request.data.get('beneficiary_number', None)
+            beneficiary_mfo = request.data.get('beneficiary_mfo', None)
+
+            pledger_name = request.data.get('pledger_name', None)
+            pledger_address = request.data.get('pledger_address', None)
+            pledger_number = request.data.get('pledger_phone_number', None)
+            pledger_bank_account = request.data.get('pledger_checking_account', None)
+
+            pledger_bank_id = request.data.get('pledger_bank_id', None)
+            pledger_bank = None
+            if beneficiary_bank_id is not None:
+                pledger_bank = Bank.objects.get()
+
+            pledger_inn = request.data.get('pledger_inn', None)
+            pledger_mfo = request.data.get('pledger_mfo', None)
+
+            from_date = request.data.get('from_date')
+
+            to_date = request.data.get('to_date')
+
+            contract_type = request.data.get('contract_type_id')
+            form_status = request.data.get('form_status')
+            fields = request.data.get('fields')
+
 
             response['success']=True
         except Exception as e:

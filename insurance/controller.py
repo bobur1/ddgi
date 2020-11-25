@@ -355,10 +355,12 @@ def product_show(request, id):
 @login_required
 def product_edit(request, id):
     product = ProductType.objects.filter(id=id).first()
+    productClasses = product.classes.values_list('id', flat=True)
     klasses = ProductTypeCode.objects.all()
     return render(request, "product/edit.html", {
         'product': product,
         'klasses': klasses,
+        'productClasses': productClasses,
     })
 
 

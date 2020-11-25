@@ -215,13 +215,8 @@ class BeneficiaryAdmin(admin.ModelAdmin):
     list_display = (str, 'person', 'fax_number', 'checking_account', 'bank', 'inn', 'mfo')
 
 
-@admin.register(Pledger)
-class PledgerAdmin(admin.ModelAdmin):
-    list_display = ('person', 'fax_number', 'inn')
-
-
 @admin.register(Human)
-class PledgerAdmin(admin.ModelAdmin):
+class HumanAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name', 'phone')
 
 

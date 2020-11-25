@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers
 
+
 @login_required
 def home(request):
     return render(request, "home.html")
@@ -82,11 +83,12 @@ def request(request):
 
 
 @login_required
-def spravochnik_bank (request):
+def spravochnik_bank(request):
     return render(request, "spravochniki/bank/add.html")
 
+
 @login_required
-def user (request):
+def user(request):
     return render(request, "user/add.html")
 
 

@@ -6,6 +6,7 @@ from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType
     ApplicationForm
 from insurance.enum import InputType, ContractType, CurrencyType, ClientType
 
+
 @login_required
 def home(request):
     return render(request, "home.html")
@@ -119,6 +120,7 @@ def request(request):
 @login_required
 def user(request):
     return render(request, "user/index.html")
+
 
 
 @login_required

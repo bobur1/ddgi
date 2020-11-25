@@ -22,7 +22,7 @@ def create_user(login, email, password, is_active, first_name=None, last_name=No
 
 
 def register_user_profile(user, position, middle_name, phone_number, passport_number, passport_series, created_by,
-                          document, image=None):
+                          document, passport_given_date, passport_given_by, image=None):
     try:
 
         user.profile.middle_name = middle_name
@@ -31,6 +31,9 @@ def register_user_profile(user, position, middle_name, phone_number, passport_nu
         user.profile.passport_series = passport_series
         user.profile.passport_number = passport_number
         user.profile.created_by = created_by
+        user.profile.passport_given_date = passport_given_date,
+        user.profile.passport_given_by = passport_given_by,
+
         user.profile.document = document
         user.profile.image = image
         user.save()
@@ -57,6 +60,8 @@ def edit_profile(request):
     passport_series = request.data.get('passport_series', profile.passport_series)
     document = request.FILES.get('file', None)
     image = request.FILES.get('image', None)
+    passport_given_by = request.data.get('passport_given_by', None)
+    passport_given_date = request.data.get('passport_given_date', None)
     if document is None:
         document = user.profile.document
     updated_by = request.user
@@ -76,8 +81,10 @@ def edit_profile(request):
         profile.phone = phone_number
         profile.passport_number = passport_number
         profile.passport_series = passport_series
+        profile.passport_given_by = passport_given_by
+        profile.passport_given_date = passport_given_date
         profile.updated_by = updated_by
         profile.document = document
-        profile.image = None
+        profile.image = image
 
     user.save()

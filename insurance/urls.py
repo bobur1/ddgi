@@ -25,6 +25,7 @@ router.register('policy-transfers', viewset=views.TransferPoliciesViewSet)
 router.register('user_creat_update', viewset=views.UserViewSet)
 router.register('product_type', viewset=views.ProductTypeViewSet)
 router.register('product_type_codes', viewset=views.ProductTypeCodeViewSet)
+router.register('application_form', viewset=views.ApplicationFormViewSet)
 
 
 urlpatterns = [

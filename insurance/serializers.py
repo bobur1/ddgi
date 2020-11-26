@@ -225,13 +225,6 @@ class BeneficiarySerializer(serializers.ModelSerializer):
                   'bank_name', 'inn', 'mfo']
 
 
-class Insurer(serializers.ModelSerializer):
-    class Meta:
-        model = Insurer
-        fields = ['id', 'first_name', 'last_name', 'middle_name', 'address',
-                  'phone_number', 'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo']
-
-
 class ActSerializer(serializers.ModelSerializer):
     class Meta:
         model = Policy

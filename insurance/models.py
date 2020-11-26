@@ -324,10 +324,6 @@ class LegalClient(models.Model):
 
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
 
-    inn = models.CharField(max_length=20, null=True)
-
-    mfo = models.CharField(max_length=6, null=True)
-
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
     up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by')
@@ -338,15 +334,10 @@ class LegalClient(models.Model):
         return self.name
 
 
-
 class IndividualClient(Human):
     checking_account = models.CharField(max_length=32)
 
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
-
-    inn = models.CharField(max_length=20, null=True)
-
-    mfo = models.CharField(max_length=6, null=True)
 
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)

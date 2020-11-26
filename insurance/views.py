@@ -803,17 +803,40 @@ class ApplicationFormViewSet(viewsets.ViewSet):
         response = {}
         try:
             product_type = ProductType.objects.get(id=request.data.get('product_type'))
+
             person = request.data.get('client', None)
 
-            is_legal_client = person.get('is_legal_client', False)
-            title = person.get('legal_client_title')
+            legal_client = None
+            individual_client = None
 
-            first_name = person.get('first_name')
-            last_name = person.get('last_name')
+            is_legal_client = person.get('is_legal_client', False)
+
+            title = person.get('legal_client_title')
+            first_name = person.get('first_name', None)
+            last_name = person.get('last_name', None)
+
+            passport_number = person.get('passport_number', None)
+            passport_series = person.get('passport_series', None)
+            passport_given_by = person.get('passport_given_by', None)
+            passport_given_date = person.get('passport_given_date', None)
 
             address = person.get('client_address')
-            client_number = person.get('client_number')
+            client_phone_number = person.get('client_phone_number')
             mfo = person.get('request')
+
+            client_bank_inn = person.get('client_bank_inn')
+
+            client_bank_id = person.get('client_bank_id', None)
+
+            if is_legal_client:
+                legal_client = LegalClient.objects.update_or_create(mfo=mfo,
+                                                                    defaults={
+                                                                        'mfo': mfo,
+                                                                        'title': title,
+                                                                        'address': address,
+                                                                        'client_phone_number': client_phone_number,
+
+                                                                    })
 
             beneficiary = request.data.get('beneficiary', None)
 
@@ -837,8 +860,6 @@ class ApplicationFormViewSet(viewsets.ViewSet):
 
             beneficiary_number = beneficiary.get('beneficiary_number', None)
             beneficiary_mfo = beneficiary.get('beneficiary_mfo', None)
-
-
 
             pledger = request.data.get('pledger', None)
 

@@ -424,8 +424,10 @@ def form(request):
 @login_required
 def form_add(request):
     products = ProductType.objects.all()
+    banks = Bank.objects.all()
     return render(request, "form/add.html", {
         'products': products,
+        'banks': banks,
 
     })
 
@@ -440,8 +442,10 @@ def form_show(request, id):
 def form_edit(request, id):
     form = ApplicationForm.objects.filter(id=id).first()
     products = ProductType.objects.all()
+    banks = Bank.objects.all()
     return render(request, "form/edit.html", {
         'form': form,
         'products': products,
+        'banks': banks,
 
     })

@@ -1,10 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank, ProductType, ProductField, \
-    ApplicationForm
+from insurance.models import Currency, Policy, InsuranceOffice, \
+    PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
+    IndividualClient, LegalClient, Position, ProductTypeCode, \
+    OfficeType, Bank, ProductType, ProductField, ApplicationForm
 from insurance.enum import InputType, ContractType, CurrencyType, ClientType
+
 
 @login_required
 def home(request):
@@ -157,6 +159,10 @@ def bank_add(request):
 def bank_show(request, id):
     bank = Bank.objects.filter(id=id).first()
     return render(request, "references/bank/show.html", { 'bank': bank })
+
+
+# def spravochnik_bank(request):
+#     return render(request, "spravochniki/bank/add.html")
 
 
 @login_required

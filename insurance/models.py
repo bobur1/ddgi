@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django.utils import timezone
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
@@ -205,6 +204,8 @@ class Human(models.Model):
     address = models.CharField(verbose_name="Адрес", max_length=1024, default=None)
     passport_series = models.CharField(verbose_name='Паспортная серия', max_length=3, default=None)
     passport_number = models.CharField(verbose_name='Паспортная серия', max_length=10, default=None)
+    passport_given_date = models.DateField(verbose_name='Дата выдачи паспорта', blank=True, null=True)
+    passport_given_by = models.CharField(verbose_name='Паспорт выдан', blank=True, null=True, max_length=128)
 
     def __str__(self):
         return f'{self.first_name} {self.last_name} - {self.passport_series}|{self.passport_number}'
@@ -314,37 +315,19 @@ class BasicTariffRate(models.Model):
     sum = models.BigIntegerField(verbose_name="Сумма")
 
 
-class Beneficiary(models.Model):
-    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True, blank=True)
-
-    legal_client_title = models.CharField(verbose_name="Наименование", max_length=128, default=None, null=True,
-                                          help_text='This field should be set if beneficiary is legal client')
-
-    address = models.CharField(verbose_name="Адрес", max_length=1024, default=None, null=True,
-                               help_text='This field should be set if beneficiary is legal client')
-
-    phone = models.CharField(verbose_name="Номер телефона", max_length=14, default=None, null=True,
-                             help_text='This field should be set if beneficiary is legal client')
-
-    fax_number = models.CharField(max_length=64, null=True)
-
-    checking_account = models.CharField(max_length=64, null=True)
-    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, related_name='beneficiary_bank', null=True)
-    inn = models.CharField(max_length=20, null=True)
-    mfo = models.CharField(max_length=6, null=True, default=None, blank=True)
-
-    def __str__(self):
-        left_text = self.person.__str__()
-        if self.person is None:
-            left_text = self.legal_client_title
-        return left_text + ' ' + self.inn
-
-
 class LegalClient(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
     address = models.CharField(verbose_name="Адрес", max_length=150)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
-    mfo = models.CharField(verbose_name="MFO", max_length=6, null=True, default=None, blank=True)
+
+    checking_account = models.CharField(max_length=32)
+
+    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
+
+    inn = models.CharField(max_length=20, null=True)
+
+    mfo = models.CharField(max_length=6, null=True)
+
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
     up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by')
@@ -355,8 +338,16 @@ class LegalClient(models.Model):
         return self.name
 
 
-class IndividualClient(models.Model):
-    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
+
+class IndividualClient(Human):
+    checking_account = models.CharField(max_length=32)
+
+    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
+
+    inn = models.CharField(max_length=20, null=True)
+
+    mfo = models.CharField(max_length=6, null=True)
+
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
     up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='individual_client_up_by')
@@ -364,19 +355,31 @@ class IndividualClient(models.Model):
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
-        return "{} {}".format(self.person.first_name, self.person.last_name)
+        return "{} {}".format(self.first_name, self.last_name)
 
 
-class Pledger(models.Model):
-    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True, default=None)
-    fax_number = models.CharField(max_length=32)
-    checking_account = models.CharField(max_length=32)
-    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
-    inn = models.CharField(max_length=20, null=True)
-    mfo = models.CharField(max_length=6, null=True)
+class Beneficiary(models.Model):
+    individual = models.ForeignKey(IndividualClient, on_delete=models.SET_NULL, null=True, blank=True,
+                                   related_name='beneficiary_individual')
+
+    legal = models.ForeignKey(LegalClient, on_delete=models.SET_NULL, null=True, blank=True,
+                              related_name='legal')
+
+    cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    cr_on = models.DateTimeField(default=timezone.now)
+
+    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='beneficiary_up_by')
+
+    up_on = models.DateTimeField(default=timezone.now)
+
+    is_exist = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.person.__str__()
+        left_text = self.individual.__str__()
+        if self.individual is None:
+            left_text = self.legal.name
+        return left_text + ' ' + self.legal.inn
 
 
 class Policy(models.Model):
@@ -400,7 +403,7 @@ class Policy(models.Model):
 
     beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
-    pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, null=True, blank=True, default=None)
+    pledger = models.ForeignKey(LegalClient, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
     income_session = models.ForeignKey(PoliciesIncome, verbose_name="Policies income session",
                                        on_delete=models.SET_NULL,
@@ -489,18 +492,6 @@ class ProductField(models.Model):
         return self.name
 
 
-class Insurer(models.Model):
-    person = models.ForeignKey(Human, on_delete=models.SET_NULL, null=True)
-    fax_number = models.CharField(max_length=32)
-    checking_account = models.CharField(max_length=32)
-    bank_name = models.CharField(max_length=256, null=True)
-    inn = models.CharField(max_length=20, null=True)
-    mfo = models.CharField(max_length=6, null=True)
-
-    def __str__(self):
-        return "{} ".format(self.person)
-
-
 class PolicyFields(models.Model):
     product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
     order = models.IntegerField(null=True)
@@ -546,9 +537,11 @@ class ApplicationForm(models.Model):
 
     individual_client = models.ForeignKey(IndividualClient, on_delete=models.CASCADE, blank=True, null=True)
 
-    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, blank=True, null=True)
+    beneficiary = models.ForeignKey(Beneficiary, on_delete=models.SET_NULL, blank=True, null=True,
+                                    related_name='application_form_beneficiary')
 
-    pledger = models.ForeignKey(Pledger, on_delete=models.SET_NULL, blank=True, null=True)
+    pledger = models.ForeignKey(LegalClient, on_delete=models.SET_NULL, blank=True, null=True,
+                                related_name='application_form_pledger')
 
     from_time = models.DateField(verbose_name='From date')
 
@@ -560,7 +553,7 @@ class ApplicationForm(models.Model):
     form_status = models.PositiveIntegerField(choices=ApplicationFormStatus.__list__,
                                               default=ApplicationFormStatus.ACTIVE)
 
-    cr_on = models.DateTimeField(verbose_name='created on', default=timezone.now())
+    cr_on = models.DateTimeField(verbose_name='created on', default=timezone.now)
 
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, default=None,
                                    related_name='application_form_created_by')

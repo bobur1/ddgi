@@ -750,6 +750,10 @@ class UserViewSet(viewsets.ViewSet):
                 middle_name = request.data.get('middle_name', None)
                 passport_number = request.data.get('passport_number')
                 passport_series = request.data.get('passport_series')
+
+                passport_given_by = request.data.get('passport_given_by', None)
+                passport_given_date = request.data.get('passport_given_date', None)
+
                 document = request.FILES['file']
                 image = request.FILES.get('image', None)
                 created_by = request.user
@@ -765,6 +769,8 @@ class UserViewSet(viewsets.ViewSet):
                                                       passport_number=passport_number,
                                                       passport_series=passport_series,
                                                       document=document,
+                                                      passport_given_date=passport_given_date,
+                                                      passport_given_by=passport_given_by,
                                                       created_by=created_by, image=image)
 
                 print(f'new user create status {create_status}')
@@ -796,7 +802,76 @@ class ApplicationFormViewSet(viewsets.ViewSet):
     def create(self, request):
         response = {}
         try:
-            product_type = request.data.get('product_type')
+            product_type = ProductType.objects.get(id=request.data.get('product_type'))
+            person = request.data.get('client', None)
+
+            is_legal_client = person.get('is_legal_client', False)
+            title = person.get('legal_client_title')
+
+            first_name = person.get('first_name')
+            last_name = person.get('last_name')
+
+            address = person.get('client_address')
+            client_number = person.get('client_number')
+            mfo = person.get('request')
+
+            beneficiary = request.data.get('beneficiary', None)
+
+            is_beneficiary_legal = beneficiary.get('is_beneficiary_legal', False)
+
+            beneficiary_title = beneficiary.get('beneficiary_title', None)
+
+            beneficiary_first_name = beneficiary.get('beneficiary_first_name', None)
+            beneficiary_last_name = beneficiary.get('beneficiary_last_name', None)
+
+            beneficiary_passport_series = beneficiary.get('beneficiary_passport_series', None)
+            beneficiary_passport_number = beneficiary.get('beneficiary_passport_number', None)
+
+            beneficiary_address = beneficiary.get('beneficiary_address', None)
+            beneficiary_bank = None
+
+            beneficiary_bank_id = beneficiary.get('beneficiary_bank_id', None)
+
+            if beneficiary_bank_id is not None:
+                beneficiary_bank = Bank.objects.get()
+
+            beneficiary_number = beneficiary.get('beneficiary_number', None)
+            beneficiary_mfo = beneficiary.get('beneficiary_mfo', None)
+
+
+
+            pledger = request.data.get('pledger', None)
+
+            pledger_name = pledger.get('pledger_name', None)
+            pledger_address = pledger.get('pledger_address', None)
+            pledger_number = pledger.get('pledger_phone_number', None)
+            pledger_bank_account = pledger.get('pledger_checking_account', None)
+
+            pledger_bank_id = pledger.get('pledger_bank_id', None)
+            pledger_bank = None
+            if beneficiary_bank_id is not None:
+                pledger_bank = Bank.objects.get()
+
+            pledger_inn = pledger.get('pledger_inn', None)
+            pledger_mfo = pledger.get('pledger_mfo', None)
+
+            from_date = request.data.get('from_date')
+
+            to_date = request.data.get('to_date')
+
+            contract_type = request.data.get('contract_type_id')
+            form_status = request.data.get('form_status')
+            fields = request.data.get('fields', [])
+
+            for field in fields:
+                field_type = field.get('type', None)
+                input_type = field.get('input_type')
+                is_required = field.get('is_required')
+                name = field.get('name')
+                value = field.get('value')
+                order = field.get('order')
+                pass
+
             response['success']=True
         except Exception as e:
             response['error_msg'] = e.__str__()

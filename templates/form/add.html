@@ -58,74 +58,174 @@
     </div>
 
     <div class="card card-info anketa" id="form-container" style="display: none">
-        <div class="card-header">
-          <h3 class="card-title">Анкета</h3>
-          <div class="card-tools">
-            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fas fa-minus"></i></button>
-          </div>
+      <div class="card-header">
+        <h3 class="card-title">Анкета</h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fas fa-minus"></i>
+          </button>
         </div>
-        <div class="card-body">
-          <div class="card card-success">
-            <div class="card-header">
-              <h3 class="card-title">Общие Сведения</h3>
+      </div>
+      <div class="card-body">
+        <div class="card card-success">
+          <div class="card-header">
+            <h3 class="card-title">Общие Сведения</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <label for="insurer_id" class="col-form-label">Страхователи</label>
+                    <select
+                        id="insurer_id"
+                        class="form-control"
+                        name="insurer_id"
+                    >
+                      <option selected="selected"></option>
+                    </select>
               </div>
             </div>
-            <div class="card-body">
-              <div class="row client-fullname" id="individual-client-row">
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="insurer_first_name">Имя страхователя</label>
-                    <input id="insurer_first_name" name="insurer_first_name" type="text" class="form-control" placeholder="Имя">
-                  </div>
+
+            <div class="row client-fullname" id="individual-client-row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="insurer_first_name">Имя страхователя</label>
+                  <input id="insurer_first_name" name="insurer_first_name" type="text" class="form-control" placeholder="Имя">
                 </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="insurer_surname">Фамилия страхователя</label>
-                    <input id="insurer_surname" name="insurer_surname" type="text" class="form-control" placeholder="Фамилия">
-                  </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="insurer_surname">Фамилия страхователя</label>
+                  <input id="insurer_surname" name="insurer_surname" type="text" class="form-control" placeholder="Фамилия">
                 </div>
-                <div class="col-sm-4">
-                  <div class="form-group">
-                    <label for="insurer_middle_name">Отчество страхователя</label>
-                    <input id="insurer_middle_name" name="insurer_middle_name" type="text" class="form-control" placeholder="Отчество">
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <label for="insurer_middle_name">Отчество страхователя</label>
+                  <input id="insurer_middle_name" name="insurer_middle_name" type="text" class="form-control" placeholder="Отчество">
+                </div>
+              </div>
+            </div>
+
+            <div class="row client-fullname" id="legal-client-row" style="display: none">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <label for="insurer_name">Название страхователя</label>
+                  <input id="insurer-name" name="insurer_name" type="text" class="form-control" placeholder="Название" disabled="disabled">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group client-address">
+              <label for="address">Юридический адрес страхователя</label>
+              <input type="text" id="address" name="address" class="form-control" placeholder="Город, Область, Район, Улица, Дом, Номер Квартиры">
+            </div>
+
+            <div class="form-group">
+              <label for="phone_number">Телефон</label>
+              <input type="text" id="phone_number" class="form-control" placeholder="+998911322482">
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <label for="checking_account">Реквизиты страхователя</label>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Расчетный счёт</span>
+                    </div>
+                    <input type="text" id="checking_account" name="checking_account" class="form-control">
                   </div>
                 </div>
               </div>
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <div class="input-group mb-3" style="margin-top: 33px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">ИНН</span>
+                    </div>
+                    <input type="text" id="inn" name="inn" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
 
-              <div class="row client-fullname" id="legal-client-row" style="display: none">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group mb-3" style="margin-top: 33px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">МФО</span>
+                    </div>
+                    <input type="text" id="mfo" name="mfo" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group mb-3" style="margin-top: 33px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">Банк</span>
+                    </div>
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="input-group mb-3" style="margin-top: 33px">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">ОКОНХ</span>
+                    </div>
+                    <input type="text" id="okonh" name="okonh" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="beneficiary-card-container">
+              <div class="row">
                 <div class="col-sm-12">
-                  <div class="form-group">
-                    <label for="insurer_name">Название страхователя</label>
-                    <input id="insurer-name" name="insurer_name" type="text" class="form-control" placeholder="Название" disabled="disabled">
-                  </div>
+                  <label for="beneficiary_id" class="col-form-label">Выгодоприобретатели</label>
+                      <select
+                          id="beneficiary_id"
+                          class="form-control"
+                          name="beneficiary_id"
+                      >
+                        <option selected="selected"></option>
+                      </select>
                 </div>
-              </div>
-
-              <div class="form-group client-address">
-                <label for="address">Юридический адрес страхователя</label>
-                <input type="text" id="address" name="address" class="form-control" placeholder="Город, Область, Район, Улица, Дом, Номер Квартиры">
               </div>
 
               <div class="form-group">
-                <label for="phone_number">Телефон</label>
-                <input type="text" id="phone_number" class="form-control" placeholder="+998911322482">
+                <label for="beneficiary_name">Выгодоприобретатель</label>
+                <input type="text" id="beneficiary_name" name="beneficiary_name" class="form-control" placeholder="Полное имя">
+              </div>
+
+              <div class="form-group client-address">
+                <label for="vig_address">Юридический адрес выгодоприобретателя</label>
+                <input type="text" id="vig_address" name="vig_address" class="form-control" placeholder="Город, Область, Район, Улица, Дом, Номер Квартиры">
+              </div>
+
+              <div class="form-group">
+                <label for="vig_phone_number">Телефон выгодоприобретателя</label>
+                <input type="text" id="vig_phone_number" name="beneficiary_phone" class="form-control" placeholder="+998911322482">
               </div>
 
               <div class="row">
                 <div class="col-sm-6">
                   <div class="form-group">
-                    <label for="checking_account">Реквизиты страхователя</label>
+                    <label for="vig_checking_account">Реквизиты выгодоприобретателя</label>
                     <div class="input-group mb-3">
                       <div class="input-group-prepend">
                         <span class="input-group-text">Расчетный счёт</span>
                       </div>
-                      <input type="text" id="checking_account" name="checking_account" class="form-control">
+                      <input type="text" id="vig_checking_account" name="beneficiary_checking_account" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -135,7 +235,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">ИНН</span>
                       </div>
-                      <input type="text" id="inn" name="inn" class="form-control">
+                      <input type="text" id="vig_inn" name="vig_inn" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -148,7 +248,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">МФО</span>
                       </div>
-                      <input type="text" id="mfo" name="mfo" class="form-control">
+                      <input type="text" id="vig_mfo" name="vig_mfo" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -158,7 +258,7 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">Банк</span>
                       </div>
-                      <input type="text" class="form-control">
+                      <input type="text" name="vig_bank" class="form-control">
                     </div>
                   </div>
                 </div>
@@ -168,18 +268,57 @@
                       <div class="input-group-prepend">
                         <span class="input-group-text">ОКОНХ</span>
                       </div>
-                      <input type="text" id="okonh" name="okonh" class="form-control">
+                      <input type="text" id="vig_okonh" name="vig_okonh" class="form-control">
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="form-group">
-                <label for="beneficiary_name">Выгодоприобретатель</label>
-                <input type="text" id="beneficiary_name" name="beneficiary_name" class="form-control" placeholder="Полное имя">
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="insurance_from">Период страхования</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">с</span>
+                      </div>
+                      <input id="insurance_from" name="insurance_from" type="date" class="form-control">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group mb-3" style="margin-top: 33px">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">до</span>
+                      </div>
+                      <input id="insurance_to" name="insurance_to" type="date" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="beneficiary-card-container">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label for="pledger_id" class="col-form-label">Залогодатели</label>
+                      <select
+                          id="pledger_id"
+                          class="form-control"
+                          name="pledger_id"
+                      >
+                        <option selected="selected"></option>
+                      </select>
+                </div>
               </div>
 
-            <div class="form-group client-address">
+              <div class="form-group">
+                <label for="pledger_name">Залогодатель</label>
+                <input type="text" id="pledger_name" name="pledger_name" class="form-control" placeholder="Полное имя">
+              </div>
+
+              <div class="form-group client-address">
                 <label for="vig_address">Юридический адрес выгодоприобретателя</label>
                 <input type="text" id="vig_address" name="vig_address" class="form-control" placeholder="Город, Область, Район, Улица, Дом, Номер Квартиры">
               </div>
@@ -247,41 +386,41 @@
               </div>
 
               <div class="row">
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <label for="insurance_from">Период страхования</label>
-                      <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">с</span>
-                        </div>
-                        <input id="insurance_from" name="insurance_from" type="date" class="form-control">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label for="insurance_from">Период страхования</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">с</span>
                       </div>
-                    </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <div class="input-group mb-3" style="margin-top: 33px">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">до</span>
-                        </div>
-                        <input id="insurance_to" name="insurance_to" type="date" class="form-control">
-                      </div>
+                      <input id="insurance_from" name="insurance_from" type="date" class="form-control">
                     </div>
                   </div>
                 </div>
-
-              <div class="form-group">
-                <label>Использование транспортного средства на основании:</label>
-                <input type="text" class="form-control">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <div class="input-group mb-3" style="margin-top: 33px">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">до</span>
+                      </div>
+                      <input id="insurance_to" name="insurance_to" type="date" class="form-control">
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
 
-              <div class="form-group">
-                <label>Географическая зона:</label>
-                <input type="text" class="form-control">
-              </div>
+            <div class="form-group">
+              <label for="reason">Использование транспортного средства на основании:</label>
+              <input type="text" id="reason" name="reason" class="form-control">
+            </div>
 
-              </div>
+            <div class="form-group">
+              <label for="geographic-zone">Географическая зона:</label>
+              <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+            </div>
           </div>
+        </div>
 
             <!-- Default box -->
             <div class="card card-success">

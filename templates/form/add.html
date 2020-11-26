@@ -33,21 +33,22 @@
           <div class="row">
             <div class="col-sm-4">
               <div class="icheck-success">
-                <input type="radio" name="r3" checked id="client-type-radio-1">
+                <input type="radio" name="r3" checked id="client-type-radio-1" value="individual">
                 <label for="client-type-radio-1">физ. лицо</label>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="icheck-success">
-                <input type="radio" name="r3" id="client-type-radio-2">
+                <input type="radio" name="r3" id="client-type-radio-2" value="legal">
                 <label for="client-type-radio-2">юр. лицо</label>
               </div>
             </div>
           </div>
         </div>
         <div class="form-group">
-          <select class="form-control select2" name="product_id" style="width: 100%;">
+          <select id="product-id" class="form-control select2" name="product_id" style="width: 100%;">
             <option selected="selected"></option>
+            <option>Asasas</option>
             {% for product in products %}
               <option value="{{ product.id }}">{{ product.name }}</option>
             {% endfor %}
@@ -56,7 +57,7 @@
       </div>
     </div>
 
-      <div class="card card-info anketa">
+    <div class="card card-info anketa" id="form-container" style="display: none">
         <div class="card-header">
           <h3 class="card-title">Анкета</h3>
           <div class="card-tools">
@@ -76,7 +77,7 @@
               </div>
             </div>
             <div class="card-body">
-              <div class="row client-fullname" id="client-row">
+              <div class="row client-fullname" id="individual-client-row">
                 <div class="col-sm-4">
                   <div class="form-group">
                     <label for="insurer_first_name">Имя страхователя</label>
@@ -93,6 +94,15 @@
                   <div class="form-group">
                     <label for="insurer_middle_name">Отчество страхователя</label>
                     <input id="insurer_middle_name" name="insurer_middle_name" type="text" class="form-control" placeholder="Отчество">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row client-fullname" id="legal-client-row" style="display: none">
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="insurer_name">Название страхователя</label>
+                    <input id="insurer-name" name="insurer_name" type="text" class="form-control" placeholder="Название" disabled="disabled">
                   </div>
                 </div>
               </div>
@@ -682,8 +692,9 @@
           <button type="submit" class="btn btn-primary float-right">Сохранить</button>
         </div>
       </div>
-      <!-- dogovor box -->
-      <div class="card  card-info dogovor">
+
+    <!-- dogovor box -->
+    <div class="card card-info dogovor" id="agreement-container" style="display: none">
         <div class="card-header">
           <h3 class="card-title">Договор</h3>
           <div class="card-tools">
@@ -722,8 +733,8 @@
         </div>
       </div>
 
-      <!-- polis box -->
-      <div class="card  card-info polis">
+    <!-- polis box -->
+    <div class="card card-info polis" id="polis-container" style="display: none">
         <div class="card-header">
           <h3 class="card-title">Полис</h3>
           <div class="card-tools">
@@ -794,10 +805,35 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
+        let formContainer = $('#form-container');
+        let agreementContainer = $('#agreement-container');
+        let polisContainer = $('#polis-container');
+        let productId = $('#product-id');
+        let individualClientRow = $('#individual-client-row');
+        let legalClientRow = $('#legal-client-row');
+        let insurerName = $('#insurer-name');
         let submitButton = $('#submit-button');
         let form = $('#klass-form');
 
         $(document).ready(function () {
+            productId.change(function (e) {
+                let value = $(this).children("option:selected").val();
+                if (value) {
+                    if ($("input:radio[name='r3']:checked").val() === 'individual') {
+                        legalClientRow.hide();
+                        insurerName.prop('disabled', true);
+                        individualClientRow.show();
+                    } else {
+                        legalClientRow.show();
+                        insurerName.prop('disabled', false);
+                        individualClientRow.hide();
+                    }
+                    formContainer.show();
+                } else {
+                    formContainer.hide();
+                }
+            });
+
             submitButton.click(function (e) {
                 e.preventDefault();
 

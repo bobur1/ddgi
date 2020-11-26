@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from insurance.models import Currency, Policy, InsuranceOffice, PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
-    IndividualClient, LegalClient, Position, ProductTypeCode, OfficeType, Bank, ProductType, ProductField, \
-    ApplicationForm
+from insurance.models import Currency, Policy, InsuranceOffice, \
+    PolicySeriesType, User, OfficeWorkers, PolicyTransfers, \
+    IndividualClient, LegalClient, Position, ProductTypeCode, \
+    OfficeType, Bank, ProductType, ProductField, ApplicationForm
 from insurance.enum import InputType, ContractType, CurrencyType, ClientType
 
 

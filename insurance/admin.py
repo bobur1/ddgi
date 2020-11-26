@@ -212,7 +212,7 @@ class PolicyAdmin(admin.ModelAdmin):
 
 @admin.register(Beneficiary)
 class BeneficiaryAdmin(admin.ModelAdmin):
-    list_display = (str, 'person', 'fax_number', 'checking_account', 'bank', 'inn', 'mfo')
+    list_display = (str, 'individual', 'legal')
 
 
 @admin.register(Human)

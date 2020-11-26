@@ -803,48 +803,57 @@ class ApplicationFormViewSet(viewsets.ViewSet):
         response = {}
         try:
             product_type = ProductType.objects.get(id=request.data.get('product_type'))
-            is_legal_client = request.data.get('is_legal_client', False)
-            title = request.data.get('legal_client_title')
+            person = request.data.get('client', None)
 
-            first_name = request.data.get('first_name')
-            last_name = request.data.get('last_name')
+            is_legal_client = person.get('is_legal_client', False)
+            title = person.get('legal_client_title')
 
-            address = request.data.get('client_address')
-            client_number = request.data.get('client_number')
-            mfo = request.data.get('request')
+            first_name = person.get('first_name')
+            last_name = person.get('last_name')
 
-            is_beneficiary_legal = request.data.get('is_beneficiary_legal', False)
-            beneficiary_title = request.data.get('beneficiary_title', None)
+            address = person.get('client_address')
+            client_number = person.get('client_number')
+            mfo = person.get('request')
 
-            beneficiary_first_name = request.data.get('beneficiary_first_name', None)
-            beneficiary_last_name = request.data.get('beneficiary_last_name', None)
+            beneficiary = request.data.get('beneficiary', None)
 
-            beneficiary_passport_series = request.data.get('beneficiary_passport_series', None)
-            beneficiary_passport_number = request.data.get('beneficiary_passport_number', None)
+            is_beneficiary_legal = beneficiary.get('is_beneficiary_legal', False)
 
-            beneficiary_address = request.data.get('beneficiary_address', None)
+            beneficiary_title = beneficiary.get('beneficiary_title', None)
+
+            beneficiary_first_name = beneficiary.get('beneficiary_first_name', None)
+            beneficiary_last_name = beneficiary.get('beneficiary_last_name', None)
+
+            beneficiary_passport_series = beneficiary.get('beneficiary_passport_series', None)
+            beneficiary_passport_number = beneficiary.get('beneficiary_passport_number', None)
+
+            beneficiary_address = beneficiary.get('beneficiary_address', None)
             beneficiary_bank = None
 
-            beneficiary_bank_id = request.data.get('beneficiary_bank_id', None)
+            beneficiary_bank_id = beneficiary.get('beneficiary_bank_id', None)
 
             if beneficiary_bank_id is not None:
                 beneficiary_bank = Bank.objects.get()
 
-            beneficiary_number = request.data.get('beneficiary_number', None)
-            beneficiary_mfo = request.data.get('beneficiary_mfo', None)
+            beneficiary_number = beneficiary.get('beneficiary_number', None)
+            beneficiary_mfo = beneficiary.get('beneficiary_mfo', None)
 
-            pledger_name = request.data.get('pledger_name', None)
-            pledger_address = request.data.get('pledger_address', None)
-            pledger_number = request.data.get('pledger_phone_number', None)
-            pledger_bank_account = request.data.get('pledger_checking_account', None)
 
-            pledger_bank_id = request.data.get('pledger_bank_id', None)
+
+            pledger = request.data.get('pledger', None)
+
+            pledger_name = pledger.get('pledger_name', None)
+            pledger_address = pledger.get('pledger_address', None)
+            pledger_number = pledger.get('pledger_phone_number', None)
+            pledger_bank_account = pledger.get('pledger_checking_account', None)
+
+            pledger_bank_id = pledger.get('pledger_bank_id', None)
             pledger_bank = None
             if beneficiary_bank_id is not None:
                 pledger_bank = Bank.objects.get()
 
-            pledger_inn = request.data.get('pledger_inn', None)
-            pledger_mfo = request.data.get('pledger_mfo', None)
+            pledger_inn = pledger.get('pledger_inn', None)
+            pledger_mfo = pledger.get('pledger_mfo', None)
 
             from_date = request.data.get('from_date')
 
@@ -852,8 +861,16 @@ class ApplicationFormViewSet(viewsets.ViewSet):
 
             contract_type = request.data.get('contract_type_id')
             form_status = request.data.get('form_status')
-            fields = request.data.get('fields')
+            fields = request.data.get('fields', [])
 
+            for field in fields:
+                field_type = field.get('type', None)
+                input_type = field.get('input_type')
+                is_required = field.get('is_required')
+                name = field.get('name')
+                value = field.get('value')
+                order = field.get('order')
+                pass
 
             response['success']=True
         except Exception as e:

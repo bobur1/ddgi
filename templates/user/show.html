@@ -25,11 +25,30 @@
                     <table class="table {% comment %}table-bordered{% endcomment %} table-striped projects">
                         <tbody>
                         <tr><th>ID</th><td>{{ user.id }}</td></tr>
-                        <tr><th>Название</th><td>{{ user.name }}</td></tr>
-                        <tr><th>Код</th><td>{{ user.code }}</td></tr>
-                        <tr><th>Описание</th><td>{{ user.description }}</td></tr>
+                        <tr><th>Имя пользователя</th><td>{{ user.username }}</td></tr>
+                        <tr><th>Электронная почта</th><td>{{ user.email }}</td></tr>
+                        <tr><th>омер телефона</th><td>{{ user.profile.phone }}</td></tr>
+                        <tr><th>ФИО</th><td>{{ user.last_name }} {{ user.first_name }} {{ user.profile.middle_name }}</td></tr>
+                        <tr><th>Активный</th><td>{% if user.is_active %}Да{% else %}Нет{% endif %}</td></tr>
+                        <tr><th>Серия паспорта</th><td>{{ user.profile.passport_series }}</td></tr>
+                        <tr><th>Номер паспорта</th><td>{{ user.profile.passport_number }}</td></tr>
+                        <tr><th>Дата выдачи паспорта</th><td>{{ user.profile.passport_given_date }}</td></tr>
+                        <tr><th>Кем выдан паспорта</th><td>{{ user.profile.passport_given_by }}</td></tr>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-gray card-outline">
+                <div class="card-header"><h3 class="card-title">Logo</h3></div>
+                <div class="card-body">
+                    @if ($payment->logo)
+                        <a href="{{ $payment->logoOriginal }}" target="_blank"><img src="{{ $payment->logoThumbnail }}"></a>
+                    @endif
                 </div>
             </div>
         </div>

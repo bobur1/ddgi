@@ -123,6 +123,7 @@ def user(request):
     return render(request, "user/index.html")
 
 
+
 @login_required
 def user_add(request):
     positions = Position.objects.all()
@@ -159,10 +160,6 @@ def bank_add(request):
 def bank_show(request, id):
     bank = Bank.objects.filter(id=id).first()
     return render(request, "references/bank/show.html", { 'bank': bank })
-
-
-# def spravochnik_bank(request):
-#     return render(request, "spravochniki/bank/add.html")
 
 
 @login_required
@@ -361,10 +358,12 @@ def product_show(request, id):
 @login_required
 def product_edit(request, id):
     product = ProductType.objects.filter(id=id).first()
+    productClasses = product.classes.values_list('id', flat=True)
     klasses = ProductTypeCode.objects.all()
     return render(request, "product/edit.html", {
         'product': product,
         'klasses': klasses,
+        'productClasses': productClasses,
     })
 
 
@@ -424,7 +423,11 @@ def form(request):
 
 @login_required
 def form_add(request):
+    products = ProductType.objects.all()
+    banks = Bank.objects.all()
     return render(request, "form/add.html", {
+        'products': products,
+        'banks': banks,
 
     })
 
@@ -438,7 +441,11 @@ def form_show(request, id):
 @login_required
 def form_edit(request, id):
     form = ApplicationForm.objects.filter(id=id).first()
+    products = ProductType.objects.all()
+    banks = Bank.objects.all()
     return render(request, "form/edit.html", {
         'form': form,
+        'products': products,
+        'banks': banks,
 
     })

@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="name" class="col-form-label">Название</label>
                     <input
@@ -38,7 +38,7 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="code" class="col-form-label">Код</label>
                     <input
@@ -50,31 +50,16 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="group_id" class="col-form-label">Группа</label>
-                    <select
-                        id="group_id"
-                        class="form-control"
-                        name="group_id"
-                    >
-                      <option></option>
-                      {% for group in groups %}
-                        <option value="{{ group.id }}" {% if product.group_id == group.id %}selected="selected"{% endif %}>{{ group.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
               </div>
 
               <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-6">
                   <div class="form-group">
                     <label for="klass_id" class="col-form-label">Класс</label>
                     <select
                         id="klass_id"
                         class="form-control"
-                        name="klass_id"
+                        name="product_code_types"
                     >
                       {% for klass in klasses %}
                         <option value="{{ klass.id }}" {% if product.klass_id == klass.id %}selected="selected"{% endif %}>{{ klass.name }}</option>
@@ -82,21 +67,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-md-5">
-                  <div class="form-group">
-                    <label for="view_id" class="col-form-label">Вид</label>
-                    <select
-                      id="view_id"
-                      class="form-control"
-                      name="view_id"
-                    >
-                      {% for view in views %}
-                        <option value="{{ view.id }}" {% if product.view_id == view.id %}selected="selected"{% endif %}>{{ view.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="has_beneficiary" class="col-form-label">Имеет выгодоприобретателя?</label>
                     <input
@@ -109,7 +80,7 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="has_pledger" class="col-form-label">Имеет залогодателя?</label>
                     <input
@@ -161,17 +132,23 @@
 
                 let forms = {};
                 let params = {}
+                let productTypeCodes = {};
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'update';
                 forms.id = {{ product.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    if (serializedForm[i]['name'] === 'product_code_types') {
+                        productTypeCodes[j++] = serializedForm[i]['value'];
+                    } else {
+                        params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    }
                 }
+                params.product_code_types = productTypeCodes;
                 forms.params = params;
 
                 $.ajax({
-                    url: '/api/product/',
+                    url: '/api/product_type/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',

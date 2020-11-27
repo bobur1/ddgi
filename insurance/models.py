@@ -320,8 +320,6 @@ class LegalClient(models.Model):
     address = models.CharField(verbose_name="Адрес", max_length=150)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
 
-    checking_account = models.CharField(max_length=32)
-
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
 
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -335,8 +333,6 @@ class LegalClient(models.Model):
 
 
 class IndividualClient(Human):
-    checking_account = models.CharField(max_length=32)
-
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
 
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -470,7 +466,7 @@ class GridCols(models.Model):
 
 
 class ProductField(models.Model):
-    product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name="product_field")
     type = models.CharField(max_length=128)
     input_type = models.PositiveIntegerField(choices=InputType.__list__, default=InputType.TEXT)
     is_required = models.BooleanField(default=False)

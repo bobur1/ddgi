@@ -159,8 +159,7 @@
         let form = $('#polis-registration-form');
         let submitButton = $('#submit-button');
 
-        $(document).ready(function () {
-            if (logoUrl) {
+        if (logoUrl) {
                 let send = XMLHttpRequest.prototype.send, token = $('meta[name="csrf-token"]').attr('content');
                 XMLHttpRequest.prototype.send = function(data) {
                     this.setRequestHeader('X-CSRFToken', token);
@@ -188,6 +187,8 @@
                 });
             }
 
+        $(document).ready(function () {
+
             activatePolisSeries.change(function () {
                 if (this.checked) {
                     polisSeries.prop('disabled', true);
@@ -214,6 +215,7 @@
 
                 if (activatePolisSeries.prop('checked') === true) {
                     formData.append('is_free_policy', true.toString());
+                    formData.append('policy_series', '');
                 } else {
                     formData.append('policy_series', polisSeries.val());
                 }

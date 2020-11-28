@@ -233,12 +233,6 @@ class ActSerializer(serializers.ModelSerializer):
                   'is_insured', 'risk']
 
 
-class ActFieldsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PolicyFields
-        fields = ['id', 'product', 'order', 'name', 'value']
-
-
 class PolicySeriesTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PolicySeriesType

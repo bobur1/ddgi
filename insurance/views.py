@@ -139,7 +139,7 @@ def get_product_type_list(request):
 
 
 @api_view(['GET'])
-def get_product_type_fileds(request):
+def get_product_type_fields(request):
     type_id = request.query_params.get('product_type_id', None)
     response = {}
     try:
@@ -152,6 +152,8 @@ def get_product_type_fileds(request):
         response['success'] = False
     return JsonResponse(response)
 
+# @api_view(['GET'])
+# def get_prduct_details(request)
 
 class PolicyViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]
@@ -563,6 +565,15 @@ class ProductTypeViewSet(viewsets.ViewSet):
 
     def put(self, request, *args, **kwargs):
         return self.__handle_request(req=request)
+
+    def get(self, request, *args, **kwargs):
+        serializer = ProductSerializer(ProductType.objects.all(), many=True)
+        response = {
+            'data': serializer.data,
+            'success': True
+        }
+
+        return JsonResponse(response)
 
 
 class ProductTypeCodeViewSet(viewsets.ViewSet):

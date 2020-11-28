@@ -319,8 +319,7 @@ class LegalClient(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
     address = models.CharField(verbose_name="Адрес", max_length=150)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
-
-    checking_account = models.CharField(max_length=32)
+    inn = models.CharField(verbose_name="INN", max_length=15, default=None, blank=True)
 
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -335,10 +334,8 @@ class LegalClient(models.Model):
 
 
 class IndividualClient(Human):
-    checking_account = models.CharField(max_length=32)
-
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
-
+    inn = models.CharField(verbose_name="INN", max_length=15, default=None, blank=True)
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
     up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='individual_client_up_by')
@@ -370,7 +367,7 @@ class Beneficiary(models.Model):
         left_text = self.individual.__str__()
         if self.individual is None:
             left_text = self.legal.name
-        return left_text + ' ' + self.legal.inn
+        return left_text + ' ' + self.legal.bank.inn
 
 
 class Policy(models.Model):
@@ -469,25 +466,32 @@ class GridCols(models.Model):
         return self.title
 
 
+class ProductFieldClass(models.Model):
+    title = models.CharField(max_length=512, default="", blank=False, null=False)
+    description = models.CharField(max_length=1024, default="", blank=False, null=False)
+
+    def __str__(self):
+        return self.title
+
+
+class SimpleField(models.Model):
+    name = models.CharField(max_length=128)
+    input_type = models.PositiveIntegerField(choices=InputType.__list__, default=InputType.TEXT)
+    value = models.CharField(max_length=4096, null=True, blank=True, default=None)
+
+
 class ProductField(models.Model):
-    product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
-    type = models.CharField(max_length=128)
+    product = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name="product_field")
+    field_class = models.ForeignKey(ProductFieldClass, on_delete=models.CASCADE,
+                                    related_name='product_field_class', default=None, null=True, blank=True)
     input_type = models.PositiveIntegerField(choices=InputType.__list__, default=InputType.TEXT)
     is_required = models.BooleanField(default=False)
     name = models.CharField(max_length=128)
-    value = models.CharField(max_length=4096, null=True, blank=True, default=None)
 
+    value = models.CharField(max_length=4096, null=True, blank=True, default=None)
+    value_description = models.CharField(max_length=4096, null=True, blank=True, default=None)
     order = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-class PolicyFields(models.Model):
-    product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True)
-    order = models.IntegerField(null=True)
-    name = models.CharField(max_length=128, null=True)
-    value = models.CharField(max_length=4096, null=True, blank=True, default=None)
+    extra_fields = models.ManyToManyField(SimpleField, related_name='product_field_extra_fields', default=[])
 
     def __str__(self):
         return self.name

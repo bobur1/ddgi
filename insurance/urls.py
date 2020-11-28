@@ -36,7 +36,7 @@ urlpatterns = [
     path('api/update-office/', views.create_update_office),
     path('api/check_login/', views.is_free_login),
     path('api/get_product_type_list/', views.get_product_type_list),
-    path('api/get_product_type_fileds/', views.get_product_type_fileds),
+    path('api/get_product_type_fileds/', views.get_product_type_fields),
 
 ]
 

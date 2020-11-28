@@ -82,21 +82,29 @@ def create_update_product_type(request):
     code = request.data.get('code')
     name = request.data.get('name')
     client_type = request.data.get('client_type')
+
     product_type_codes = request.data.get('product_code_types', [])
+
+    type_codes = ProductTypeCode.objects.filter(id__in=product_type_codes)
+
     has_beneficiary = request.data.get('has_beneficiary', False)
     has_pledger = request.data.get('has_pledger', False)
     min_acceptable_amount = request.data.get('min_acceptable_amount')
     max_acceptable_amount = request.data.get('max_acceptable_amount')
     is_exist = request.data.get('is_active', True)
+
     if type_id is None:
-        ProductType.objects.create(code=code,
-                                   name=name,
-                                   client_type=client_type,
-                                   product_type_codes=product_type_codes,
-                                   has_beneficiary=has_beneficiary,
-                                   has_pledger=has_pledger,
-                                   min_acceptable_amount=min_acceptable_amount,
-                                   max_acceptable_amount=max_acceptable_amount)
+        product = ProductType.objects.create(code=code,
+                                             name=name,
+                                             client_type=client_type,
+                                             # classes=type_codes,
+                                             has_beneficiary=has_beneficiary,
+                                             has_pledger=has_pledger,
+                                             min_acceptable_amount=min_acceptable_amount,
+                                             max_acceptable_amount=max_acceptable_amount)
+        product.classes.set(type_codes)
+
+        product.save()
     else:
         product = ProductType.objects.get(id=type_id)
         product.code = code
@@ -111,6 +119,7 @@ def create_update_product_type(request):
         product.save()
 
 
+
 def create_update_product_type_code(request):
     code_id = request.data.get('id', None)
     code = request.data.get('code')
@@ -118,5 +127,6 @@ def create_update_product_type_code(request):
     description = request.data.get('description')
     is_active = request.data.get('is_active', True)
     obj, created = ProductTypeCode.objects.update_or_create(id=code_id, defaults={'code': code, 'name': name,
-                                                                   'description': description, 'is_exist': is_active})
+                                                                                  'description': description,
+                                                                                  'is_exist': is_active})
     print(f'created {created}')

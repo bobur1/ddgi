@@ -171,7 +171,10 @@ class LegalClientAdmin(admin.ModelAdmin):
 class ProductFieldInline(admin.TabularInline):
     model = ProductField
     extra = 0
-    fields = ('type', 'input_type', 'is_required', 'name', 'value', 'order')
+    fields = ('field_class', 'input_type', 'is_required', 'name', 'extra_fields', 'value', 'order')
+
+
+admin.site.register(ProductFieldClass)
 
 
 class ApplicationFieldInline(admin.TabularInline):

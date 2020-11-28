@@ -15,8 +15,9 @@ class InputType:
     MULTI_SELECTION = (4, 'Multi selection')
     CURRENCY = (5, 'Currency')
     DATE = (6, 'Date')
+    BOOLEAN = (7, 'Boolean')
 
-    __list__ = (TEXT, NUMBER, SINGLE_SELECTION, MULTI_SELECTION, CURRENCY)
+    __list__ = (TEXT, NUMBER, SINGLE_SELECTION, MULTI_SELECTION, CURRENCY, DATE, BOOLEAN)
 
 
 class CurrencyType:

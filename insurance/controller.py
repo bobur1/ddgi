@@ -231,7 +231,7 @@ def klass_show(request, id):
 @login_required
 def klass_edit(request, id):
     klass = ProductTypeCode.objects.filter(id=id).first()
-    return render(request, "references/polis-series/edit.html", { 'klass': klass })
+    return render(request, "references/klass/edit.html", { 'klass': klass })
 
 
 @login_required
@@ -352,7 +352,11 @@ def product_add(request):
 @login_required
 def product_show(request, id):
     product = ProductType.objects.filter(id=id).first()
-    return render(request, "product/show.html", { 'product': product })
+    klasses = product.classes.all()
+    return render(request, "product/show.html", {
+        'product': product,
+        'klasses': klasses,
+    })
 
 
 @login_required

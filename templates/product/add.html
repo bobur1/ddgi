@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="name" class="col-form-label">Название</label>
                     <input
@@ -37,7 +37,7 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="code" class="col-form-label">Код</label>
                     <input
@@ -46,6 +46,20 @@
                       name="code"
                       required
                     >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="client_type" class="col-form-label">Тип клиента</label>
+                    <select
+                        id="client_type"
+                        class="form-control"
+                        name="client_type"
+                        required
+                    >
+                      <option value="1">Физическое лицо</option>
+                      <option value="2">Юридическое лицо</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -74,6 +88,7 @@
                       type="checkbox"
                       class="form-control"
                       name="has_beneficiary"
+                      value="1"
                       required
                     >
                   </div>
@@ -86,6 +101,7 @@
                       type="checkbox"
                       class="form-control"
                       name="has_pledger"
+                      value="1"
                       required
                     >
                   </div>
@@ -168,11 +184,11 @@
                     if (serializedForm[i]['name'] === 'product_code_types') {
                         productTypeCodes[j++] = serializedForm[i]['value'];
                     } else {
-                        params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                        forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                     }
                 }
-                params.product_code_types = productTypeCodes;
-                forms.params = params;
+                forms.product_code_types = productTypeCodes;
+                {#forms.params = params;#}
 
                 console.log(forms);
 
@@ -186,7 +202,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/product/');
+                            window.location.replace('/product');
                         }
                     }
                 });

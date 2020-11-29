@@ -124,21 +124,6 @@ def is_login_exists(request):
 
 
 @api_view(['GET'])
-def get_product_type_list(request):
-    client_type = request.query_params.get('client_type', '1')
-    response = {}
-    try:
-        objs = ProductType.objects.filter(client_type=client_type)
-        serializer = ProductSerializer(objs, many=True)
-        response['data'] = serializer.data
-        response['success'] = True
-    except Exception as e:
-        response['error_msg'] = e.__str__()
-        response['success'] = False
-    return JsonResponse(response)
-
-
-@api_view(['GET'])
 def get_product_type_fields(request):
     type_id = request.query_params.get('product_type_id', None)
     response = {}
@@ -567,7 +552,13 @@ class ProductTypeViewSet(viewsets.ViewSet):
         return self.__handle_request(req=request)
 
     def get(self, request, *args, **kwargs):
-        serializer = ProductSerializer(ProductType.objects.all(), many=True)
+        client_type = request.query_params.get('client_type', None)
+
+        if client_type is not None:
+            serializer = ProductSerializer(ProductType.objects.filter(client_type=client_type), many=True)
+        else:
+            serializer = ProductSerializer(ProductType.objects.all(), many=True)
+
         response = {
             'data': serializer.data,
             'success': True

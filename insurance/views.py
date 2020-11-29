@@ -66,6 +66,7 @@ def create_update_office(request):
     response = {}
     try:
         reason = request.data.get('reason', 1)
+
         office_id = request.data.get('office_id', None)
         series = request.data.get('series')
         director_id = request.data.get('director_id')
@@ -90,11 +91,22 @@ def create_update_office(request):
 
         if reason == 1:
             create_insurance_office(series=series, name=name, location=address, region=region, director=director,
-                                    created_by=created_by, office_type=office_type, parent=parent, funded=founded_date)
+                                    created_by=created_by, office_type=office_type, parent=parent,
+                                    funded=founded_date, bank_ids=bank_ids, phone_number=contact)
         else:
+            insurance_office = InsuranceOffice.objects.get(id=office_id)
+            is_exist = request.data.get('is_exist', insurance_office.is_exist)
+            phone_number = insurance_office.contact if contact is None else contact
+            parent_id = insurance_office.parent.id if parent_id is None else parent_id
+            created_by = insurance_office.cr_by if created_by is None else created_by
+            if parent_id is not None:
+                parent = InsuranceOffice.objects.get(id=parent_id)
+
             edit_insurance_office(office_id=office_id, series=series, name=name, location=address, region=region,
-                                  director=director,
-                                  office_type=office_type, parent=parent, bank_ids=bank_ids, phone_number=contact)
+                                  director=director, office_type=office_type, parent=parent,
+                                  bank_ids=bank_ids, phone_number=phone_number,
+                                  funded=founded_date if founded_date is None else insurance_office.founded_date,
+                                  is_exist=is_exist, created_by=created_by)
         response['success'] = True
     except Exception as e:
         response['success'] = False

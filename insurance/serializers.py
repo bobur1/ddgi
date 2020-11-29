@@ -199,16 +199,17 @@ class KlassSerializer(serializers.ModelSerializer):
 class BankSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bank
-        fields = ['id', 'name', 'branch_name', 'mfo', 'inn',
+        fields = ['id', 'name', 'branchName', 'mfo', 'inn',
                   'address', 'phone_number', 'checking_account']
 
 
 class BranchSerializer(serializers.ModelSerializer):
     director = UserDetailedSerializer()
+    bank = BankSerializer()
 
     class Meta:
         model = InsuranceOffice
-        fields = ['id', 'name', 'is_branch', 'director']
+        fields = ['id', 'name', 'office_type', 'director', 'bank']
 
 
 class RegionSerializer(serializers.ModelSerializer):

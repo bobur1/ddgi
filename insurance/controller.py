@@ -427,7 +427,7 @@ def form(request):
 
 @login_required
 def form_add(request):
-    products = ProductType.objects.all()
+    products = ProductType.objects.filter(client_type=1).all()
     banks = Bank.objects.all()
     return render(request, "form/add.html", {
         'products': products,

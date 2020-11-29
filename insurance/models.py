@@ -479,6 +479,10 @@ class SimpleField(models.Model):
     input_type = models.PositiveIntegerField(choices=InputType.__list__, default=InputType.TEXT)
     value = models.CharField(max_length=4096, null=True, blank=True, default=None)
 
+    def __str__(self):
+        name = InputType.__list__[self.input_type-1][1]
+        return f'{self.name} {name}'
+
 
 class ProductField(models.Model):
     product = models.ForeignKey(ProductType, on_delete=models.CASCADE, related_name="product_field")

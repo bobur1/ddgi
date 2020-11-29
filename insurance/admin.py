@@ -168,6 +168,12 @@ class LegalClientAdmin(admin.ModelAdmin):
     pass
 
 
+# class SimpleFieldInline(admin.TabularInline):
+#     model = SimpleField
+#     extra = 0
+#     fields = ('name', 'input_type', 'value')
+
+
 class ProductFieldInline(admin.TabularInline):
     model = ProductField
     extra = 0
@@ -175,6 +181,7 @@ class ProductFieldInline(admin.TabularInline):
 
 
 admin.site.register(ProductFieldClass)
+admin.site.register(SimpleField)
 
 
 class ApplicationFieldInline(admin.TabularInline):

@@ -52,29 +52,42 @@ def generate_policies(from_number, to_number, is_free_generated, series, session
 
 def create_insurance_office(series, name, director, parent, office_type, location, region, funded, created_by, bank_ids,
                             phone_number):
-    banks = Bank.objects.filter(id in bank_ids)
+    banks = Bank.objects.filter(id__in=bank_ids)
 
-    InsuranceOffice.objects.create(series=series, name=name, director=director, parent=parent,
-                                   location=location, region=region,
-                                   office_type=office_type,
-                                   founded_date=funded, cr_on=datetime.now(), cr_by=created_by,
-                                   is_exist=True,
-                                   banks=banks,
-                                   contact=phone_number)
+    office = InsuranceOffice.objects.create(series=series, name=name, director=director, parent=parent,
+                                            location=location, region=region,
+                                            office_type=office_type,
+                                            founded_date=funded, cr_on=datetime.now(), cr_by=created_by,
+                                            is_exist=True,
+                                            contact=phone_number)
+    for b in banks:
+        office.bank.add(b)
+    office.save()
 
 
-def edit_insurance_office(office_id, series, name, director, parent, office_type, location, region, funded, created_by,
-                          bank_ids,
+def edit_insurance_office(office_id, series, name, director, parent, office_type,
+                          location, region, funded, created_by, bank_ids, is_exist,
                           phone_number):
-    banks = Bank.objects.filter(id in bank_ids)
+    banks = Bank.objects.filter(id__in=bank_ids)
 
-    InsuranceOffice.objects.update_or_create(id=office_id, series=series, name=name, director=director, parent=parent,
-                                             location=location, region=region,
-                                             office_type=office_type,
-                                             founded_date=funded, cr_on=datetime.now(), cr_by=created_by,
-                                             is_exist=True,
-                                             banks=banks,
-                                             contact=phone_number)
+    office = InsuranceOffice.objects.get(id=office_id)
+
+    office.series = series
+    office.name = name
+    office.director = director
+    office.parent = parent
+    office.location = location
+    office.region = region
+    office.office_type = office_type
+    office.founded_date = funded
+    office.contact = phone_number
+    office.is_exists = is_exist
+    office.up_by = created_by
+    office.up_on = datetime.now()
+
+    for b in banks:
+        office.bank.add(b)
+    office.save()
 
 
 def create_update_product_type(request):
@@ -119,7 +132,6 @@ def create_update_product_type(request):
         product.save()
 
 
-
 def create_update_product_type_code(request):
     code_id = request.data.get('id', None)
     code = request.data.get('code')
@@ -130,3 +142,16 @@ def create_update_product_type_code(request):
                                                                                   'description': description,
                                                                                   'is_exist': is_active})
     print(f'created {created}')
+
+
+# def create_update_office_worker(request):
+#     worker_user_id = request.data.get('user_id')
+# OfficeWorkers.objects.create(user=)
+
+def get_transferred_policies_by(user):
+    retransferred_policies = PolicyRetransfer.objects.filter(to_user=user)
+    policies = []
+    for rtf in retransferred_policies:
+        policies.append(rtf.transfer.policy)
+
+    return policies

@@ -164,6 +164,7 @@
                 for (let i = 0; i < serializedForm.length; i++) {
                     params[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
+                params.id = {{ bank.id }};
                 forms.params = params;
 
                 $.ajax({

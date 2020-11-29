@@ -33,6 +33,7 @@
                       id="name"
                       class="form-control"
                       name="name"
+                      value="{{ client.name }}"
                       required
                     >
                   </div>
@@ -44,6 +45,7 @@
                       id="address"
                       class="form-control"
                       name="address"
+                      value="{{ client.address }}"
                       required
                     >
                   </div>
@@ -58,6 +60,7 @@
                       id="phone_number"
                       class="form-control"
                       name="phone_number"
+                      value="{{ client.phone_number }}"
                       required
                     >
                   </div>
@@ -73,7 +76,7 @@
                     >
                       <option selected></option>
                       {% for position in positions %}
-                          <option value="{{ position.id }}">{{ position.name }}</option>
+                          <option value="{{ position.id }}" {% if client.position_id == position.id %}selected="selected"{% endif %}>{{ position.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -88,6 +91,7 @@
                       id="mfo"
                       class="form-control"
                       name="mfo"
+                      value="{{ client.mfo }}"
                       required
                     >
                   </div>
@@ -99,6 +103,7 @@
                       id="inn"
                       class="form-control"
                       name="inn"
+                      value="{{ client.inn }}"
                       required
                     >
                   </div>
@@ -144,11 +149,13 @@
                 let forms = {};
                 let params = {}
                 forms.csrfmiddlewaretoken = csrftoken;
-                forms.action = 'create';
+                forms.action = 'update';
+                forms.id = {{ client.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     params[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
+                params.id = {{ client.id }};
                 forms.params = params;
 
                 $.ajax({

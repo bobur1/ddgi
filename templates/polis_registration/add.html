@@ -228,8 +228,11 @@
                     type: "POST",
                     {#dataType: 'multipart/form-data',#}
                     success: function (data) {
-                        if (data) {
+                        if (data.success === true) {
                             console.log(data);
+                            alert('Полисы успешно добавлены!');
+                        } else {
+                            alert('Полисы не добавлены!!!');
                         }
                     }
                 });

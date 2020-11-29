@@ -530,7 +530,7 @@
               <button type="button" onclick="addRow()" class="btn btn-primary ">Добавить</button>
             </div>
             <div class="table-responsive p-0 " style="max-height: 300px;">
-              <form method="POST" id="polis-fields" data-counter="0">
+              <form method="POST" id="product-fields" class="product-fields" data-field-number="0">
                 <table class="table table-hover table-head-fixed" id="empTable">
                   <thead>
                   <tr>
@@ -562,7 +562,7 @@
                     <td><input type="text" class="form-control forsum2" name="insurance_cost-0"></td>
                     <td><input type="text" class="form-control forsum" name="insurance_sum-0"></td>
                     <td><input type="text" class="form-control forsum3" name="insurance_premium-0"></td>
-                    <td><input type="button" value="Заполнить" class="btn btn-success polis-fields-0"></td>
+                    <td><input type="button" value="Заполнить" class="btn btn-success product-fields-button" id="product-fields-button-0" data-field-number="0"></td>
                   </tr>
                   <tr>
                     <td colspan="8" style="text-align: right"><label class="text-bold">Итого</label></td>
@@ -596,8 +596,9 @@
           </div>
         </div>
 
-        <div id="product-field-modal-0" class="modal">
-          <div class="modal-content">
+        <div id="product-field-modal-0" class="modal" data-field-number="0">
+          <div class="modal-content" id="product-field-modal-content-0">
+            <span class="close product-fields-close" id="product-fields-close-0" data-field-number="0">&times;</span>
             <div class="card card-success">
               <div class="card-header">
                 <h3 class="card-title">Перечень дополнительного оборудования</h3>
@@ -608,7 +609,7 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive p-0 " style="max-height: 300px;">
-                  <form method="POST" id="polis-fields-0-1">
+                  <form method="POST" id="product-fields-0-1">
                     <table class="table table-hover table-head-fixed" id="empTable2">
                       <thead>
                       <tr>
@@ -698,7 +699,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <form method="POST" id="polis-fields-0-2">
+                <form method="POST" id="product-fields-0-2">
                   <div class="form-group">
                     <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
                     <div class="form-check">
@@ -727,7 +728,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <form method="POST" id="polis-fields-0-3">
+                <form method="POST" id="product-fields-0-3">
                   <div class="form-group">
                     <label>Раздел I. Гибель или повреждение транспортного средства</label>
                     <div class="row">
@@ -776,7 +777,7 @@
                   </div>
                 </form>
 
-                <form method="POST" id="polis-fields-0-4">
+                <form method="POST" id="product-fields-0-4">
                   <div class="form-group">
                     <label class=>Раздел II. Автогражданская ответственность</label>
                     <div class="row">
@@ -815,7 +816,7 @@
                   </div>
                 </form>
 
-                <form method="POST" id="polis-fields-0-5">
+                <form method="POST" id="product-fields-0-5">
                   <div class="form-group">
                     <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                     <div class="form-check">
@@ -830,7 +831,7 @@
                 </form>
 
                 <div class="table-responsive p-0 ">
-                  <form method="POST" id="polis-fields-0-6">
+                  <form method="POST" id="product-fields-0-6">
                     <table class="table table-hover table-head-fixed">
                       <thead>
                       <tr>
@@ -911,7 +912,7 @@
               </div>
             </div>
 
-            <div class="card card-info polis" id="polis-container" style="display: none">
+            <div class="card card-info polis" id="polis-container">
               <div class="card-header">
                 <h3 class="card-title">Полис</h3>
                 <div class="card-tools">
@@ -935,7 +936,7 @@
                         <div class="col-sm-4">
                           <div class="form-group">
                             <label for="polises">Полис</label>
-                            <select class="form-control" id="polises" name="policy" style="width: 100%;">
+                            <select class="form-control polises" id="polises-0" name="policy" style="width: 100%;">
                               <option selected="selected">Полисы</option>
                             </select>
       {#                      <div class="input-group mb-3">#}
@@ -1096,7 +1097,7 @@
         let submitButton = $('#submit-button');
         let form = $('#klass-form');
 
-        let polises = $('#polises');
+        let polises = $('.polises');
 
         let product = null;
         let individualClient = true;
@@ -1339,12 +1340,18 @@
             });
 
             $(window).click(function(event) {
+                let fieldNumber;
                 if (event.target == insurerModal[0]) {
                     insurerModal.hide();
                 } else if (event.target == beneficiaryModal[0]) {
                     beneficiaryModal.hide();
                 } else if (event.target == pledgerModal[0]) {
                     pledgerModal.hide();
+                } else {
+                    let modal = $('#product-fields-' + (fieldNumber = event.target.data('field-number')));
+                    if (modal.length && target.event == modal[0]) {
+                      modal.hide();
+                    }
                 }
             });
         });

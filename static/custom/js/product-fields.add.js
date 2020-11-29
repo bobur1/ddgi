@@ -1,4 +1,22 @@
 $(document).ready(function () {
+    $('.product-fields-button').click(function (e) {
+        let productForm = $(this);
+        let fieldNumber = productForm.data('field-number');
+        let field = $('#product-field-modal-' + fieldNumber);
+        let content = $('#product-field-modal-content-' + fieldNumber);
+        field.show();
+        field.css('overflow', 'scroll');
+        field.css('padding', '10px');
+        content.css('padding', '10px');
+    });
+
+    $('.product-fields-close').click(function (e) {
+        let productForm = $(this);
+        let fieldNumber = productForm.data('field-number');
+
+        $('#product-field-modal-' + fieldNumber).hide();
+    });
+
     // $('.client-type-radio').click(function () {
     //     $.ajax({
     //         url: '/api/product_type/',

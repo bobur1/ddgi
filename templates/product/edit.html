@@ -74,9 +74,10 @@
                         id="klass_id"
                         class="form-control"
                         name="product_code_types"
+                        multiple
                     >
                       {% for klass in klasses %}
-                        <option value="{{ klass.id }}" {% if product.klass_id == klass.id %}selected="selected"{% endif %}>{{ klass.name }}</option>
+                        <option value="{{ klass.id }}" {% if klass.id in productClasses  %}selected="selected"{% endif %}>{{ klass.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -158,6 +159,7 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
+        $('#klass_id').select2();
         let submitButton = $('#submit-button');
         let form = $('#product-form');
 
@@ -180,15 +182,16 @@
                 forms.action = 'update';
                 forms.id = {{ product.id }};
                 let serializedForm = form.serializeArray();
+                let j = 0;
                 for (let i = 0; i < serializedForm.length; i++) {
                     if (serializedForm[i]['name'] === 'product_code_types') {
                         productTypeCodes[j++] = serializedForm[i]['value'];
                     } else {
-                        params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                        forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                     }
                 }
-                params.product_code_types = productTypeCodes;
-                forms.params = params;
+                forms.product_code_types = productTypeCodes;
+                {#forms.params = params;#}
 
                 $.ajax({
                     url: '/api/product_type/',
@@ -196,7 +199,7 @@
                     {#processData: false,#}
                     contentType: 'application/json',
                     dataType: 'json',
-                    type: "POST",
+                    type: "PUT",
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);

@@ -253,7 +253,7 @@ def polis_series_show(request, id):
 @login_required
 def polis_series_edit(request, id):
     polisSeries = PolicySeriesType.objects.filter(id=id).first()
-    return render(request, "references/klass/edit.html", { 'polisSeries': polisSeries })
+    return render(request, "references/polis-series/edit.html", { 'polisSeries': polisSeries })
 #
 #
 # @login_required

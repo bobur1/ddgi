@@ -155,7 +155,7 @@ class BankAdmin(admin.ModelAdmin):
 
 @admin.register(InsuranceOffice)
 class BranchAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('id', 'series', 'name')
 
 
 @admin.register(Currency)

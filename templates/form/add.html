@@ -937,7 +937,11 @@
                           <div class="form-group">
                             <label for="polises">Полис</label>
                             <select class="form-control polises" id="polises-0" name="policy" style="width: 100%;">
-                              <option selected="selected">Полисы</option>
+{#                              <option selected="selected">Полисы</option>#}
+                              {% for polis in polises %}
+                                <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>
+                              {% endfor %}
+
                             </select>
       {#                      <div class="input-group mb-3">#}
       {#                        <div class="input-group-prepend">#}

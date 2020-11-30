@@ -6,6 +6,7 @@ from insurance.models import Currency, Policy, InsuranceOffice, \
     IndividualClient, LegalClient, Position, ProductTypeCode, \
     OfficeType, Bank, ProductType, ProductField, ApplicationForm
 from insurance.enum import InputType, ContractType, CurrencyType, ClientType
+from insurance.helpers import get_transferred_policies_by
 
 
 @login_required
@@ -429,10 +430,11 @@ def form(request):
 def form_add(request):
     products = ProductType.objects.filter(client_type=1).all()
     banks = Bank.objects.all()
+    polises = get_transferred_policies_by(request.user)
     return render(request, "form/add.html", {
         'products': products,
         'banks': banks,
-
+        'polises': polises,
     })
 
 

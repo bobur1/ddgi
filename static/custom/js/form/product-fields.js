@@ -254,7 +254,7 @@ function addProductFields(fieldNumber) {
                         </tr>
                         <tr>
                           <td colspan="4"><label class="text-bold">Итого</label></td>
-                          <td><input type="text" class="form-control" name="total"></td>
+                          <td><input type="text" class="form-control" name="total-${fieldNumber}"></td>
                         </tr>
                         </tbody>
                       </table>
@@ -273,44 +273,46 @@ function addProductFields(fieldNumber) {
                 </div>
 
                 <div class="card-body">
-                  <div class="form-group">
-                    <label>Покрытие террористических актов с ТС </label>
-                    <div class="input-group mb-4">
-                      <input type="text" class="form-control">
-                      <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
-                          <option selected="selected">UZS</option>
-                          <option>USD</option>
-                        </select>
+                  <form method="POST" id="product-fields-${fieldNumber}-2">
+                    <div class="form-group">
+                      <label>Покрытие террористических актов с ТС </label>
+                      <div class="input-group mb-4">
+                        <input type="text" class="form-control" name="cover_terror_attacks_sum-${fieldNumber}">
+                        <div class="input-group-append">
+                          <select class="form-control success" name="cover_terror_attacks_currency-${fieldNumber}" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Покрытие террористических актов с застрахованными лицами </label>
-                    <div class="input-group mb-4">
-                      <input type="text" class="form-control">
-                      <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
-                          <option selected="selected">UZS</option>
-                          <option>USD</option>
-                        </select>
+                    
+                    <div class="form-group">
+                      <label>Покрытие террористических актов с застрахованными лицами </label>
+                       <div class="input-group mb-4">
+                        <input type="text" class="form-control" name="cover_terror_attacks_insured_sum-${fieldNumber}">
+                        <div class="input-group-append">
+                          <select class="form-control success" name="cover_terror_attacks_insured_currency-${fieldNumber}" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label>Покрытие расходы по эвакуации</label>
-                    <div class="input-group mb-4">
-                      <input type="text" class="form-control">
-                      <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
-                          <option selected="selected">UZS</option>
-                          <option>USD</option>
-                        </select>
+                    
+                    <div class="form-group">
+                      <label>Покрытие расходы по эвакуации</label>
+                      <div class="input-group mb-4">
+                        <input type="text" class="form-control" name="coverage_evacuation_cost-${fieldNumber}">
+                        <div class="input-group-append">
+                          <select class="form-control success" name="coverage_evacuation_currency-${fieldNumber}" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
 
@@ -323,7 +325,7 @@ function addProductFields(fieldNumber) {
                   </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" id="product-fields-${fieldNumber}-2">
+                  <form method="POST" id="product-fields-${fieldNumber}-3">
                     <div class="form-group">
                       <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
                       <div class="form-check">
@@ -352,7 +354,7 @@ function addProductFields(fieldNumber) {
                   </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" id="product-fields-${fieldNumber}-3">
+                  <form method="POST" id="product-fields-${fieldNumber}-4">
                     <div class="form-group">
                       <label>Раздел I. Гибель или повреждение транспортного средства</label>
                       <div class="row">
@@ -401,7 +403,7 @@ function addProductFields(fieldNumber) {
                     </div>
                   </form>
 
-                  <form method="POST" id="product-fields-${fieldNumber}-4">
+                  <form method="POST" id="product-fields-${fieldNumber}-5">
                     <div class="form-group">
                       <label class=>Раздел II. Автогражданская ответственность</label>
                       <div class="row">
@@ -440,7 +442,7 @@ function addProductFields(fieldNumber) {
                     </div>
                   </form>
 
-                  <form method="POST" id="product-fields-${fieldNumber}-5">
+                  <form method="POST" id="product-fields-${fieldNumber}-6">
                     <div class="form-group">
                       <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                       <div class="form-check">
@@ -455,7 +457,7 @@ function addProductFields(fieldNumber) {
                   </form>
 
                   <div class="table-responsive p-0 ">
-                    <form method="POST" id="product-fields-${fieldNumber}-6">
+                    <form method="POST" id="product-fields-${fieldNumber}-7">
                       <table class="table table-hover table-head-fixed">
                         <thead>
                         <tr>
@@ -601,4 +603,6 @@ function addProductFields(fieldNumber) {
             </div>
           </div>
         `;
+
+    generalProductFields.append(fields);
 }

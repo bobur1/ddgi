@@ -42,6 +42,9 @@ let anketaFieldsForm = $('#anketa-fields');
 
 let polises = $('.polises');
 
+let generalProductFields = $('#general-product-fields');
+let formSaveButton = $('#form-save-button');
+
 let product = null;
 let individualClient = true;
 

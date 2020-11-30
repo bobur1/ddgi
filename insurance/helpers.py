@@ -144,9 +144,17 @@ def create_update_product_type_code(request):
     print(f'created {created}')
 
 
-# def create_update_office_worker(request):
-#     worker_user_id = request.data.get('user_id')
-# OfficeWorkers.objects.create(user=)
+def create_update_office_worker(request):
+    worker_id = request.data.get('worker_id', None)
+
+    if worker_id is not None:
+        #update
+        user = User.objects.get(id=request.data.get('worker_user_id', None))
+        worker = OfficeWorkers.objects.get(id=worker_id)
+        worker.user
+    else:
+        #create
+        OfficeWorkers.objects.create()
 
 def get_transferred_policies_by(user):
     retransferred_policies = PolicyRetransfer.objects.filter(to_user=user)

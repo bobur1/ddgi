@@ -108,6 +108,7 @@ def polis_retransfer(request):
     office = InsuranceOffice.objects.filter(director=request.user).first()
     officeWorkers = OfficeWorkers.objects.filter(office=office)
     polisTransfers = PolicyTransfers.objects.filter(to_office=office)
+    
     return render(request, "polis_retransfer/retransfer.html", {
         'polisTransfers': polisTransfers,
         'officeWorkers': officeWorkers,

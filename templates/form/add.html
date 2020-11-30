@@ -688,44 +688,46 @@
                 </div>
 
                 <div class="card-body">
-                  <div class="form-group">
-                    <label>Покрытие террористических актов с ТС </label>
-                    <div class="input-group mb-4">
-                      <input type="text" class="form-control">
-                      <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
-                          <option selected="selected">UZS</option>
-                          <option>USD</option>
-                        </select>
+                  <form method="POST" id="product-fields-0-2">
+                    <div class="form-group">
+                      <label>Покрытие террористических актов с ТС </label>
+                      <div class="input-group mb-4">
+                        <input type="text" class="form-control" name="cover_terror_attacks_sum-0">
+                        <div class="input-group-append">
+                          <select class="form-control success" name="cover_terror_attacks_currency-0" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="form-group">
-                    <label>Покрытие террористических актов с застрахованными лицами </label>
-                    <div class="input-group mb-4">
-                      <input type="text" class="form-control">
-                      <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
-                          <option selected="selected">UZS</option>
-                          <option>USD</option>
-                        </select>
+                    <div class="form-group">
+                      <label>Покрытие террористических актов с застрахованными лицами </label>
+                       <div class="input-group mb-4">
+                        <input type="text" class="form-control" name="cover_terror_attacks_insured_sum-0">
+                        <div class="input-group-append">
+                          <select class="form-control success" name="cover_terror_attacks_insured_currency-0" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  <div class="form-group">
-                    <label>Покрытие расходы по эвакуации</label>
-                    <div class="input-group mb-4">
-                      <input type="text" class="form-control">
-                      <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
-                          <option selected="selected">UZS</option>
-                          <option>USD</option>
-                        </select>
+                    <div class="form-group">
+                      <label>Покрытие расходы по эвакуации</label>
+                      <div class="input-group mb-4">
+                        <input type="text" class="form-control" name="coverage_evacuation_cost-0">
+                        <div class="input-group-append">
+                          <select class="form-control success" name="coverage_evacuation_currency-0" style="width: 100%;">
+                            <option selected="selected">UZS</option>
+                            <option>USD</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
               </div>
 
@@ -1088,7 +1090,7 @@
       </div>
 
       <div class="card-footer">
-        <button type="submit" class="btn btn-primary float-right">Сохранить</button>
+        <button type="submit" class="btn btn-primary float-right" id="form-save-button">Сохранить</button>
       </div>
     </div>
 
@@ -1249,12 +1251,41 @@
                     beneficiaryModal.hide();
                 } else if (event.target == pledgerModal[0]) {
                     pledgerModal.hide();
-                } else {
+                }{% comment %} else {
                     let modal = $('#product-fields-' + (fieldNumber = event.target.data('field-number')));
                     if (modal.length && target.event == modal[0]) {
                       modal.hide();
                     }
+                }{% endcomment %}
+            });
+
+            formSaveButton.click(function (e) {
+                e.preventDefault();
+
+                let forms = {};
+                let params = {}
+                forms.csrfmiddlewaretoken = csrftoken;
+                forms.action = 'create';
+                let serializedForm = form.serializeArray();
+                for (let i = 0; i < serializedForm.length; i++) {
+                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
+                forms.params = params;
+
+                $.ajax({
+                    url: '/api/klass/',
+                    data: JSON.stringify(forms),
+                    {#processData: false,#}
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: "POST",
+                    success: function (data) {
+                        if (data.success === true) {
+                            console.log(data);
+                            window.location.replace('/references/klass/');
+                        }
+                    }
+                });
             });
         });
 

@@ -1,17 +1,30 @@
 function addRow() {
     let empTab = document.getElementById('empTable');
-
+    var fieldNames = ['mark_model-',
+                      'release_year-',
+                      'country_number-',
+                      'tech_passport_number-',
+                      'engine_number-',
+                      'carcase_number-',
+                      'lifting_capacity-',
+                      'number_of_seats-',
+                      'insurance_cost-',
+                      'insurance_sum-',
+                      'insurance_premium-',
+    ];
     let rowCnt = empTab.rows.length;    // get the number of rows.
     let tr = empTab.insertRow(rowCnt - 1); // table row.
 
     productFieldNumber++;
 
-    for (let c = 0; c < $("#empTable tr th").length; c++) {
+    var rowsAmount = $("#empTable tr th").length - 1;
+
+    for (let c = 0; c < rowsAmount; c++) {
         let td = document.createElement('td');          // TABLE DEFINITION.
         td = tr.insertCell(c);
 
-        if (c == ($("#empTable tr th").length - 1)) {   // if its the first column of the table.
-            // add a button control.
+        if (c == (rowsAmount - 1)) {   // if its the last column of the table.
+            // add delete a button
             let button = document.createElement('input');
 
             // set the attributes.
@@ -26,6 +39,9 @@ function addRow() {
         } else {
             // all except the last colum will have input field.
             let ele = document.createElement('input');
+
+            let fieldIndex = c + 1;
+            ele.setAttribute('name', fieldNames[c] + productFieldNumber);
 
             if (c === 1) {
                 ele.setAttribute('type', 'date');

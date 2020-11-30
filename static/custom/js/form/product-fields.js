@@ -4,6 +4,8 @@ function addRow() {
     let rowCnt = empTab.rows.length;    // get the number of rows.
     let tr = empTab.insertRow(rowCnt - 1); // table row.
 
+    productFieldNumber++;
+
     for (let c = 0; c < $("#empTable tr th").length; c++) {
         let td = document.createElement('td');          // TABLE DEFINITION.
         td = tr.insertCell(c);
@@ -41,7 +43,7 @@ function addRow() {
         }
     }
 
-    addProductFields();
+    addProductFields(productFieldNumber);
 }
 
 $(document).ready(function () {

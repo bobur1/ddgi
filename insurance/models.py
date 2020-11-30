@@ -379,7 +379,8 @@ class Policy(models.Model):
 
     product = models.ForeignKey(ProductType, on_delete=models.SET_NULL, null=True, blank=True, default=None)
 
-    client_type = models.CharField(max_length=64, null=True, blank=True, default=None)
+    client_type = models.PositiveIntegerField(verbose_name='Тип клиента', choices=ClientType.__list__,
+                                              default=None, blank=True)
 
     date_from = models.DateField(null=True, blank=True, default=None)
 

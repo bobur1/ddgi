@@ -1,3 +1,5 @@
+let productFieldsAdd = require('product-fields.add');
+
 function addRow() {
     let empTab = document.getElementById('empTable');
 
@@ -111,11 +113,13 @@ function showDiv(divId, element) {
     document.getElementById(divId).style.display = element.value == 'other' ? 'block' : 'none';
 }
 
-function addRow3() {
+function addRow3(fieldNumber, ) {
     let empTab = document.getElementById('empTable3');
 
     let rowCnt = empTab.rows.length;    // get the number of rows.
     let tr = empTab.insertRow(rowCnt); // table row.
+
+    paymentTypeFieldNumber++;
 
     for (let c = 0; c < $("#empTable3 tr th").length; c++) {
         let td = document.createElement('td');          // TABLE DEFINITION.
@@ -140,8 +144,10 @@ function addRow3() {
 
             if (c === 1) {
                 ele.setAttribute('type', 'date');
+                ele.setAttribute('id', `payment_from-${fieldNumber}-${paymentTypeFieldNumber}`);
             } else {
                 ele.setAttribute('type', 'text');
+                ele.setAttribute('id', `payment_sum-${fieldNumber}-${paymentTypeFieldNumber}`);
             }
 
             ele.setAttribute('class', 'form-control');

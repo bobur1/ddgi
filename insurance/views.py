@@ -426,7 +426,7 @@ class GridViewSet(viewsets.ModelViewSet):
 
 
 class IndividualClientViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, ]
     queryset = IndividualClient.objects.all()
     serializer_class = IndividualClientSerializer
 

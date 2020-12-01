@@ -721,6 +721,7 @@ class LegalClientViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         response = {}
+
         try:
             if self.request.data['action'] == 'create':
                 params = self.request.data['params']

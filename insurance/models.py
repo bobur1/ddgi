@@ -320,13 +320,12 @@ class LegalClient(models.Model):
     address = models.CharField(verbose_name="Адрес", max_length=150)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
     inn = models.CharField(verbose_name="INN", max_length=15, default=None, blank=True)
-
+    okohx = models.CharField(verbose_name="OKOHX", max_length=15, default=None, blank=True)
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
-
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    cr_on = models.DateTimeField(auto_now_add=True)
-    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by')
-    up_on = models.DateTimeField(auto_now_add=True)
+    cr_on = models.DateTimeField(default=None, null=True)
+    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by', )
+    up_on = models.DateTimeField(default=None, null=True)
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):
@@ -564,3 +563,7 @@ class ApplicationForm(models.Model):
 
 class ProductApplicationField(ProductField):
     application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
+
+
+class Vehicle(models.Model):
+    model_name = models.CharField(max_length=128, null=False, blank=False)

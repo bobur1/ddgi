@@ -15,6 +15,46 @@ import json
 from datetime import datetime
 
 
+@api_view(['POST', 'GET'])
+@permission_classes([IsAuthenticated])
+def create_update_worker(request):
+    response = {}
+    if request.method == 'POST':
+        try:
+            create_update_office_worker(request)
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.__str__()
+    if request.method == 'GET':
+        page = request.query_params.get('page', 1)
+        size = request.query_params.get('size', 20)
+        director_id = request.query_params.get('director', None)
+        office_id = request.query_params.get('office', None)
+        response = {}
+
+        try:
+
+            if director_id is not None:
+                items = get_workers_by_user(director_id)
+            elif office_id is not None:
+                items = get_workers_by_office(office_id)
+            else:
+                items = OfficeWorkers.objects.all()
+
+            paginator = Paginator(items, size)
+            serializer = OfficeWorkersSerializer(paginator.page(page), many=True)
+            response['data'] = serializer.data
+            response['success'] = True
+
+        except Exception as e:
+            response['error_msg'] = e.__str__()
+            response['success'] = False
+        response['page'] = page
+        response['size'] = size
+    return Response(response)
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def test_view(request):
@@ -151,6 +191,7 @@ def get_product_type_fields(request):
 
 # @api_view(['GET'])
 # def get_prduct_details(request)
+
 
 class PolicyViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]
@@ -413,45 +454,35 @@ class GridViewSet(viewsets.ModelViewSet):
 
 
 class IndividualClientViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated, ]
+    permission_classes = [IsAuthenticated, ]
     queryset = IndividualClient.objects.all()
     serializer_class = IndividualClientSerializer
 
     def create(self, request, *args, **kwargs):
         response = {}
         try:
-            if self.request.data['action'] == 'create':
-                params = self.request.data['params']
-                IndividualClient.objects.create(
-                    first_name=params['first_name'],
-                    last_name=params['last_name'],
-                    middle_name=params['middle_name'],
-                    address=params['address'],
-                    phone_number=params['phone_number'],
-                    cr_by=self.request.user
-                ).save()
-            elif self.request.data['action'] == 'get':
-                item_id = self.request.data['id']
-                item = IndividualClient.objects.get(id=item_id)
-                serializer = IndividualClientSerializer(item)
-                response['success'] = True
-                response['data'] = serializer.data
-            elif self.request.data['action'] == 'update':
-                params = self.request.data['params']
-                IndividualClient.objects.filter(id=params['id']).update(
-                    first_name=params['first_name'],
-                    last_name=params['last_name'],
-                    middle_name=params['middle_name'],
-                    address=params['address'],
-                    phone_number=params['phone_number'],
-                    up_by=self.request.user,
-                    up_on=datetime.datetime.now()
-                )
-            elif self.request.data['action'] == 'delete':
-                item_id = self.request.data['id']
-                IndividualClient.objects.filter(id=item_id).update(
-                    is_exist=False
-                )
+            create_update_individual_client(request)
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = str(e)
+        return Response(response)
+
+    def put(self, request, *args, **kwargs):
+        response = {}
+        try:
+            create_update_individual_client(request)
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = str(e)
+        return Response(response)
+
+    def delete(self, request, *args, **kwargs):
+        response = {}
+        try:
+            item_id = self.request.data['id']
+            IndividualClient.objects.filter(id=item_id).update(
+                is_exist=False
+            )
         except Exception as e:
             response['success'] = False
             response['error_msg'] = str(e)
@@ -636,6 +667,30 @@ class BankViewSet(viewsets.ModelViewSet):
             response['error_msg'] = str(e)
         return Response(response)
 
+    def put(self, request, *args, **kwargs):
+        response = {}
+        try:
+            obj = Bank.objects.get(id=request.data.get('bank_id'))
+            obj.name = request.data.get('name', obj.name)
+            obj.branchName = request.data.get('branch_name', obj.branchName)
+            obj.mfo = request.data.get('mfo', obj.mfo)
+            obj.phone_number = request.data.get('phone_number', obj.phone_number)
+            obj.address = request.data.get('address', obj.address)
+            obj.checking_account = request.data.get('checking_account', obj.checking_account)
+            obj.is_exist = request.data.get('is_exist', obj.is_exist)
+            obj.save()
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = str(e)
+
+    def delete(self, request, *args, **kwargs):
+        item_id = self.request.data.get('id')
+        Bank.objects.filter(id=item_id).update(
+            up_by=self.request.user,
+            is_exist=False
+        )
+
 
 class BranchViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]
@@ -709,39 +764,27 @@ class LegalClientViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         response = {}
         try:
-            if self.request.data['action'] == 'create':
-                params = self.request.data['params']
-                LegalClient.objects.create(
-                    name=params['name'],
-                    address=params['address'],
-                    phone_number=params['phone_number']
-                ).save()
-                response['success'] = True
-            elif self.request.data['action'] == 'get':
-                item_id = self.request.data['id']
-                item = LegalClient.objects.get(id=item_id)
-                response['data'] = LegalClientSerializer(item)
-                response['success'] = True
-            elif self.request.data['action'] == 'update':
-                params = self.request.data['params']
-                LegalClient.objects.filter(id=params['id']).update(
-                    name=params['name'],
-                    address=params['address'],
-                    phone_number=params['phone_number'],
-                    up_by=self.request.user
-                )
-                response['success'] = True
-            elif self.request.data['action'] == 'delete':
-                item_id = self.request.data['id']
-                LegalClient.objects.filter(id=item_id).update(
-                    up_by=self.request.user,
-                    is_exist=False
-                )
-                response['success'] = True
+            create_update_legal_client(request=request)
+            response['success'] = True
         except Exception as e:
             response['success'] = False
-            response['error_msg'] = str(e)
+            response['error_msg'] = e.__str__()
+
+    def put(self, request, *args, **kwargs):
+        response = {}
+        try:
+            create_update_legal_client(request=request)
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.__str__()
+
         return Response(response)
+
+    def delete(self, request, *args, **kwargs):
+        id = request.data.get('legal_client_id')
+        obj = LegalClient.objects.get(id=id)
+        obj.delete()
 
 
 class UserViewSet(viewsets.ViewSet):
@@ -806,6 +849,26 @@ class UserViewSet(viewsets.ViewSet):
             response['success'] = False
             response['error_msg'] = e.args
             print(e)
+        return Response(response)
+
+    def get(self, request):
+        page = request.query_params.get('page', 1)
+        size = request.query_params.get('size', 20)
+        response = {}
+
+        try:
+            items = User.objects.all()
+
+            paginator = Paginator(items, size)
+            serializer = UserDetailedSerializer(paginator.page(page), many=True)
+            response['data'] = serializer.data
+            response['success'] = True
+        except Exception as e:
+            response['error_msg'] = e.__str__()
+            response['success'] = False
+
+        response['page'] = page
+        response['size'] = size
         return Response(response)
 
 

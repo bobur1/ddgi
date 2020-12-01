@@ -168,20 +168,11 @@ class HumanSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'last_name', 'middle_name', 'phone']
 
 
-class IndividualClientSerializer(serializers.ModelSerializer):
-    # person = HumanSerializer()
-    person_first_name = serializers.CharField(source='person.first_name')
-
-    class Meta:
-        model = IndividualClient
-        fields = ['id', 'person_first_name']
-
-
 class LegalClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = LegalClient
         fields = ['id', 'name', 'address', 'phone_number',
-                  'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo']
+                  'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo', 'okohx']
 
 
 class CurrencySerializer(serializers.ModelSerializer):
@@ -201,6 +192,18 @@ class BankSerializer(serializers.ModelSerializer):
         model = Bank
         fields = ['id', 'name', 'branchName', 'mfo', 'inn',
                   'address', 'phone_number', 'checking_account']
+
+
+class IndividualClientSerializer(serializers.ModelSerializer):
+    bank = BankSerializer()
+    cr_by = UserSerializer()
+    up_by = UserSerializer()
+
+    class Meta:
+        model = IndividualClient
+        fields = ['id', 'first_name', 'last_name', 'middle_name', 'address',
+                  'passport_series', 'passport_number', 'passport_given_by', 'passport_given_date', 'inn',
+                  'bank', 'cr_by', 'up_by']
 
 
 class BranchSerializer(serializers.ModelSerializer):

@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from rest_framework.response import Response
 from insurance.models import *
 
 
@@ -110,7 +110,6 @@ def create_update_product_type(request):
         product = ProductType.objects.create(code=code,
                                              name=name,
                                              client_type=client_type,
-                                             # classes=type_codes,
                                              has_beneficiary=has_beneficiary,
                                              has_pledger=has_pledger,
                                              min_acceptable_amount=min_acceptable_amount,
@@ -149,12 +148,45 @@ def create_update_office_worker(request):
 
     if worker_id is not None:
         #update
-        user = User.objects.get(id=request.data.get('worker_user_id', None))
         worker = OfficeWorkers.objects.get(id=worker_id)
-        worker.user
+        office_id = request.data.get('office_id', None) or worker.office_id
+        worker.office_id = office_id
+        worker.up_by = request.user
+        worker.up_on = datetime.now()
+        worker.save()
     else:
         #create
-        OfficeWorkers.objects.create()
+        office_id = request.data.get('office_id')
+        user_id = request.data.get('user_id')
+
+        OfficeWorkers.objects.create(user_id=user_id, office_id=office_id, cr_by=request.user,
+                                     cr_on=datetime.now())
+
+
+def create_update_region(request):
+    response = {}
+    region_id = request.data.get('region_id')
+    series = request.data.get('series', None)
+    name = request.data.get('name', None)
+    type_id = request.data.get('type_id', None)
+    try:
+        if region_id is not None:
+            region = Location.objects.get(id = region_id)
+            region.series = series or region.series
+            region.name = name or region.name
+            region.type_id = type_id or region.type_id
+            region.save()
+        else:
+            Location.objects.create(series=series, name=name, type_id=type_id)
+
+        response['success'] = True
+
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+
+    return Response(response)
+
 
 def get_transferred_policies_by(user):
     retransferred_policies = PolicyRetransfer.objects.filter(to_user=user)
@@ -163,3 +195,24 @@ def get_transferred_policies_by(user):
         policies.append(rtf.transfer.policy)
 
     return policies
+
+
+def create_update_region_type(request):
+    type_id = request.data.get('type_id', None)
+    name = request.data.get('name', None)
+    details = request.data.get('details', None)
+    response = {}
+    try:
+        if type_id is not None:
+            obj = LocationType.objects.get(id=type_id)
+            obj.name = name or obj.name
+            obj.description = details or obj.description
+            obj.save()
+        else:
+            LocationType.objects.create(name=name, description=details)
+        response['success'] = True
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+
+    return Response(response)

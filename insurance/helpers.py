@@ -242,6 +242,7 @@ def create_update_legal_client(request):
         obj.is_exist = is_exists or obj.is_exist
         obj.up_by = up_by
         obj.up_on = up_on
+        obj.save()
     else:
         LegalClient.objects.create(
             name=name,
@@ -291,6 +292,7 @@ def create_update_individual_client(request):
         obj.is_exist = is_exists or obj.is_exist
         obj.up_by = up_by
         obj.up_on = up_on
+        obj.save()
     else:
         IndividualClient.objects.create(
             phone=phone,

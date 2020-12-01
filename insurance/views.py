@@ -640,6 +640,30 @@ class BankViewSet(viewsets.ModelViewSet):
             response['error_msg'] = str(e)
         return Response(response)
 
+    def put(self, request, *args, **kwargs):
+        response = {}
+        try:
+            obj = Bank.objects.get(id=request.data.get('bank_id'))
+            obj.name = request.data.get('name', obj.name)
+            obj.branchName = request.data.get('branch_name', obj.branchName)
+            obj.mfo = request.data.get('mfo', obj.mfo)
+            obj.phone_number = request.data.get('phone_number', obj.phone_number)
+            obj.address = request.data.get('address', obj.address)
+            obj.checking_account = request.data.get('checking_account', obj.checking_account)
+            obj.is_exist = request.data.get('is_exist', obj.is_exist)
+            obj.save()
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = str(e)
+
+    def delete(self, request, *args, **kwargs):
+        item_id = self.request.data.get('id')
+        Bank.objects.filter(id=item_id).update(
+            up_by=self.request.user,
+            is_exist=False
+        )
+
 
 class BranchViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]

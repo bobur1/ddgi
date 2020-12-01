@@ -324,9 +324,9 @@ class LegalClient(models.Model):
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
 
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-    cr_on = models.DateTimeField(auto_now_add=True)
-    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by')
-    up_on = models.DateTimeField(auto_now_add=True)
+    cr_on = models.DateTimeField(default=None, null=True)
+    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by', )
+    up_on = models.DateTimeField(default=None, null=True)
     is_exist = models.BooleanField(default=True)
 
     def __str__(self):

@@ -18,7 +18,9 @@
         <thead>
           <tr role="row">
             <th>ID</th>
-            <th>PERSON</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
           </tr>
         </thead>
       </table>
@@ -70,7 +72,9 @@
           ajax: "/api/client-individual?format=datatables",
           columns: [
             {"data": "id"},
-            {"data": "person_first_name"}
+            {"data": "first_name"},
+            {"data": "last_name"},
+            {"data": "middle_name"}
           ]
         }
       );

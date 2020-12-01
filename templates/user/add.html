@@ -274,7 +274,7 @@
                 formData.append('is_active', status.children("option:selected").val() === '2' ? 1 : 0);
 
                 $.ajax({
-                    url: '/api/user_creat_update/',
+                    url: 'api/create_update_worker/',
                     data: formData,
                     processData: false,
                     contentType: false,

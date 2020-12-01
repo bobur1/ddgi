@@ -17,8 +17,8 @@
       <table id="currency_table" class="table table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;">
         <thead>
           <tr role="row">
-            <th>Название</th>
-            <th></th>
+            <th>ID</th>
+            <th>Наименование</th>
           </tr>
         </thead>
       </table>
@@ -67,10 +67,10 @@
           },
           scrollY: "70vh",
           select: true,
-          ajax: "/api/client-individual?format=datatables",
+          ajax: "/api/create_update_worker?format=datatables",
           columns: [
-            {"data": "id"},
-            {"data": "person_first_name"}
+            {"data": "data.id"},
+            {"data": "data.user.email"}
           ]
         }
       );

@@ -6,6 +6,7 @@ from insurance.models import Currency, Policy, InsuranceOffice, \
     IndividualClient, LegalClient, Position, ProductTypeCode, \
     OfficeType, Bank, ProductType, ProductField, ApplicationForm
 from insurance.enum import InputType, ContractType, CurrencyType, ClientType
+from insurance.helpers import get_transferred_policies_by
 
 
 @login_required
@@ -232,7 +233,7 @@ def klass_show(request, id):
 @login_required
 def klass_edit(request, id):
     klass = ProductTypeCode.objects.filter(id=id).first()
-    return render(request, "references/polis-series/edit.html", { 'klass': klass })
+    return render(request, "references/klass/edit.html", { 'klass': klass })
 
 
 @login_required
@@ -254,7 +255,7 @@ def polis_series_show(request, id):
 @login_required
 def polis_series_edit(request, id):
     polisSeries = PolicySeriesType.objects.filter(id=id).first()
-    return render(request, "references/klass/edit.html", { 'polisSeries': polisSeries })
+    return render(request, "references/polis-series/edit.html", { 'polisSeries': polisSeries })
 #
 #
 # @login_required
@@ -353,7 +354,11 @@ def product_add(request):
 @login_required
 def product_show(request, id):
     product = ProductType.objects.filter(id=id).first()
-    return render(request, "product/show.html", { 'product': product })
+    klasses = product.classes.all()
+    return render(request, "product/show.html", {
+        'product': product,
+        'klasses': klasses,
+    })
 
 
 @login_required
@@ -424,12 +429,13 @@ def form(request):
 
 @login_required
 def form_add(request):
-    products = ProductType.objects.all()
+    products = ProductType.objects.filter(client_type=1).all()
     banks = Bank.objects.all()
+    polises = get_transferred_policies_by(request.user)
     return render(request, "form/add.html", {
         'products': products,
         'banks': banks,
-
+        'polises': polises,
     })
 
 

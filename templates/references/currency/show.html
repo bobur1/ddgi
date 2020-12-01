@@ -1,6 +1,6 @@
 {% extends "home.html" %}
 {% load static %}
-{% block title %}Вид: {{ currency.name }}{% endblock %}
+{% block title %}Валюта: {{ currency.name }}{% endblock %}
 {% block content %}
   <div class="content-header">
     <div class="container-fluid">
@@ -10,7 +10,7 @@
 <div class="content">
   <div class="container-fluid">
       <div class="d-flex flex-row mb-3">
-        <a href="{% url 'currency_edit' currency.id %}" class="btn btn-primary mr-1">Редактировать вид</a>
+        <a href="{% url 'currency_edit' currency.id %}" class="btn btn-primary mr-1">Редактировать валюту</a>
 
         <form method="POST" id="delete-form" class="mr-1">
             {% csrf_token %}

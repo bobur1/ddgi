@@ -11,7 +11,7 @@
   <div class="container-fluid">
       <div class="d-flex flex-row mb-3">
         <a href="{% url 'product_edit' product.id %}" class="btn btn-primary mr-1">Редактировать продукт</a>
-        <a href="{% url 'product_field_add' product.id %}" class="btn btn-green mr-1">Добавить поле продукта</a>
+        <a href="{% url 'product_field_add' product.id %}" class="btn btn-success mr-1">Добавить поле продукта</a>
 
         <form method="POST" id="delete-form" class="mr-1">
             {% csrf_token %}
@@ -28,8 +28,14 @@
                         <tr><th>ID</th><td>{{ product.id }}</td></tr>
                         <tr><th>Название</th><td>{{ product.name }}</td></tr>
                         <tr><th>Код</th><td>{{ product.code }}</td></tr>
-                        <tr><th>Группа</th><td>{{ product.group.name }}</td></tr>
-                        <tr><th>Класс</th><td>{{ product.classes.name }}</td></tr>
+                        <tr>
+                          <th>Класс</th>
+                          <td>
+                            {% for klass in klasses %}
+                              <p><a href="{% url 'klass_show' klass.id %}">{{ klass.name }}</a></p>
+                            {% endfor %}
+                          </td>
+                        </tr>
                         <tr><th>Вид</th><td>{{ product.view.name }}</td></tr>
                         <tr><th>Имеет залогодателя</th><td>{% if product.has_pledger == true %}Да{% else %}Нет{% endif %}</td></tr>
                         </tbody>

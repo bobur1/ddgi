@@ -18,7 +18,8 @@
         <thead>
           <tr role="row">
             <th>ID</th>
-            <th>PERSON</th>
+            <th>Transfer</th>
+            <th>To User</th>
           </tr>
         </thead>
       </table>
@@ -70,7 +71,8 @@
           ajax: "/api/client-individual?format=datatables",
           columns: [
             {"data": "id"},
-            {"data": "person_first_name"}
+            {"data": "transfer"},
+            {"data": "to_user"}
           ]
         }
       );

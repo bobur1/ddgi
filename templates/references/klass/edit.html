@@ -102,17 +102,18 @@
                 forms.id = {{ klass.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
-                forms.params = params;
+                {#params.id = {{ klass.id }};#}
+                {#forms.params = params;#}
 
                 $.ajax({
-                    url: '/api/klass/',
+                    url: '/api/product_type_codes/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',
                     dataType: 'json',
-                    type: "POST",
+                    type: "PUT",
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);

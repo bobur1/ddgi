@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="name" class="col-form-label">Название</label>
                     <input
@@ -38,7 +38,7 @@
                     >
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group">
                     <label for="code" class="col-form-label">Код</label>
                     <input
@@ -48,6 +48,20 @@
                       value="{{ product.code }}"
                       required
                     >
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="client_type" class="col-form-label">Тип клиента</label>
+                    <select
+                        id="client_type"
+                        class="form-control"
+                        name="client_type"
+                        required
+                    >
+                      <option value="1" {% if product.client_type == '1' %}selected="selected"{% endif %}>Физическое лицо</option>
+                      <option value="2" {% if product.client_type == '2' %}selected="selected"{% endif %}>Юридическое лицо</option>
+                    </select>
                   </div>
                 </div>
               </div>
@@ -60,9 +74,10 @@
                         id="klass_id"
                         class="form-control"
                         name="product_code_types"
+                        multiple
                     >
                       {% for klass in klasses %}
-                        <option value="{{ klass.id }}" {% if product.klass_id == klass.id %}selected="selected"{% endif %}>{{ klass.name }}</option>
+                        <option value="{{ klass.id }}" {% if klass.id in productClasses  %}selected="selected"{% endif %}>{{ klass.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -75,7 +90,7 @@
                       type="checkbox"
                       class="form-control"
                       name="has_beneficiary"
-                      {% if product.has_beneficiary == true %}checked="checked"{% endif %}
+                      {% if product.has_beneficiary == 1 %}checked="checked"{% endif %}
                       required
                     >
                   </div>
@@ -88,7 +103,36 @@
                       type="checkbox"
                       class="form-control"
                       name="has_pledger"
-                      {% if product.has_pledger == true %}checked="checked"{% endif %}
+                      {% if product.has_pledger == 1 %}checked="checked"{% endif %}
+                      required
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="min_acceptable_amount" class="col-form-label">Минимально допустимая сумма</label>
+                    <input
+                      id="min_acceptable_amount"
+{#                      type="number"#}
+                      class="form-control"
+                      name="min_acceptable_amount"
+                      value="{{ product.min_acceptable_amount }}"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="max_acceptable_amount" class="col-form-label">Максимально допустимая сумма</label>
+                    <input
+                      id="max_acceptable_amount"
+{#                      type="number"#}
+                      class="form-control"
+                      name="max_acceptable_amount"
+                      value="{{ product.max_acceptable_amount }}"
                       required
                     >
                   </div>
@@ -115,6 +159,7 @@
     <script src="{% static 'custom/js/csrftoken.js' %}"></script>
 
     <script>
+        $('#klass_id').select2();
         let submitButton = $('#submit-button');
         let form = $('#product-form');
 
@@ -137,15 +182,16 @@
                 forms.action = 'update';
                 forms.id = {{ product.id }};
                 let serializedForm = form.serializeArray();
+                let j = 0;
                 for (let i = 0; i < serializedForm.length; i++) {
                     if (serializedForm[i]['name'] === 'product_code_types') {
                         productTypeCodes[j++] = serializedForm[i]['value'];
                     } else {
-                        params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                        forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                     }
                 }
-                params.product_code_types = productTypeCodes;
-                forms.params = params;
+                forms.product_code_types = productTypeCodes;
+                {#forms.params = params;#}
 
                 $.ajax({
                     url: '/api/product_type/',
@@ -153,7 +199,7 @@
                     {#processData: false,#}
                     contentType: 'application/json',
                     dataType: 'json',
-                    type: "POST",
+                    type: "PUT",
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);

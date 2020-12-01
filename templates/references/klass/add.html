@@ -99,12 +99,12 @@
                 forms.action = 'create';
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
-                forms.params = params;
+                {#forms.params = params;#}
 
                 $.ajax({
-                    url: '/api/klass/',
+                    url: '/api/product_type_codes/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',

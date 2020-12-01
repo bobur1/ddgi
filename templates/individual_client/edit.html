@@ -159,11 +159,13 @@
                 let forms = {};
                 let params = {}
                 forms.csrfmiddlewaretoken = csrftoken;
-                forms.action = 'create';
+                forms.action = 'update';
+                forms.id = {{ client.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     params[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
+                params.id = {{ client.id }};
                 forms.params = params;
 
                 $.ajax({

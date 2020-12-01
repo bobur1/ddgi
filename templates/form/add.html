@@ -740,7 +740,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" id="product-fields-0-2">
+                  <form method="POST" id="product-fields-0-3">
                     <div class="form-group">
                       <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
                       <div class="form-check">
@@ -769,7 +769,7 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <form method="POST" id="product-fields-0-3">
+                  <form method="POST" id="product-fields-0-4">
                     <div class="form-group">
                       <label>Раздел I. Гибель или повреждение транспортного средства</label>
                       <div class="row">
@@ -818,7 +818,7 @@
                     </div>
                   </form>
 
-                  <form method="POST" id="product-fields-0-4">
+                  <form method="POST" id="product-fields-0-5">
                     <div class="form-group">
                       <label class=>Раздел II. Автогражданская ответственность</label>
                       <div class="row">
@@ -857,7 +857,7 @@
                     </div>
                   </form>
 
-                  <form method="POST" id="product-fields-0-5">
+                  <form method="POST" id="product-fields-0-6">
                     <div class="form-group">
                       <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                       <div class="form-check">
@@ -865,14 +865,14 @@
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="accidents" value="0">
+                        <input class="form-check-input" type="radio" checked name="accidents" value="0">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>
                   </form>
 
                   <div class="table-responsive p-0 ">
-                    <form method="POST" id="product-fields-0-6">
+                    <form method="POST" id="product-fields-0-7">
                       <table class="table table-hover table-head-fixed">
                         <thead>
                         <tr>
@@ -886,49 +886,49 @@
                         <tbody>
                         <tr>
                           <td><label>Водитель(и)</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="driver_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="driver_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="driver_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="driver_total_sum"></td>
+                          <td><input type="number" class="form-control" name="driver_premium"></td>
                         </tr>
                         <tr>
                           <td><label>Пассажиры</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="passenger_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="passenger_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="passenger_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div>
                           </td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="passenger_total_sum"></td>
+                          <td><input type="number" class="form-control" name="passenger_premium"></td>
                         </tr>
                         <tr>
                           <td><label class="text-bold">Общий Лимит</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="limit_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="limit_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="limit_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="limit_total_sum"></td>
+                          <td><input type="number" class="form-control" name="limit_premium"></td>
                         </tr>
                         <tr>
                           <td colspan="3"><label class="text-bold">Итого</label></td>
@@ -941,9 +941,9 @@
                   <div class="form-group col-sm-8">
                     <label>Общий лимит ответственности </label>
                     <div class="input-group mb-4">
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" name="total_liability_limit">
                       <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
+                        <select class="form-control success" name="total_liability_limit_currency" style="width: 100%;">
                           <option selected="selected">UZS</option>
                           <option>USD</option>
                         </select>
@@ -998,7 +998,7 @@
                                 <div class="input-group-prepend">
                                   <span class="input-group-text">от</span>
                                 </div>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" name="from_date">
                               </div>
                             </div>
                           </div>
@@ -1006,7 +1006,7 @@
 
                         <div class="form-group">
                           <label>Ответственный Агент</label>
-                          <select class="form-control select2" style="width: 100%;">
+                          <select class="form-control select2" name="agent" style="width: 100%;">
                             <option selected="selected">Ф.И.О агента</option>
                             <option></option>
                           </select>
@@ -1017,9 +1017,6 @@
                     </div>
                     <!-- /.card -->
                   </div>
-                </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                 </div>
               </div>
             </div>
@@ -1126,7 +1123,6 @@
                     url: '/api/product_type/?client_type=' + clientType,
                     method: "GET",
                     success: function (data) {
-                        console.log(data);
                         if (data.success === true) {
                             product.empty().append('<option selected="selected"></option>');
                             const products = data.data;
@@ -1151,7 +1147,6 @@
                     success: function (data) {
                         if (data.success === true) {
                             product = data.data;
-                            console.log(product);
 
                             if (product.has_beneficiary) {
                                 beneficiaryCardBody.show();
@@ -1294,26 +1289,25 @@
                 let field;
                 let productFields1 = [];
                 let productFields2 = [];
+                let polisFields = {};
                 let productExists = false;
-                for (let i = 0; i < productFieldNumber; i++) {
+                for (let i = 0; i < productFieldNumber + 1; i++) {
                     field = null;
 
-                    for (let j = 0; j < 6; j++) {
+                    for (let j = 1; j < 8; j++) {
                         if ((field = $(`#product-fields-${i}-${j}`)).length) {
                             serializedForm = field.serializeArray();
                             for (let k = 0; k < serializedForm.length; k++) {
                                 params[serializedForm[k]['name']] = serializedForm[k]['value'];
                             }
-                            productExists = true;
-                        } else {
-                            productExists = false;
+
                         }
                         productFields2[j] = params;
                         params = {};
                     }
                     params = {};
 
-                    if (productExists) {
+                    if ((polisFields = $(`#polis-fields-${i}`)).length) {
                         field = $(`#product-fields`);
                         serializedForm = field.serializeArray();
                         params.mark_model = field.find(`input[name=mark_model-${i}]`).val();
@@ -1327,11 +1321,23 @@
                         params.insurance_cost = field.find(`input[name=insurance_cost-${i}]`).val();
                         params.insurance_sum = field.find(`input[name=insurance_sum-${i}]`).val();
                         params.insurance_premium = field.find(`input[name=insurance_premium-${i}]`).val();
-                        field = null;
+                        console.log(params);
+                        productFields2[0] = params;
+                        params = {};
+
+                        serializedForm = polisFields.serializeArray();
+                        for (let j = 0; j < serializedForm.length; j++) {
+                            params[serializedForm[j]['name']] = serializedForm[j]['value'];
+                        }
+                        productFields2[8] = params;
+                        params = {};
+                        productExists = true;
+                    } else {
+                        productExists = false;
                     }
 
                     productFields1[count++] = productFields2;
-                    productFields2 = {};
+                    productFields2 = [];
                 }
                 forms.product_fields = productFields1;
 

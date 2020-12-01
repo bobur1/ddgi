@@ -362,11 +362,11 @@ function addProductFields(fieldNumber) {
                     <div class="form-group">
                       <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
                       <div class="form-check">
-                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance" value="yes">
+                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance-${fieldNumber}" value="1">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="no">
+                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="0">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>
@@ -393,11 +393,11 @@ function addProductFields(fieldNumber) {
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="vehicle_damage" checked id="radioSuccess3-${fieldNumber}">
+                            <input type="radio" name="vehicle_damage" checked id="radioSuccess3-${fieldNumber}" value="1">
                             <label for="radioSuccess3-${fieldNumber}">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="vehicle_damage" id="radioSuccess4-${fieldNumber}">
+                            <input type="radio" name="vehicle_damage" id="radioSuccess4-${fieldNumber}" value="0">
                             <label for="radioSuccess4-${fieldNumber}">Нет</label>
                           </div>
                         </div>
@@ -442,11 +442,11 @@ function addProductFields(fieldNumber) {
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="civil_liability" checked id="radioSuccess5-${fieldNumber}">
+                            <input type="radio" name="civil_liability" checked id="radioSuccess5-${fieldNumber}" value="1">
                             <label for="radioSuccess5-${fieldNumber}">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="civil_liability" id="radioSuccess6-${fieldNumber}">
+                            <input type="radio" name="civil_liability" id="radioSuccess6-${fieldNumber}" value="0">
                             <label for="radioSuccess6-${fieldNumber}">Нет</label>
                           </div>
                         </div>
@@ -479,11 +479,11 @@ function addProductFields(fieldNumber) {
                     <div class="form-group">
                       <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="accidents" value="yes">
+                        <input class="form-check-input" type="radio" name="accidents" value="1">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="accidents" value="no">
+                        <input class="form-check-input" type="radio" checked name="accidents" value="0">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>
@@ -504,53 +504,53 @@ function addProductFields(fieldNumber) {
                         <tbody>
                         <tr>
                           <td><label>Водитель(и)</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="driver_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="driver_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="driver_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="driver_total_sum"></td>
+                          <td><input type="number" class="form-control" name="driver_premium"></td>
                         </tr>
                         <tr>
                           <td><label>Пассажиры</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="passenger_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="passenger_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="passenger_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div>
                           </td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="passenger_total_sum"></td>
+                          <td><input type="number" class="form-control" name="passenger_premium"></td>
                         </tr>
                         <tr>
                           <td><label class="text-bold">Общий Лимит</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="limit_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="limit_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="limit_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="limit_total_sum"></td>
+                          <td><input type="number" class="form-control" name="limit_premium"></td>
                         </tr>
                         <tr>
                           <td colspan="3"><label class="text-bold">Итого</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="total"></td>
                         </tr>
                         </tbody>
                       </table>
@@ -559,9 +559,9 @@ function addProductFields(fieldNumber) {
                   <div class="form-group col-sm-8">
                     <label>Общий лимит ответственности </label>
                     <div class="input-group mb-4">
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" name="total_liability_limit">
                       <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
+                        <select class="form-control success" name="total_liability_limit_currency" style="width: 100%;">
                           <option selected="selected">UZS</option>
                           <option>USD</option>
                         </select>
@@ -590,12 +590,12 @@ function addProductFields(fieldNumber) {
                       </div>
                     </div>
                     <div class="card-body">
-                      <form method="POST" id="polis-field-${fieldNumber}">
+                      <form method="POST" id="polis-fields-${fieldNumber}">
                         <div class="row policy">
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <label for="polises">Полис</label>
-                              <select class="form-control polises" id="polises" name="policy" style="width: 100%;">
+                              <label for="polises-${fieldNumber}">Полис</label>
+                              <select class="form-control polises" id="polises-${fieldNumber}" name="policy" style="width: 100%;">
                                 <option selected="selected"></option>
                                 {% for polis in polises %}
                                   <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>
@@ -609,7 +609,7 @@ function addProductFields(fieldNumber) {
                                 <div class="input-group-prepend">
                                   <span class="input-group-text">от</span>
                                 </div>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" name="from_date">
                               </div>
                             </div>
                           </div>
@@ -617,7 +617,7 @@ function addProductFields(fieldNumber) {
 
                         <div class="form-group">
                           <label>Ответственный Агент</label>
-                          <select class="form-control select2" style="width: 100%;">
+                          <select class="form-control select2" name="agent" style="width: 100%;">
                             <option selected="selected">Ф.И.О агента</option>
                             <option></option>
                           </select>

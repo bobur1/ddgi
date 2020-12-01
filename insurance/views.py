@@ -17,6 +17,19 @@ from datetime import datetime
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+def create_update_worker(request):
+    response = {}
+    try:
+        create_update_office_worker(request)
+        response['success'] = True
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+    return Response(response)
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def test_view(request):
     response = {'success': True, 'authenticated_user': request.user.username}
     return Response(response)

@@ -1121,8 +1121,9 @@
 
         $(document).ready(function () {
             $('.client-type-radio').click(function () {
+                clientType = $(this).val() == 'individual' ? 1 : 2;
                 $.ajax({
-                    url: '/api/product_type/',
+                    url: '/api/product_type/?client_type=' + clientType,
                     method: "GET",
                     success: function (data) {
                         console.log(data);
@@ -1262,15 +1263,31 @@
             formSaveButton.click(function (e) {
                 e.preventDefault();
 
+                let productFieldsForm = $('#product-fields');
+
                 let forms = {};
-                let params = {}
+                let params = {};
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'create';
-                let serializedForm = form.serializeArray();
+                forms.client_type = clientType;
+                let serializedForm = clientProductForm.serializeArray();
+                for (let i = 0; i < serializedForm.length; i++) {
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
+                }
+
+                params = {};
+                serializedForm = paymentTermsForm.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     params[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
-                forms.params = params;
+                forms.payment_terms = params;
+
+                params = {};
+                serializedForm = anketaFieldsForm.serializeArray();
+                for (let i = 0; i < serializedForm.length; i++) {
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
+                }
+                forms.payment_terms = params;
 
                 $.ajax({
                     url: '/api/klass/',

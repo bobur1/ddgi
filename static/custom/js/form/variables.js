@@ -50,3 +50,5 @@ let individualClient = true;
 
 let paymentTypeFieldNumber = 0;
 let productFieldNumber = 0;
+
+let clientType = 1;

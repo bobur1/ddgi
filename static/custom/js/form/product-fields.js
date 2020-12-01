@@ -36,6 +36,19 @@ function addRow() {
             button.setAttribute('class', 'btn btn-warning');
 
             td.appendChild(button);
+
+            // add delete a button
+            let button2 = document.createElement('input');
+            button2.setAttribute('type', 'button');
+            button2.setAttribute('value', 'Заполнить');
+            button2.setAttribute('class', 'btn btn-success product-fields-button');
+            button2.setAttribute('id', 'product-fields-button-'+productFieldNumber);
+            button2.setAttribute('data-field-number', productFieldNumber);
+
+            let td2 = document.createElement('td');          // TABLE DEFINITION.
+            let fieldNumer = c +1;
+            td2 = tr.insertCell(fieldNumer);
+            td2.appendChild(button2);
         } else {
             // all except the last colum will have input field.
             let ele = document.createElement('input');
@@ -234,11 +247,13 @@ $(document).ready(function () {
 });
 
 
+
+//ToDo: delete one of the addproductfields function
 function addProductFields(fieldNumber) {
     let fields = `
           <div id="product-field-modal-${fieldNumber}" class="modal" data-field-number="${fieldNumber}">
             <div class="modal-content" id="product-field-modal-content-${fieldNumber}">
-              <span class="close product-fields-close" id="product-fields-close-${fieldNumber}" data-field-number="0">&times;</span>
+              <span class="close product-fields-close" id="product-fields-close-${fieldNumber}" data-field-number="${fieldNumber}">&times;</span>
               <div class="card card-success">
                 <div class="card-header">
                   <h3 class="card-title">Перечень дополнительного оборудования</h3>
@@ -376,12 +391,12 @@ function addProductFields(fieldNumber) {
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch1" checked id="radioSuccess3">
-                            <label for="radioSuccess3">Да</label>
+                            <input type="radio" name="ch1-${fieldNumber}" checked id="radioSuccess3-${fieldNumber}">
+                            <label for="radioSuccess3-${fieldNumber}">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch1" id="radioSuccess4">
-                            <label for="radioSuccess4">Нет</label>
+                            <input type="radio" name="ch1-${fieldNumber}" id="radioSuccess4-${fieldNumber}">
+                            <label for="radioSuccess4-${fieldNumber}">Нет</label>
                           </div>
                         </div>
                       <div class="col-sm-3">
@@ -425,12 +440,12 @@ function addProductFields(fieldNumber) {
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch2" checked id="radioSuccess5">
-                            <label for="radioSuccess5">Да</label>
+                            <input type="radio" name="ch2-${fieldNumber}" checked id="radioSuccess5-${fieldNumber}">
+                            <label for="radioSuccess5-${fieldNumber}">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch2" id="radioSuccess6">
-                            <label for="radioSuccess6">Нет</label>
+                            <input type="radio" name="ch2-${fieldNumber}" id="radioSuccess6-${fieldNumber}">
+                            <label for="radioSuccess6-${fieldNumber}">Нет</label>
                           </div>
                         </div>
                         <div class="col-sm-4">
@@ -462,11 +477,11 @@ function addProductFields(fieldNumber) {
                     <div class="form-group">
                       <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ch3" value="yes">
+                        <input class="form-check-input" type="radio" name="ch3-${fieldNumber}" value="yes">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ch3" value="no">
+                        <input class="form-check-input" type="radio" name="ch3-${fieldNumber}" value="no">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>

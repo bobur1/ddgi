@@ -1,5 +1,5 @@
 from django.urls import path, include
-from insurance import views
+from insurance import views, helpers
 from rest_framework import routers
 from django.conf.urls.static import static
 from django.conf import settings
@@ -36,7 +36,9 @@ urlpatterns = [
     path('api/update-office/', views.create_update_office),
     path('api/check_login/', views.is_free_login),
     path('api/get_product_type_fileds/', views.get_product_type_fields),
-
+    path('api/create_update_worker/', views.create_update_worker),
+    path('api/create_update_region/', helpers.create_update_region),
+    path('api/create_update_region_type/', helpers.create_update_region_type),
 ]
 
 urlpatterns += [

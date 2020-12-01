@@ -1,10 +1,14 @@
 from datetime import datetime
-
+from rest_framework.response import Response
 from insurance.models import *
 
 
-def get_workers_by_user(user):
-    return OfficeWorkers.objects.filter(office__director=user)
+def get_workers_by_user(user_id):
+    return OfficeWorkers.objects.filter(office__director_id=user_id)
+
+
+def get_workers_by_office(office_id):
+    return OfficeWorkers.objects.filter(office_id=office_id)
 
 
 def get_office_list_by_user(user):
@@ -110,7 +114,6 @@ def create_update_product_type(request):
         product = ProductType.objects.create(code=code,
                                              name=name,
                                              client_type=client_type,
-                                             # classes=type_codes,
                                              has_beneficiary=has_beneficiary,
                                              has_pledger=has_pledger,
                                              min_acceptable_amount=min_acceptable_amount,
@@ -148,13 +151,45 @@ def create_update_office_worker(request):
     worker_id = request.data.get('worker_id', None)
 
     if worker_id is not None:
-        #update
-        user = User.objects.get(id=request.data.get('worker_user_id', None))
         worker = OfficeWorkers.objects.get(id=worker_id)
-        worker.user
+        office_id = request.data.get('office_id', None) or worker.office_id
+        worker.office_id = office_id
+        worker.up_by = request.user
+        worker.up_on = datetime.now()
+        worker.save()
     else:
         #create
-        OfficeWorkers.objects.create()
+        office_id = request.data.get('office_id')
+        user_id = request.data.get('user_id')
+
+        OfficeWorkers.objects.create(user_id=user_id, office_id=office_id, cr_by=request.user,
+                                     cr_on=datetime.now())
+
+
+def create_update_region(request):
+    response = {}
+    region_id = request.data.get('region_id')
+    series = request.data.get('series', None)
+    name = request.data.get('name', None)
+    type_id = request.data.get('type_id', None)
+    try:
+        if region_id is not None:
+            region = Location.objects.get(id = region_id)
+            region.series = series or region.series
+            region.name = name or region.name
+            region.type_id = type_id or region.type_id
+            region.save()
+        else:
+            Location.objects.create(series=series, name=name, type_id=type_id)
+
+        response['success'] = True
+
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+
+    return Response(response)
+
 
 def get_transferred_policies_by(user):
     retransferred_policies = PolicyRetransfer.objects.filter(to_user=user)
@@ -163,3 +198,121 @@ def get_transferred_policies_by(user):
         policies.append(rtf.transfer.policy)
 
     return policies
+
+
+def create_update_region_type(request):
+    type_id = request.data.get('type_id', None)
+    name = request.data.get('name', None)
+    details = request.data.get('details', None)
+    response = {}
+    try:
+        if type_id is not None:
+            obj = LocationType.objects.get(id=type_id)
+            obj.name = name or obj.name
+            obj.description = details or obj.description
+            obj.save()
+        else:
+            LocationType.objects.create(name=name, description=details)
+        response['success'] = True
+    except Exception as e:
+        response['success'] = False
+        response['error_msg'] = e.__str__()
+
+    return Response(response)
+
+
+def create_update_legal_client(request):
+    client_id = request.data.get('client_id', None)
+    name = request.data.get('name', None)
+    address = request.data.get('address', None)
+    phone_number = request.data.get('phone_number', None)
+    inn = request.data.get('inn', None)
+    bank_id = request.data.get('bank_id', None)
+    is_exists = request.data.get('is_exists', None)
+    okohx = request.data.get('okohx', None)
+
+    cr_by = request.user
+    up_by = request.user
+    cr_on = datetime.now()
+    up_on = datetime.now()
+
+    if client_id is not None:
+        obj = LegalClient.objects.get(id=client_id)
+        obj.name = name or obj.name
+        obj.address = address or obj.address
+        obj.phone_number = phone_number or obj.phone_number
+        obj.inn = inn or obj.inn
+        obj.bank_id = bank_id or obj.bank_id
+        obj.is_exist = is_exists or obj.is_exist
+        obj.up_by = up_by
+        obj.up_on = up_on
+        obj.okohx = okohx or obj.okohx
+        obj.save()
+    else:
+        LegalClient.objects.create(
+            name=name,
+            address=address,
+            phone_number=phone_number,
+            inn=inn,
+            bank_id=bank_id,
+            is_exists=is_exists or True,
+            cr_by=cr_by,
+            cr_on=cr_on,
+            okohx=okohx
+        ).save()
+
+
+def create_update_individual_client(request):
+    client_id = request.data.get('client_id', None)
+    phone = request.data.get('phone', None)
+    first_name = request.data.get('first_name', None)
+    last_name = request.data.get('last_name', None)
+    middle_name = request.data.get('middle_name', None)
+    address = request.data.get('address', None)
+    p_series = request.data.get('passport_series', None)
+    p_number = request.data.get('passport_number', None)
+    p_given_date = request.data.get('passport_given_date', None)
+    p_given_by = request.data.get('passport_given_by', None)
+    bank_id = request.data.get('bank_id', None)
+    inn = request.data.get('inn', None)
+    cr_by = request.user
+    cr_on = datetime.now()
+
+    up_by = request.user
+    up_on = datetime.now()
+    is_exists = request.data.get('is_exists', None)
+
+    if client_id is not None:
+        obj = IndividualClient.objects.get(id=client_id)
+        obj.phone = phone or obj.phone
+        obj.first_name = first_name or obj.first_name
+        obj.last_name = last_name or obj.last_name
+        obj.middle_name = middle_name or obj.middle_name
+        obj.address = address or obj.address
+        obj.passport_series = p_series or obj.passport_series
+        obj.passport_number = p_number or obj.passport_number
+        obj.passport_given_date = p_given_date or obj.passport_given_date
+        obj.passport_given_by = p_given_by or obj.passport_given_by
+        obj.bank_id = bank_id or obj.bank_id
+        obj.inn = inn or obj.inn
+        obj.is_exist = is_exists or obj.is_exist
+        obj.up_by = up_by
+        obj.up_on = up_on
+        obj.save()
+    else:
+        IndividualClient.objects.create(
+            phone=phone,
+            first_name=first_name,
+            last_name=last_name,
+            middle_name=middle_name,
+            address=address,
+            passport_series=p_series,
+            passport_number=p_number,
+            passport_given_date=p_given_date,
+            passport_given_by=p_given_by,
+            bank_id=bank_id,
+            inn=inn,
+            cr_by=cr_by,
+            cr_on=cr_on,
+            is_exists=is_exists or True
+        ).save()

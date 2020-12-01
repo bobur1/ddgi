@@ -36,13 +36,13 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="icheck-success">
-                  <input type="radio" name="r3" checked class="client-type-radio" id="client-type-radio-1" value="individual">
+                  <input type="radio" name="client_type_radio" checked class="client-type-radio" id="client-type-radio-1" value="individual">
                   <label for="client-type-radio-1">физ. лицо</label>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="icheck-success">
-                  <input type="radio" name="r3" class="client-type-radio" id="client-type-radio-2" value="legal">
+                  <input type="radio" name="client_type_radio" class="client-type-radio" id="client-type-radio-2" value="legal">
                   <label for="client-type-radio-2">юр. лицо</label>
                 </div>
               </div>
@@ -599,7 +599,7 @@
                     <td><input type="text" class="form-control forsum2" name="insurance_cost-0"></td>
                     <td><input type="text" class="form-control forsum" name="insurance_sum-0"></td>
                     <td><input type="text" class="form-control forsum3" name="insurance_premium-0"></td>
-                    <td><input type="button" value="Заполнить" class="btn btn-success product-fields-button" id="product-fields-button-0" data-field-number="0"></td>
+                    <td><input type="button" value="Заполнить" class="btn btn-success product-fields-button" id="product-fields-button" data-field-number="0"></td>
                   </tr>
                   <tr>
                     <td colspan="8" style="text-align: right"><label class="text-bold">Итого</label></td>
@@ -614,11 +614,11 @@
             <div class="form-group">
               <label>При наружном осмотре ТС дефекты и повреждения</label>
               <div class="form-check">
-                <input class="form-check-input defects" value="no" type="radio" name="defects" checked>
+                <input class="form-check-input defects" value="0" type="radio" name="defects" checked>
                 <label class="form-check-label">Нет - не имеются</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input defects" value="yes" type="radio" name="defects">
+                <input class="form-check-input defects" value="1" type="radio" name="defects">
                 <label class="form-check-label">Да - присутствуют</label>
               </div>
             </div>
@@ -661,11 +661,11 @@
                         </thead>
                         <tbody>
                         <tr>
-                          <td><input type="text" class="form-control" name="mark_model-0"></td>
-                          <td><input type="text" class="form-control" name="name-0"></td>
-                          <td><input type="text" class="form-control" name="series_number-0"></td>
-                          <td><input type="text" class="form-control" name="insurance_sum-0"></td>
-                          <td><input type="text" class="form-control" name="insurance_premium-0"></td>
+                          <td><input type="text" class="form-control" name="mark_model"></td>
+                          <td><input type="text" class="form-control" name="name"></td>
+                          <td><input type="text" class="form-control" name="series_number"></td>
+                          <td><input type="text" class="form-control" name="insurance_sum"></td>
+                          <td><input type="text" class="form-control" name="insurance_premium"></td>
                         </tr>
                         <tr>
                           <td colspan="4"><label class="text-bold">Итого</label></td>
@@ -692,9 +692,9 @@
                     <div class="form-group">
                       <label>Покрытие террористических актов с ТС </label>
                       <div class="input-group mb-4">
-                        <input type="text" class="form-control" name="cover_terror_attacks_sum-0">
+                        <input type="text" class="form-control" name="cover_terror_attacks_sum">
                         <div class="input-group-append">
-                          <select class="form-control success" name="cover_terror_attacks_currency-0" style="width: 100%;">
+                          <select class="form-control success" name="cover_terror_attacks_currency" style="width: 100%;">
                             <option selected="selected">UZS</option>
                             <option>USD</option>
                           </select>
@@ -705,9 +705,9 @@
                     <div class="form-group">
                       <label>Покрытие террористических актов с застрахованными лицами </label>
                        <div class="input-group mb-4">
-                        <input type="text" class="form-control" name="cover_terror_attacks_insured_sum-0">
+                        <input type="text" class="form-control" name="cover_terror_attacks_insured_sum">
                         <div class="input-group-append">
-                          <select class="form-control success" name="cover_terror_attacks_insured_currency-0" style="width: 100%;">
+                          <select class="form-control success" name="cover_terror_attacks_insured_currency" style="width: 100%;">
                             <option selected="selected">UZS</option>
                             <option>USD</option>
                           </select>
@@ -718,9 +718,9 @@
                     <div class="form-group">
                       <label>Покрытие расходы по эвакуации</label>
                       <div class="input-group mb-4">
-                        <input type="text" class="form-control" name="coverage_evacuation_cost-0">
+                        <input type="text" class="form-control" name="coverage_evacuation_cost">
                         <div class="input-group-append">
-                          <select class="form-control success" name="coverage_evacuation_currency-0" style="width: 100%;">
+                          <select class="form-control success" name="coverage_evacuation_currency" style="width: 100%;">
                             <option selected="selected">UZS</option>
                             <option>USD</option>
                           </select>
@@ -744,11 +744,11 @@
                     <div class="form-group">
                       <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
                       <div class="form-check">
-                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance" value="yes">
+                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance" value="1">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="no">
+                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="0">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>
@@ -775,11 +775,11 @@
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch1" checked id="radioSuccess3">
+                            <input type="radio" name="vehicle_damage" checked id="radioSuccess3" value="1">
                             <label for="radioSuccess3">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch1" id="radioSuccess4">
+                            <input type="radio" name="vehicle_damage" id="radioSuccess4" value="0">
                             <label for="radioSuccess4">Нет</label>
                           </div>
                         </div>
@@ -824,11 +824,11 @@
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch2" checked id="radioSuccess5">
+                            <input type="radio" name="civil_liability" checked id="radioSuccess5" value="1">
                             <label for="radioSuccess5">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch2" id="radioSuccess6">
+                            <input type="radio" name="civil_liability" id="radioSuccess6" value="0">
                             <label for="radioSuccess6">Нет</label>
                           </div>
                         </div>
@@ -861,11 +861,11 @@
                     <div class="form-group">
                       <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ch3" value="yes">
+                        <input class="form-check-input" type="radio" name="accidents" value="1">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ch3" value="no">
+                        <input class="form-check-input" type="radio" name="accidents" value="0">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>
@@ -977,7 +977,7 @@
                           <div class="col-sm-4">
                             <div class="form-group">
                               <label for="polises">Полис</label>
-                              <select class="form-control polises" id="polises-0" name="policy" style="width: 100%;">
+                              <select class="form-control polises" id="polises" name="policy" style="width: 100%;">
                                 <option selected="selected"></option>
                                 {% for polis in polises %}
                                   <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>
@@ -1146,7 +1146,7 @@
                 let value = $(this).children("option:selected").val();
 
                 $.ajax({
-                    url: '/api/products/',
+                    url: '/api/product_type/',
                     method: "GET",
                     success: function (data) {
                         if (data.success === true) {
@@ -1289,8 +1289,54 @@
                 }
                 forms.payment_terms = params;
 
+                params = {};
+                let count = 0;
+                let field;
+                let productFields1 = [];
+                let productFields2 = [];
+                let productExists = false;
+                for (let i = 0; i < productFieldNumber; i++) {
+                    field = null;
+
+                    for (let j = 0; j < 6; j++) {
+                        if ((field = $(`#product-fields-${i}-${j}`)).length) {
+                            serializedForm = field.serializeArray();
+                            for (let k = 0; k < serializedForm.length; k++) {
+                                params[serializedForm[k]['name']] = serializedForm[k]['value'];
+                            }
+                            productExists = true;
+                        } else {
+                            productExists = false;
+                        }
+                        productFields2[j] = params;
+                        params = {};
+                    }
+                    params = {};
+
+                    if (productExists) {
+                        field = $(`#product-fields`);
+                        serializedForm = field.serializeArray();
+                        params.mark_model = field.find(`input[name=mark_model-${i}]`).val();
+                        params.release_year = field.find(`input[name=release_year-${i}]`).val();
+                        params.country_number = field.find(`input[name=country_number-${i}]`).val();
+                        params.tech_passport_number = field.find(`input[name=tech_passport_number-${i}]`).val();
+                        params.engine_number = field.find(`input[name=engine_number-${i}]`).val();
+                        params.carcase_number = field.find(`input[name=carcase_number-${i}]`).val();
+                        params.lifting_capacity = field.find(`input[name=lifting_capacity-${i}]`).val();
+                        params.number_of_seats = field.find(`input[name=number_of_seats-${i}]`).val();
+                        params.insurance_cost = field.find(`input[name=insurance_cost-${i}]`).val();
+                        params.insurance_sum = field.find(`input[name=insurance_sum-${i}]`).val();
+                        params.insurance_premium = field.find(`input[name=insurance_premium-${i}]`).val();
+                        field = null;
+                    }
+
+                    productFields1[count++] = productFields2;
+                    productFields2 = {};
+                }
+                forms.product_fields = productFields1;
+
                 $.ajax({
-                    url: '/api/klass/',
+                    url: '/api/klassss/',
                     data: JSON.stringify(forms),
                     {#processData: false,#}
                     contentType: 'application/json',

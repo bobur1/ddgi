@@ -46,11 +46,11 @@ $(document).ready(function () {
                         </thead>
                         <tbody>
                         <tr>
-                          <td><input type="text" class="form-control" name="mark_model-${fieldNumber}"></td>
-                          <td><input type="text" class="form-control" name="name-${fieldNumber}"></td>
-                          <td><input type="text" class="form-control" name="series_number-${fieldNumber}"></td>
-                          <td><input type="text" class="form-control" name="insurance_sum-${fieldNumber}"></td>
-                          <td><input type="text" class="form-control" name="insurance_premium-${fieldNumber}"></td>
+                          <td><input type="text" class="form-control" name="mark_model"></td>
+                          <td><input type="text" class="form-control" name="name"></td>
+                          <td><input type="text" class="form-control" name="series_number"></td>
+                          <td><input type="text" class="form-control" name="insurance_sum"></td>
+                          <td><input type="text" class="form-control" name="insurance_premium"></td>
                         </tr>
                         <tr>
                           <td colspan="4"><label class="text-bold">Итого</label></td>
@@ -127,11 +127,11 @@ $(document).ready(function () {
                     <div class="form-group">
                       <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
                       <div class="form-check">
-                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance" value="yes">
+                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance" value="1">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="no">
+                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="0">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>
@@ -158,11 +158,11 @@ $(document).ready(function () {
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch1" checked id="radioSuccess3">
+                            <input type="radio" name="vehicle_damage" checked id="radioSuccess3" value="1">
                             <label for="radioSuccess3">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch1" id="radioSuccess4">
+                            <input type="radio" name="vehicle_damage" id="radioSuccess4" value="0">
                             <label for="radioSuccess4">Нет</label>
                           </div>
                         </div>
@@ -207,11 +207,11 @@ $(document).ready(function () {
                       <div class="row">
                         <div class="col-sm-1">
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch2" checked id="radioSuccess5">
+                            <input type="radio" name="civil_liability" checked id="radioSuccess5" value="1">
                             <label for="radioSuccess5">Да</label>
                           </div>
                           <div class="checkbox icheck-success">
-                            <input type="radio" name="ch2" id="radioSuccess6">
+                            <input type="radio" name="civil_liability" id="radioSuccess6" value="0">
                             <label for="radioSuccess6">Нет</label>
                           </div>
                         </div>
@@ -244,11 +244,11 @@ $(document).ready(function () {
                     <div class="form-group">
                       <label class=>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ch3" value="yes">
+                        <input class="form-check-input" type="radio" name="accidents" value="1">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="ch3" value="no">
+                        <input class="form-check-input" type="radio" name="accidents" value="0">
                         <label class="form-check-label">Нет</label>
                       </div>
                     </div>
@@ -360,7 +360,7 @@ $(document).ready(function () {
                           <div class="col-sm-4">
                             <div class="form-group">
                               <label for="polises">Полис</label>
-                              <select class="form-control polises" id="polises-${fieldNumber}" name="policy" style="width: 100%;">
+                              <select class="form-control polises" id="polises" name="policy" style="width: 100%;">
                                 <option selected="selected"></option>
                                 {% for polis in polises %}
                                   <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>

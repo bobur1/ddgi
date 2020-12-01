@@ -55,17 +55,20 @@ function addRow() {
             let ele = document.createElement('input');
 
             let fieldIndex = c + 1;
-            ele.setAttribute('name', fieldNames[c] + productFieldNumber);
+            let columnName = fieldNames[c];
+            ele.setAttribute('name', columnName + productFieldNumber);
 
             if (c === 1) {
                 ele.setAttribute('type', 'date');
             } else {
                 ele.setAttribute('type', 'text');
             }
-            if (c == ($("#empTable tr th").length - 3)) {
+            if (columnName === 'insurance_cost-') {
                 ele.setAttribute('class', 'form-control forsum2');
-            } else if (c == ($("#empTable tr th").length - 2)) {
+            } else if (columnName === 'insurance_sum-') {
                 ele.setAttribute('class', 'form-control forsum');
+            } else if (columnName === 'insurance_premium-'){
+                ele.setAttribute('class', 'form-control forsum3');
             } else {
                 ele.setAttribute('class', 'form-control');
             }
@@ -79,6 +82,7 @@ function addRow() {
 $(document).ready(function () {
     $(document).on("keyup", ".forsum", calculateSum);
     $(document).on("keyup", ".forsum2", calculateSum2);
+    $(document).on("keyup", ".forsum3", calculateSum3);
 });
 
 function calculateSum() {
@@ -107,6 +111,20 @@ function calculateSum2() {
     $('.overall-sum2').val(sum.toFixed(2));
 }
 
+function calculateSum3() {
+
+    let sum = 0;
+    $('.forsum3').each(function () {
+
+        if (!isNaN(this.value) && this.value.length != 0) {
+            sum += parseFloat(this.value);
+        }
+
+    });
+    $('.overall-sum3').val(sum.toFixed(2));
+}
+
+
 // function to delete a row.
 function removeRow(oButton) {
     let empTab = document.getElementById('empTable');
@@ -115,6 +133,7 @@ function removeRow(oButton) {
     $("#product-field-modal-"+id).remove();
     calculateSum();
     calculateSum2();
+    calculateSum3();
 }
 
 // function to add new row.

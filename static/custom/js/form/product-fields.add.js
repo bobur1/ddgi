@@ -127,7 +127,7 @@ $(document).ready(function () {
                     <div class="form-group">
                       <label>Застрахованы ли автотранспортные средства на момент заполнения настоящей анкеты? </label>
                       <div class="form-check">
-                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" id="other_insurance" value="1">
+                        <input class="form-check-input other_insurance" type="radio" name="other_insurance" value="1">
                         <label class="form-check-label">Да</label>
                       </div>
                       <div class="form-check">
@@ -269,53 +269,53 @@ $(document).ready(function () {
                         <tbody>
                         <tr>
                           <td><label>Водитель(и)</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="driver_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="driver_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="driver_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="driver_total_sum"></td>
+                          <td><input type="number" class="form-control" name="driver_premium"></td>
                         </tr>
                         <tr>
                           <td><label>Пассажиры</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="passenger_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="passenger_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="passenger_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div>
                           </td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="passenger_total_sum"></td>
+                          <td><input type="number" class="form-control" name="passenger_premium"></td>
                         </tr>
                         <tr>
                           <td><label class="text-bold">Общий Лимит</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="limit_quantity"></td>
                           <td><div class="input-group mb-4">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="limit_one_sum">
                             <div class="input-group-append">
-                              <select class="form-control success" style="width: 100%;">
+                              <select class="form-control success" name="limit_currency" style="width: 100%;">
                                 <option selected="selected">UZS</option>
                                 <option>USD</option>
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control"></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="limit_total_sum"></td>
+                          <td><input type="number" class="form-control" name="limit_premium"></td>
                         </tr>
                         <tr>
                           <td colspan="3"><label class="text-bold">Итого</label></td>
-                          <td><input type="number" class="form-control"></td>
+                          <td><input type="number" class="form-control" name="total"></td>
                         </tr>
                         </tbody>
                       </table>
@@ -324,9 +324,9 @@ $(document).ready(function () {
                   <div class="form-group col-sm-8">
                     <label>Общий лимит ответственности </label>
                     <div class="input-group mb-4">
-                      <input type="text" class="form-control">
+                      <input type="text" class="form-control" name="total_liability_limit">
                       <div class="input-group-append">
-                        <select class="form-control success" style="width: 100%;">
+                        <select class="form-control success" name="total_liability_limit_currency" style="width: 100%;">
                           <option selected="selected">UZS</option>
                           <option>USD</option>
                         </select>
@@ -355,12 +355,12 @@ $(document).ready(function () {
                       </div>
                     </div>
                     <div class="card-body">
-                      <form method="POST" id="polis-field-${fieldNumber}">
+                      <form method="POST" id="polis-fields-${fieldNumber}">
                         <div class="row policy">
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <label for="polises">Полис</label>
-                              <select class="form-control polises" id="polises" name="policy" style="width: 100%;">
+                              <label for="polises-${fieldNumber}">Полис</label>
+                              <select class="form-control polises" id="polises-${fieldNumber}" name="policy" style="width: 100%;">
                                 <option selected="selected"></option>
                                 {% for polis in polises %}
                                   <option value="{{ polis.id }}">{{ polis.policy_number }} - {{ polis.income_session.act_number }}</option>
@@ -393,9 +393,6 @@ $(document).ready(function () {
                     </div>
                     <!-- /.card -->
                   </div>
-                </div>
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                 </div>
               </div>
             </div>

@@ -33,6 +33,7 @@ function addRow() {
 
             // add button's "onclick" event.
             button.setAttribute('onclick', 'removeRow(this)');
+            button.setAttribute('data-field-number', productFieldNumber);
             button.setAttribute('class', 'btn btn-warning');
 
             td.appendChild(button);
@@ -109,9 +110,9 @@ function calculateSum2() {
 // function to delete a row.
 function removeRow(oButton) {
     let empTab = document.getElementById('empTable');
-    console.log(oButton.parentNode.parentNode.rowIndex);
     empTab.deleteRow(oButton.parentNode.parentNode.rowIndex); // buttton -> td -> tr
-    $(`product-field-modal-${oButton.parentNode.parentNode.rowIndex}`).remove();
+    let id = oButton.dataset.fieldNumber;
+    $("#product-field-modal-"+id).remove();
     calculateSum();
     calculateSum2();
 }

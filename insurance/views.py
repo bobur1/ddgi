@@ -165,6 +165,7 @@ def get_product_type_fields(request):
 # @api_view(['GET'])
 # def get_prduct_details(request)
 
+
 class PolicyViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = Policy.objects.all()
@@ -433,38 +434,28 @@ class IndividualClientViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         response = {}
         try:
-            if self.request.data['action'] == 'create':
-                params = self.request.data['params']
-                IndividualClient.objects.create(
-                    first_name=params['first_name'],
-                    last_name=params['last_name'],
-                    middle_name=params['middle_name'],
-                    address=params['address'],
-                    phone_number=params['phone_number'],
-                    cr_by=self.request.user
-                ).save()
-            elif self.request.data['action'] == 'get':
-                item_id = self.request.data['id']
-                item = IndividualClient.objects.get(id=item_id)
-                serializer = IndividualClientSerializer(item)
-                response['success'] = True
-                response['data'] = serializer.data
-            elif self.request.data['action'] == 'update':
-                params = self.request.data['params']
-                IndividualClient.objects.filter(id=params['id']).update(
-                    first_name=params['first_name'],
-                    last_name=params['last_name'],
-                    middle_name=params['middle_name'],
-                    address=params['address'],
-                    phone_number=params['phone_number'],
-                    up_by=self.request.user,
-                    up_on=datetime.datetime.now()
-                )
-            elif self.request.data['action'] == 'delete':
-                item_id = self.request.data['id']
-                IndividualClient.objects.filter(id=item_id).update(
-                    is_exist=False
-                )
+            create_update_individual_client(request)
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = str(e)
+        return Response(response)
+
+    def put(self, request, *args, **kwargs):
+        response = {}
+        try:
+            create_update_individual_client(request)
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = str(e)
+        return Response(response)
+
+    def delete(self, request, *args, **kwargs):
+        response = {}
+        try:
+            item_id = self.request.data['id']
+            IndividualClient.objects.filter(id=item_id).update(
+                is_exist=False
+            )
         except Exception as e:
             response['success'] = False
             response['error_msg'] = str(e)
@@ -721,41 +712,28 @@ class LegalClientViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         response = {}
-
         try:
-            if self.request.data['action'] == 'create':
-                params = self.request.data['params']
-                LegalClient.objects.create(
-                    name=params['name'],
-                    address=params['address'],
-                    phone_number=params['phone_number']
-                ).save()
-                response['success'] = True
-            elif self.request.data['action'] == 'get':
-                item_id = self.request.data['id']
-                item = LegalClient.objects.get(id=item_id)
-                response['data'] = LegalClientSerializer(item)
-                response['success'] = True
-            elif self.request.data['action'] == 'update':
-                params = self.request.data['params']
-                LegalClient.objects.filter(id=params['id']).update(
-                    name=params['name'],
-                    address=params['address'],
-                    phone_number=params['phone_number'],
-                    up_by=self.request.user
-                )
-                response['success'] = True
-            elif self.request.data['action'] == 'delete':
-                item_id = self.request.data['id']
-                LegalClient.objects.filter(id=item_id).update(
-                    up_by=self.request.user,
-                    is_exist=False
-                )
-                response['success'] = True
+            create_update_legal_client(request=request)
+            response['success'] = True
         except Exception as e:
             response['success'] = False
-            response['error_msg'] = str(e)
+            response['error_msg'] = e.__str__()
+
+    def put(self, request, *args, **kwargs):
+        response = {}
+        try:
+            create_update_legal_client(request=request)
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.__str__()
+
         return Response(response)
+
+    def delete(self, request, *args, **kwargs):
+        id = request.data.get('legal_client_id')
+        obj = LegalClient.objects.get(id=id)
+        obj.delete()
 
 
 class UserViewSet(viewsets.ViewSet):

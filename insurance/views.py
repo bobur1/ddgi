@@ -15,16 +15,43 @@ import json
 from datetime import datetime
 
 
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
 def create_update_worker(request):
     response = {}
-    try:
-        create_update_office_worker(request)
-        response['success'] = True
-    except Exception as e:
-        response['success'] = False
-        response['error_msg'] = e.__str__()
+    if request.method == 'POST':
+        try:
+            create_update_office_worker(request)
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.__str__()
+    if request.method == 'GET':
+        page = request.query_params.get('page', 1)
+        size = request.query_params.get('size', 20)
+        director_id = request.query_params.get('director', None)
+        office_id = request.query_params.get('office', None)
+        response = {}
+
+        try:
+
+            if director_id is not None:
+                items = get_workers_by_user(director_id)
+            elif office_id is not None:
+                items = get_workers_by_office(office_id)
+            else:
+                items = OfficeWorkers.objects.all()
+
+            paginator = Paginator(items, size)
+            serializer = OfficeWorkersSerializer(paginator.page(page), many=True)
+            response['data'] = serializer.data
+            response['success'] = True
+
+        except Exception as e:
+            response['error_msg'] = e.__str__()
+            response['success'] = False
+        response['page'] = page
+        response['size'] = size
     return Response(response)
 
 
@@ -822,6 +849,26 @@ class UserViewSet(viewsets.ViewSet):
             response['success'] = False
             response['error_msg'] = e.args
             print(e)
+        return Response(response)
+
+    def get(self, request):
+        page = request.query_params.get('page', 1)
+        size = request.query_params.get('size', 20)
+        response = {}
+
+        try:
+            items = User.objects.all()
+
+            paginator = Paginator(items, size)
+            serializer = UserDetailedSerializer(paginator.page(page), many=True)
+            response['data'] = serializer.data
+            response['success'] = True
+        except Exception as e:
+            response['error_msg'] = e.__str__()
+            response['success'] = False
+
+        response['page'] = page
+        response['size'] = size
         return Response(response)
 
 

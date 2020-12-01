@@ -147,7 +147,6 @@ def create_update_office_worker(request):
     worker_id = request.data.get('worker_id', None)
 
     if worker_id is not None:
-        #update
         worker = OfficeWorkers.objects.get(id=worker_id)
         office_id = request.data.get('office_id', None) or worker.office_id
         worker.office_id = office_id
@@ -226,6 +225,7 @@ def create_update_legal_client(request):
     inn = request.data.get('inn', None)
     bank_id = request.data.get('bank_id', None)
     is_exists = request.data.get('is_exists', None)
+    okohx = request.data.get('okohx', None)
 
     cr_by = request.user
     up_by = request.user
@@ -242,6 +242,7 @@ def create_update_legal_client(request):
         obj.is_exist = is_exists or obj.is_exist
         obj.up_by = up_by
         obj.up_on = up_on
+        obj.okohx = okohx or obj.okohx
         obj.save()
     else:
         LegalClient.objects.create(
@@ -252,8 +253,9 @@ def create_update_legal_client(request):
             bank_id=bank_id,
             is_exists=is_exists or True,
             cr_by=cr_by,
-            cr_on=cr_on
-        )
+            cr_on=cr_on,
+            okohx=okohx
+        ).save()
 
 
 def create_update_individual_client(request):

@@ -563,3 +563,7 @@ class ApplicationForm(models.Model):
 
 class ProductApplicationField(ProductField):
     application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
+
+
+class Vehicle(models.Model):
+    model_name = models.CharField(max_length=128, null=False, blank=False)

@@ -3,8 +3,12 @@ from rest_framework.response import Response
 from insurance.models import *
 
 
-def get_workers_by_user(user):
-    return OfficeWorkers.objects.filter(office__director=user)
+def get_workers_by_user(user_id):
+    return OfficeWorkers.objects.filter(office__director_id=user_id)
+
+
+def get_workers_by_office(office_id):
+    return OfficeWorkers.objects.filter(office_id=office_id)
 
 
 def get_office_list_by_user(user):

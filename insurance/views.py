@@ -596,9 +596,11 @@ class ProductTypeViewSet(viewsets.ViewSet):
 
     def get(self, request, *args, **kwargs):
         client_type = request.query_params.get('client_type', None)
-
+        item_id = request.query_params.get('item_id', None)
         if client_type is not None:
             serializer = ProductSerializer(ProductType.objects.filter(client_type=client_type), many=True)
+        elif item_id is not None:
+            serializer = ProductSerializer(ProductType.objects.get(id=item_id), many=False)
         else:
             serializer = ProductSerializer(ProductType.objects.all(), many=True)
 

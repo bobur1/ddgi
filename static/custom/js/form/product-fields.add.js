@@ -1,5 +1,6 @@
 $(document).ready(function () {
-    $('.product-fields-button').click(function (e) {
+    //better use on() event handler for dynamically creating elements
+    $(document).on('click','.product-fields-button', function(e){
         let productForm = $(this);
         let fieldNumber = productForm.data('field-number');
         let field = $('#product-field-modal-' + fieldNumber);
@@ -10,7 +11,7 @@ $(document).ready(function () {
         content.css('padding', '10px');
     });
 
-    $('.product-fields-close').click(function (e) {
+    $(document).on('click','.product-fields-close', function(e){
         let productForm = $(this);
         let fieldNumber = productForm.data('field-number');
 
@@ -21,7 +22,7 @@ $(document).ready(function () {
         let fields = `
           <div id="product-field-modal-${fieldNumber}" class="modal" data-field-number="${fieldNumber}">
             <div class="modal-content" id="product-field-modal-content-${fieldNumber}">
-              <span class="close product-fields-close" id="product-fields-close-${fieldNumber}" data-field-number="0">&times;</span>
+              <span class="close product-fields-close" id="product-fields-close-${fieldNumber}" data-field-number="${fieldNumber}">&times;</span>
               <div class="card card-success">
                 <div class="card-header">
                   <h3 class="card-title">Перечень дополнительного оборудования</h3>

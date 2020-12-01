@@ -18,7 +18,7 @@
         <thead>
           <tr role="row">
             <th>ID</th>
-            <th>PERSON</th>
+            <th>Policy number</th>
           </tr>
         </thead>
       </table>
@@ -67,10 +67,10 @@
           },
           scrollY: "70vh",
           select: true,
-          ajax: "/api/client-individual?format=datatables",
+          ajax: "/api/polis-registration?format=datatables",
           columns: [
             {"data": "id"},
-            {"data": "person_first_name"}
+            {"data": "policy_number"}
           ]
         }
       );
@@ -82,7 +82,7 @@
     });
 
     function addClient() {
-        window.location.href ='{% url "individual_client_add" %}';
+        window.location.href ='{% url "polis_registration_add" %}';
     }
 
 

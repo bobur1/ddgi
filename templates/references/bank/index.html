@@ -17,8 +17,9 @@
       <table id="currency_table" class="table table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;">
         <thead>
           <tr role="row">
-            <th>Название</th>
-            <th>Код</th>
+            <th>МФО</th>
+            <th>Наименование</th>
+            <th>Наименования Филиала</th>
           </tr>
         </thead>
       </table>
@@ -67,10 +68,11 @@
           },
           scrollY: "70vh",
           select: true,
-          ajax: "/api/client-individual?format=datatables",
+          ajax: "/api/references/bank?format=datatables",
           columns: [
-            {"data": "id"},
-            {"data": "person_first_name"}
+            {"data": "mfo"},
+            {"data": "name"},
+            {"data": "branchName"}
           ]
         }
       );

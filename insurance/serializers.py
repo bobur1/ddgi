@@ -172,7 +172,7 @@ class LegalClientSerializer(serializers.ModelSerializer):
     class Meta:
         model = LegalClient
         fields = ['id', 'name', 'address', 'phone_number',
-                  'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo']
+                  'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo', 'okohx']
 
 
 class CurrencySerializer(serializers.ModelSerializer):

@@ -88,6 +88,25 @@ def test_view(request):
     return Response(response)
 
 
+def get_product_types_by(request):
+    client_type = request.query_params.get('client_type', None)
+    item_id = request.query_params.get('item_id', None)
+
+    if client_type is not None:
+        serializer = ProductSerializer(ProductType.objects.filter(client_type=client_type), many=True)
+    elif item_id is not None:
+        serializer = ProductSerializer(ProductType.objects.get(id=item_id), many=False)
+    else:
+        serializer = ProductSerializer(ProductType.objects.all(), many=True)
+
+    response = {
+        'data': serializer.data,
+        'success': True
+    }
+
+    return JsonResponse(response)
+
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
@@ -601,6 +620,7 @@ class ClassifiersViewSet(viewsets.ModelViewSet):
 class ProductTypeViewSet(viewsets.ModelViewSet):
     queryset = ProductType.objects.all()
     permission_classes = [IsAuthenticated, ]
+    serializer_class = ProductSerializer
 
     @staticmethod
     def __handle_request(req):
@@ -618,23 +638,6 @@ class ProductTypeViewSet(viewsets.ModelViewSet):
 
     def put(self, request, *args, **kwargs):
         return self.__handle_request(req=request)
-
-    def get(self, request, *args, **kwargs):
-        client_type = request.query_params.get('client_type', None)
-        item_id = request.query_params.get('item_id', None)
-        if client_type is not None:
-            serializer = ProductSerializer(ProductType.objects.filter(client_type=client_type), many=True)
-        elif item_id is not None:
-            serializer = ProductSerializer(ProductType.objects.get(id=item_id), many=False)
-        else:
-            serializer = ProductSerializer(ProductType.objects.all(), many=True)
-
-        response = {
-            'data': serializer.data,
-            'success': True
-        }
-
-        return JsonResponse(response)
 
 
 class ProductTypeCodeViewSet(viewsets.ModelViewSet):

@@ -432,10 +432,12 @@ def form_add(request):
     products = ProductType.objects.filter(client_type=1).all()
     banks = Bank.objects.all()
     polises = get_transferred_policies_by(request.user)
+    legalClients = LegalClient.objects.get()
     return render(request, "form/add.html", {
         'products': products,
         'banks': banks,
         'polises': polises,
+        'legalClients': legalClients,
     })
 
 

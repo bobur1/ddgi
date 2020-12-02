@@ -19,9 +19,9 @@ let insurerFormButton = $('#insurer-form-button');
 let beneficiaryFormButton = $('#beneficiary-form-button');
 let pledgerFormButton = $('#pledger-form-button');
 
-let insurerId = $('#insurer_id');
-let beneficiaryId = $('#beneficiary_id');
-let pledgerId = $('#pledger_id');
+let insurerId = $('#insurer-id');
+let beneficiaryId = $('#beneficiary-id');
+let pledgerId = $('#pledger-id');
 
 let beneficiaryCardBody = $('#beneficiary-card-body');
 let pledgerCardBody = $('#pledger-card-body');
@@ -30,9 +30,20 @@ let formContainer = $('#form-container');
 let agreementContainer = $('#agreement-container');
 let polisContainer = $('#polis-container');
 let productId = $('#product-id');
-let individualClientRow = $('#individual-client-row');
-let legalClientRow = $('#legal-client-row');
+let insurerIndividualClientRow = $('#insurer-individual-client-row');
+let insurerLegalClientRow = $('#insurer-legal-client-row');
 let insurerName = $('#insurer-name');
+let insurerFirstName = $('#insurer_first_name');
+let insurerLastName = $('#insurer_surname');
+let insurerMiddleName = $('#insurer_middle_name');
+let insurerOkonh = $('#insurer-okonh');
+let beneficiaryIndividualClientRow = $('#beneficiary-individual-client-row');
+let beneficiaryLegalClientRow = $('#beneficiary-legal-client-row');
+let beneficiaryName = $('#beneficiary-name');
+let beneficiaryFirstName = $('#beneficiary_first_name');
+let beneficiaryLastName = $('#beneficiary_surname');
+let beneficiaryMiddleName = $('#beneficiary_middle_name');
+let beneficiaryOkonh = $('#beneficiary-okonh');
 let submitButton = $('#submit-button');
 
 let productFieldsForm = $('#product-fields');
@@ -46,7 +57,8 @@ let generalProductFields = $('#general-product-fields');
 let formSaveButton = $('#form-save-button');
 
 let product = null;
-let individualClient = true;
+let insurerIndividualClient = true;
+let beneficiaryIndividualClient = true;
 
 let paymentTypeFieldNumber = 0;
 let productFieldNumber = 0;

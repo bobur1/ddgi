@@ -94,4 +94,48 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.beneficiary-type-radio').click(function () {
+        clientType = $(this).val();
+        $.ajax({
+            url: '/api/client_' + clientType + '/',
+            method: "GET",
+            success: function (data) {
+                if (data.success === true) {
+                    beneficiaryId.empty().append('<option selected="selected"></option>');
+                    const clients = data.data;
+                    const length = clients.length;
+                    for (let i = 0; i < length; i++) {
+                        beneficiaryId.append(`<option value="${clients[i].id}">${clients[i].name}</option>`);
+                    }
+                }
+            },
+            error: function () {
+                console.log('error');
+            }
+        });
+
+        let clientType = $("input:radio[name='beneficiary_type_radio']:checked").val();
+        // {#getPolicyList(clientType === 'individual' ? 1 : 2);#}
+
+        if (clientType === 'individual') {
+            beneficiaryLegalClientRow.hide();
+            beneficiaryName.prop('disabled', true);
+            beneficiaryOkonh.prop('disabled', true);
+            beneficiaryIndividualClientRow.show();
+            beneficiaryFirstName.prop('disabled', false);
+            beneficiaryLastName.prop('disabled', false);
+            beneficiaryMiddleName.prop('disabled', false);
+            beneficiaryIndividualClient = true;
+        } else {
+            beneficiaryLegalClientRow.show();
+            beneficiaryName.prop('disabled', false);
+            beneficiaryOkonh.prop('disabled', false);
+            beneficiaryIndividualClientRow.hide();
+            beneficiaryFirstName.prop('disabled', true);
+            beneficiaryLastName.prop('disabled', true);
+            beneficiaryMiddleName.prop('disabled', true);
+            beneficiaryIndividualClient = false;
+        }
+    });
 });

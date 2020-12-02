@@ -205,7 +205,7 @@ def get_product_type_fields(request):
 # def get_prduct_details(request)
 
 
-class PolicyViewSet(viewsets.ViewSet):
+class PolicyViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = Policy.objects.all()
     serializer_class = PoliciesSerializer
@@ -241,7 +241,7 @@ class PolicyViewSet(viewsets.ViewSet):
         return Response({})
 
 
-class TransferPoliciesViewSet(viewsets.ViewSet):
+class TransferPoliciesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = PolicyTransfers.objects.all()
     serializer_class = TransferPoliciesSerializer
@@ -314,7 +314,7 @@ class TransferPoliciesViewSet(viewsets.ViewSet):
         return Response(response)
 
 
-class PolicyIncomeViewSet(viewsets.ViewSet):
+class PolicyIncomeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = PoliciesIncome.objects.all()
     serializer_class = PoliciesIncomeSerializer
@@ -584,7 +584,7 @@ class ClassifiersViewSet(viewsets.ModelViewSet):
         return Response(response)
 
 
-class ProductTypeViewSet(viewsets.ViewSet):
+class ProductTypeViewSet(viewsets.ModelViewSet):
     queryset = ProductType.objects.all()
     permission_classes = [IsAuthenticated, ]
 
@@ -623,7 +623,7 @@ class ProductTypeViewSet(viewsets.ViewSet):
         return JsonResponse(response)
 
 
-class ProductTypeCodeViewSet(viewsets.ViewSet):
+class ProductTypeCodeViewSet(viewsets.ModelViewSet):
     queryset = ProductTypeCode.objects.all()
     permission_classes = [IsAuthenticated, ]
     serializer_class = ProductTypeCodeSerializer
@@ -705,7 +705,7 @@ class BankViewSet(viewsets.ModelViewSet):
         )
 
 
-class BranchViewSet(viewsets.ViewSet):
+class BranchViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = InsuranceOffice.objects.filter(is_exist=True)
     serializer_class = BranchSerializer
@@ -800,7 +800,7 @@ class LegalClientViewSet(viewsets.ModelViewSet):
         obj.delete()
 
 
-class UserViewSet(viewsets.ViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = User.objects.all()
 
@@ -885,7 +885,7 @@ class UserViewSet(viewsets.ViewSet):
         return Response(response)
 
 
-class ApplicationFormViewSet(viewsets.ViewSet):
+class ApplicationFormViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = ApplicationForm.objects.all()
 

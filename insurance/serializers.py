@@ -168,13 +168,6 @@ class HumanSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'last_name', 'middle_name', 'phone']
 
 
-class LegalClientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = LegalClient
-        fields = ['id', 'name', 'address', 'phone_number',
-                  'fax_number', 'checking_account', 'bank_name', 'inn', 'mfo', 'okohx']
-
-
 class CurrencySerializer(serializers.ModelSerializer):
     class Meta:
         model = Currency
@@ -192,6 +185,15 @@ class BankSerializer(serializers.ModelSerializer):
         model = Bank
         fields = ['id', 'name', 'branchName', 'mfo', 'inn',
                   'address', 'phone_number', 'checking_account']
+
+
+class LegalClientSerializer(serializers.ModelSerializer):
+    bank = BankSerializer()
+
+    class Meta:
+        model = LegalClient
+        fields = ['id', 'name', 'address', 'phone_number', 'fax',
+                  'bank', 'inn', 'okohx']
 
 
 class IndividualClientSerializer(serializers.ModelSerializer):

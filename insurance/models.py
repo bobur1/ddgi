@@ -319,6 +319,7 @@ class LegalClient(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
     address = models.CharField(verbose_name="Адрес", max_length=150)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
+    fax = models.CharField(verbose_name="Fax number", max_length=20, default=None, blank=True, null=True)
     inn = models.CharField(verbose_name="INN", max_length=15, default=None, blank=True)
     okohx = models.CharField(verbose_name="OKOHX", max_length=15, default=None, blank=True)
     bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)

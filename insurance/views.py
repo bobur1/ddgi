@@ -61,10 +61,24 @@ class WorkersViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
 
     def create(self, request, *args, **kwargs):
-        create_update_office_worker(request)
+        response = {}
+        try:
+            create_update_office_worker(request)
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.__str__()
+        return Response(response)
 
     def put(self, request, *args, **kwargs):
-        create_update_office_worker(request)
+        response = {}
+        try:
+            create_update_office_worker(request)
+            response['success'] = True
+        except Exception as e:
+            response['success'] = False
+            response['error_msg'] = e.__str__()
+        return Response(response)
 
 
 @api_view(['POST'])

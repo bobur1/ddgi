@@ -26,6 +26,7 @@ router.register('user_creat_update', viewset=views.UserViewSet)
 router.register('product_type', viewset=views.ProductTypeViewSet)
 router.register('product_type_codes', viewset=views.ProductTypeCodeViewSet)
 router.register('application_form', viewset=views.ApplicationFormViewSet)
+router.register('create_update_worker', viewset=views.WorkersViewSet)
 
 
 urlpatterns = [
@@ -36,7 +37,7 @@ urlpatterns = [
     path('api/update-office/', views.create_update_office),
     path('api/check_login/', views.is_free_login),
     path('api/get_product_type_fileds/', views.get_product_type_fields),
-    path('api/create_update_worker/', views.create_update_worker),
+    # path('api/create_update_worker/', views.create_update_worker),
     path('api/create_update_region/', helpers.create_update_region),
     path('api/create_update_region_type/', helpers.create_update_region_type),
 ]

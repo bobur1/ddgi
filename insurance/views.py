@@ -88,6 +88,8 @@ def test_view(request):
     return Response(response)
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_product_types_by(request):
     client_type = request.query_params.get('client_type', None)
     item_id = request.query_params.get('item_id', None)

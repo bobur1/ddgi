@@ -83,64 +83,122 @@
           </div>
 
           <div class="card-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <div class="form-group">
-                  <label for="insurer_id" class="col-form-label">Страхователи</label>
-                  <select
-                      id="insurer_id"
-                      class="form-control"
-                      name="insurer_id"
-                  >
-                    <option selected="selected"></option>
-                  </select>
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Страхователи</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
                 </div>
               </div>
-              <div class="col-sm-4" style="margin-top: 10px">
-                <div class="form-group">
-                  <button id="insurer-modal-button" class="btn btn-primary">Добавить страхователя</button>
+
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="form-group">
+                      <label for="insurer-id" class="col-form-label">Страхователи</label>
+                      <select
+                          id="insurer-id"
+                          class="form-control"
+                          name="insurer_id"
+                      >
+                        <option selected="selected"></option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-4" style="margin-top: 10px">
+                    <div class="form-group">
+                      <button id="insurer-modal-button" class="btn btn-primary">Добавить страхователя</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="card-body" id="beneficiary-card-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <label for="beneficiary_id" class="col-form-label">Выгодоприобретатели</label>
-                <select
-                    id="beneficiary_id"
-                    class="form-control"
-                    name="beneficiary_id"
-                >
-                  <option selected="selected"></option>
-                </select>
+          <div class="card-body">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Выгодоприобретатели</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                </div>
               </div>
-              <div class="col-sm-4" style="margin-top: 10px">
-                <div class="form-group">
-                  <button id="beneficiary-modal-button" class="btn btn-primary">Добавить выгодоприобретателя</button>
+
+              <div class="card-body" id="beneficiary-card-body">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="icheck-success">
+                      <input type="radio" name="beneficiary_type_radio" checked class="beneficiary-type-radio" id="beneficiary-type-radio-1" value="individual">
+                      <label for="beneficiary-type-radio-1">физ. лицо</label>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="icheck-success">
+                      <input type="radio" name="beneficiary_type_radio" class="beneficiary-type-radio" id="beneficiary-type-radio-2" value="legal">
+                      <label for="beneficiary-type-radio-2">юр. лицо</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    <label for="beneficiary-id" class="col-form-label">Выгодоприобретатели</label>
+                    <select
+                        id="beneficiary-id"
+                        class="form-control"
+                        name="beneficiary_id"
+                    >
+                      <option selected="selected"></option>
+                    </select>
+                  </div>
+                  <div class="col-sm-4" style="margin-top: 10px">
+                    <div class="form-group">
+                      <button id="beneficiary-modal-button" class="btn btn-primary">Добавить выгодоприобретателя</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="card-body" id="pledger-card-body">
-            <div class="row">
-              <div class="col-sm-12">
-                <label for="pledger_id" class="col-form-label">Залогодатели</label>
-                <select
-                    id="pledger_id"
-                    class="form-control"
-                    name="pledger_id"
-                >
-                  <option selected="selected"></option>
-                </select>
-              </div>
-              <div class="col-sm-4" style="margin-top: 10px">
-                <div class="form-group">
-                  <button id="pledger-modal-button" class="btn btn-primary">Добавить залогодателя</button>
+          <div class="card-body">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title">Залогодатели</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                    <i class="fas fa-minus"></i>
+                  </button>
                 </div>
               </div>
+                <div class="card-body" id="pledger-card-body">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label for="pledger-id" class="col-form-label">Залогодатели</label>
+                      <select
+                          id="pledger-id"
+                          class="form-control"
+                          name="pledger_id"
+                      >
+                        <option selected="selected"></option>
+                        {% for legalClient in legalClients %}
+                          <option value="{{ legalClient.id }}">{{ legalClient.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+                    <div class="col-sm-4" style="margin-top: 10px">
+                      <div class="form-group">
+                        <button id="pledger-modal-button" class="btn btn-primary">Добавить залогодателя</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
 
@@ -199,7 +257,7 @@
                 </div>
                 <div class="card-body">
                   <form method="POST" id="insurer-form">
-                    <div class="row client-fullname" id="individual-client-row">
+                    <div class="row client-fullname" id="insurer-individual-client-row">
                       <div class="col-sm-4">
                         <div class="form-group">
                           <label for="insurer_first_name">Имя страхователя</label>
@@ -220,7 +278,7 @@
                       </div>
                     </div>
 
-                    <div class="row client-fullname" id="legal-client-row" style="display: none">
+                    <div class="row client-fullname" id="insurer-legal-client-row" style="display: none">
                       <div class="col-sm-12">
                         <div class="form-group">
                           <label for="insurer_name">Название страхователя</label>
@@ -321,7 +379,7 @@
                 </div>
                 <div class="card-body">
                   <form method="POST" id="beneficiary-form">
-                    <div class="row client-fullname" id="individual-client-row">
+                    <div class="row client-fullname" id="beneficiary-individual-client-row">
                       <div class="col-sm-4">
                         <div class="form-group">
                           <label for="beneficiary_first_name">Имя выгодоприобретателя</label>
@@ -342,7 +400,7 @@
                       </div>
                     </div>
 
-                    <div class="row client-fullname" id="legal-client-row" style="display: none">
+                    <div class="row client-fullname" id="beneficiary-legal-client-row" style="display: none">
                       <div class="col-sm-12">
                         <div class="form-group">
                           <label for="beneficiary_name">Название выгодоприобретателя</label>
@@ -415,7 +473,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">ОКОНХ</span>
                             </div>
-                            <input type="text" id="okonh" name="okonh" class="form-control">
+                            <input type="text" id="beneficiary-okonh" name="okonh" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -443,7 +501,7 @@
                 </div>
                 <div class="card-body">
                   <form method="POST" id="pledger-form">
-                    <div class="row client-fullname" id="individual-client-row">
+                    <div class="row client-fullname" id="pledger-individual-client-row">
                       <div class="col-sm-4">
                         <div class="form-group">
                           <label for="pledger_first_name">Имя зологодателя</label>
@@ -464,7 +522,7 @@
                       </div>
                     </div>
 
-                    <div class="row client-fullname" id="legal-client-row" style="display: none">
+                    <div class="row client-fullname" id="pledger-legal-client-row" style="display: none">
                       <div class="col-sm-12">
                         <div class="form-group">
                           <label for="pledger_name">Название зологодателя</label>
@@ -537,7 +595,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">ОКОНХ</span>
                             </div>
-                            <input type="text" id="okonh" name="okonh" class="form-control">
+                            <input type="text" id="pledger-okonh" name="okonh" class="form-control">
                           </div>
                         </div>
                       </div>
@@ -1118,17 +1176,18 @@
 
         $(document).ready(function () {
             $('.client-type-radio').click(function () {
+                formContainer.hide();
                 clientType = $(this).val() == 'individual' ? 1 : 2;
                 $.ajax({
                     url: '/api/product_type/?client_type=' + clientType,
                     method: "GET",
                     success: function (data) {
                         if (data.success === true) {
-                            product.empty().append('<option selected="selected"></option>');
+                            productId.empty().append('<option selected="selected"></option>');
                             const products = data.data;
                             const length = products.length;
                             for (let i = 0; i < length; i++) {
-                                product.append(`<option value="${products[i].id}">${products[i].name}</option>`);
+                                productId.append(`<option value="${products[i].id}">${products[i].name}</option>`);
                             }
                         }
                     },
@@ -1166,53 +1225,32 @@
                     }
                 })
 
-                    let clientType = $("input:radio[name='r3']:checked").val();
+                    let clientType = $("input:radio[name='client_type_radio']:checked").val();
                     {#getPolicyList(clientType === 'individual' ? 1 : 2);#}
 
                     if (clientType === 'individual') {
-                        legalClientRow.hide();
+                        insurerLegalClientRow.hide();
                         insurerName.prop('disabled', true);
-                        individualClientRow.show();
-                        individualClient = true;
+                        insurerOkonh.prop('disabled', true);
+                        insurerIndividualClientRow.show();
+                        insurerFirstName.prop('disabled', false);
+                        insurerLastName.prop('disabled', false);
+                        insurerMiddleName.prop('disabled', false);
+                        insurerIndividualClient = true;
                     } else {
-                        legalClientRow.show();
+                        insurerLegalClientRow.show();
                         insurerName.prop('disabled', false);
-                        individualClientRow.hide();
-                        individualClient = false;
+                        insurerOkonh.prop('disabled', false);
+                        insurerIndividualClientRow.hide();
+                        insurerFirstName.prop('disabled', true);
+                        insurerLastName.prop('disabled', true);
+                        insurerMiddleName.prop('disabled', true);
+                        insurerIndividualClient = false;
                     }
                     formContainer.show();
                 } else {
                     formContainer.hide();
                 }
-            });
-
-            submitButton.click(function (e) {
-                e.preventDefault();
-
-                let forms = {};
-                let params = {}
-                forms.csrfmiddlewaretoken = csrftoken;
-                forms.action = 'create';
-                let serializedForm = form.serializeArray();
-                for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
-                }
-                forms.params = params;
-
-                $.ajax({
-                    url: '/api/klass/',
-                    data: JSON.stringify(forms),
-                    {#processData: false,#}
-                    contentType: 'application/json',
-                    dataType: 'json',
-                    type: "POST",
-                    success: function (data) {
-                        if (data.success === true) {
-                            console.log(data);
-                            window.location.replace('/references/klass/');
-                        }
-                    }
-                });
             });
 
             insurerModalButton.click(function (e) {
@@ -1265,6 +1303,9 @@
                 forms.csrfmiddlewaretoken = csrftoken;
                 forms.action = 'create';
                 forms.client_type = clientType;
+                forms.insurer_id = insurerId.children("option:selected").val();
+                forms.beneficiary_id = beneficiaryId.children("option:selected").val();
+                forms.pledger_id = pledgerId.children("option:selected").val();
                 let serializedForm = clientProductForm.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
                     forms[serializedForm[i]['name']] = serializedForm[i]['value'];

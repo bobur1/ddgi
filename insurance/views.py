@@ -15,44 +15,70 @@ import json
 from datetime import datetime
 
 
-@api_view(['POST', 'GET'])
-@permission_classes([IsAuthenticated])
-def create_update_worker(request):
-    response = {}
-    if request.method == 'POST':
+# @api_view(['POST', 'GET'])
+# @permission_classes([IsAuthenticated])
+# def create_update_worker(request):
+#     response = {}
+#     if request.method == 'POST':
+#         try:
+#             create_update_office_worker(request)
+#             response['success'] = True
+#         except Exception as e:
+#             response['success'] = False
+#             response['error_msg'] = e.__str__()
+#     if request.method == 'GET':
+#         page = request.query_params.get('page', 1)
+#         size = request.query_params.get('size', 20)
+#         director_id = request.query_params.get('director', None)
+#         office_id = request.query_params.get('office', None)
+#         response = {}
+#
+#         try:
+#
+#             if director_id is not None:
+#                 items = get_workers_by_user(director_id)
+#             elif office_id is not None:
+#                 items = get_workers_by_office(office_id)
+#             else:
+#                 items = OfficeWorkers.objects.all()
+#
+#             paginator = Paginator(items, size)
+#             serializer = OfficeWorkersSerializer(paginator.page(page), many=True)
+#             response['data'] = serializer.data
+#             response['success'] = True
+#
+#         except Exception as e:
+#             response['error_msg'] = e.__str__()
+#             response['success'] = False
+#         response['page'] = page
+#         response['size'] = size
+#     return Response(response)
+
+
+class WorkersViewSet(viewsets.ModelViewSet):
+    serializer_class = OfficeWorkersSerializer
+    queryset = OfficeWorkers.objects.all()
+    permission_classes = [IsAuthenticated, ]
+
+    def create(self, request, *args, **kwargs):
+        response = {}
         try:
             create_update_office_worker(request)
             response['success'] = True
         except Exception as e:
             response['success'] = False
             response['error_msg'] = e.__str__()
-    if request.method == 'GET':
-        page = request.query_params.get('page', 1)
-        size = request.query_params.get('size', 20)
-        director_id = request.query_params.get('director', None)
-        office_id = request.query_params.get('office', None)
+        return Response(response)
+
+    def put(self, request, *args, **kwargs):
         response = {}
-
         try:
-
-            if director_id is not None:
-                items = get_workers_by_user(director_id)
-            elif office_id is not None:
-                items = get_workers_by_office(office_id)
-            else:
-                items = OfficeWorkers.objects.all()
-
-            paginator = Paginator(items, size)
-            serializer = OfficeWorkersSerializer(paginator.page(page), many=True)
-            response['data'] = serializer.data
+            create_update_office_worker(request)
             response['success'] = True
-
         except Exception as e:
-            response['error_msg'] = e.__str__()
             response['success'] = False
-        response['page'] = page
-        response['size'] = size
-    return Response(response)
+            response['error_msg'] = e.__str__()
+        return Response(response)
 
 
 @api_view(['POST'])
@@ -193,7 +219,7 @@ def get_product_type_fields(request):
 # def get_prduct_details(request)
 
 
-class PolicyViewSet(viewsets.ViewSet):
+class PolicyViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = Policy.objects.all()
     serializer_class = PoliciesSerializer
@@ -229,7 +255,7 @@ class PolicyViewSet(viewsets.ViewSet):
         return Response({})
 
 
-class TransferPoliciesViewSet(viewsets.ViewSet):
+class TransferPoliciesViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = PolicyTransfers.objects.all()
     serializer_class = TransferPoliciesSerializer
@@ -302,7 +328,7 @@ class TransferPoliciesViewSet(viewsets.ViewSet):
         return Response(response)
 
 
-class PolicyIncomeViewSet(viewsets.ViewSet):
+class PolicyIncomeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = PoliciesIncome.objects.all()
     serializer_class = PoliciesIncomeSerializer
@@ -424,7 +450,6 @@ class ProfileViewSet(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
 
     def get_queryset(self):
-        # print(json.loads(self.request.query_params.get('filter_param'))["status"])
         queryset = Profile.objects.all()
         return queryset
 
@@ -573,7 +598,7 @@ class ClassifiersViewSet(viewsets.ModelViewSet):
         return Response(response)
 
 
-class ProductTypeViewSet(viewsets.ViewSet):
+class ProductTypeViewSet(viewsets.ModelViewSet):
     queryset = ProductType.objects.all()
     permission_classes = [IsAuthenticated, ]
 
@@ -612,7 +637,7 @@ class ProductTypeViewSet(viewsets.ViewSet):
         return JsonResponse(response)
 
 
-class ProductTypeCodeViewSet(viewsets.ViewSet):
+class ProductTypeCodeViewSet(viewsets.ModelViewSet):
     queryset = ProductTypeCode.objects.all()
     permission_classes = [IsAuthenticated, ]
     serializer_class = ProductTypeCodeSerializer
@@ -694,7 +719,7 @@ class BankViewSet(viewsets.ModelViewSet):
         )
 
 
-class BranchViewSet(viewsets.ViewSet):
+class BranchViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = InsuranceOffice.objects.filter(is_exist=True)
     serializer_class = BranchSerializer
@@ -789,7 +814,7 @@ class LegalClientViewSet(viewsets.ModelViewSet):
         obj.delete()
 
 
-class UserViewSet(viewsets.ViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = User.objects.all()
 
@@ -874,7 +899,7 @@ class UserViewSet(viewsets.ViewSet):
         return Response(response)
 
 
-class ApplicationFormViewSet(viewsets.ViewSet):
+class ApplicationFormViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated, ]
     queryset = ApplicationForm.objects.all()
 

@@ -508,6 +508,7 @@ class IndividualClientViewSet(viewsets.ModelViewSet):
         response = {}
         try:
             create_update_individual_client(request)
+            response['success'] = True
         except Exception as e:
             response['success'] = False
             response['error_msg'] = str(e)
@@ -517,6 +518,7 @@ class IndividualClientViewSet(viewsets.ModelViewSet):
         response = {}
         try:
             create_update_individual_client(request)
+            response['success'] = True
         except Exception as e:
             response['success'] = False
             response['error_msg'] = str(e)

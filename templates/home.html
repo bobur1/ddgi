@@ -141,12 +141,16 @@
       </div>
 
       <!-- Sidebar Menu -->
+    {% url 'individual_client' as individual_client_url %}
+    {% url 'legal_client' as legal_client_url %}
+    {% url 'form' as form_url %}
+    {% url 'branch' as branch_url %}
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview  {% if individual_client_url == request.path or form_url or legal_client_url == request.path %} menu-open {% endif %}">
+            <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-book-open"></i>
               <p>
                 Business Book
@@ -154,16 +158,33 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+                <li class="nav-item has-treeview {% if individual_client_url == request.path or legal_client_url == request.path %} menu-open {% endif %}">
+                    <a href="#" class="nav-link">
+                      <i class="nav-icon fas far fa-user"></i>
+                      <p>
+                        Клиенты
+                        <i class="right fas fa-angle-left"></i>
+                      </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                      <li class="nav-item menu-open">
+                        <a href="{{ individual_client_url }}" class="nav-link {% if individual_client_url == request.path %}active{% endif %}">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Физические лица</p>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="{{ legal_client_url }}" class="nav-link {% if legal_client_url == request.path %}active{% endif %}">
+                          <i class="far fa-circle nav-icon"></i>
+                          <p>Юредические лица</p>
+                        </a>
+                      </li>
+                    </ul>
+                </li>
               <li class="nav-item">
-                <a href="{% url 'individual_client' %}" class="nav-link">
-                  <i class="far fa-user nav-icon"></i>
-                  <p>Individual Client</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-money-bill-alt nav-icon"></i>
-                  <p>Record List</p>
+                <a href="{{ form_url }}" class="nav-link {% if form_url == request.path %}active{% endif %}">
+                  <i class="far fa-window-restore nav-icon"></i>
+                  <p>Продукты</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -173,6 +194,14 @@
                 </a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ branch_url }}" class="nav-link {% if branch_url == request.path %}active{% endif %}">
+              <i class="nav-icon far fa-building"></i>
+              <p>
+                Филиалы
+              </p>
+            </a>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">

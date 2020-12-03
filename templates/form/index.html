@@ -17,8 +17,8 @@
       <table id="currency_table" class="table table-bordered table-hover dataTable dtr-inline" role="grid" style="width: 100%;">
         <thead>
           <tr role="row">
-            <th>Название</th>
-            <th></th>
+            <th>ID</th>
+            <th>Наименования</th>
           </tr>
         </thead>
       </table>
@@ -69,8 +69,8 @@
           select: true,
           ajax: "/api/form?format=datatables",
           columns: [
-            {"data": "id"},
-            {"data": "person_first_name"}
+            {#{"data": "id"},#}
+            {#{"data": "id"}#}
           ]
         }
       );

@@ -1179,7 +1179,7 @@
                 formContainer.hide();
                 clientType = $(this).val() == 'individual' ? 1 : 2;
                 $.ajax({
-                    url: '/api/product_type/?client_type=' + clientType,
+                    url: '/api/get_product_types_by/?client_type=' + clientType,
                     method: "GET",
                     success: function (data) {
                         if (data.success === true) {
@@ -1217,7 +1217,7 @@
                                 pledgerCardBody.show();
 
                                 $.ajax({
-                                    url: '/api/client_legal/',
+                                    url: '/api/client-legal/',
                                     method: "GET",
                                     success: function (data) {
                                         if (data.success === true) {
@@ -1301,12 +1301,12 @@
                 }
 
                 $.ajax({
-                    url: '/api/client_' + clientType + '/',
+                    url: '/api/client-' + clientType + '/',
                     method: "GET",
                     success: function (data) {
                         if (data.success === true) {
                             beneficiaryId.empty().append('<option selected="selected"></option>');
-                            const clients = data.data;
+                            const clients = data.result;
                             const length = clients.length;
                             for (let i = 0; i < length; i++) {
                                 beneficiaryId.append(`<option value="${clients[i].id}">${clients[i].name}</option>`);
@@ -1468,7 +1468,7 @@
         function getPolicyList(clientType) {
             polises.empty().append('<option selected="selected">Полисы</option>');
             $.ajax({
-                url: '/api/get_product_type_list/?client_type=' + clientType,
+                url: '/api/get_product_type_list/?client-type=' + clientType,
                 {#processData: false,#}
                 contentType: 'application/json',
                 dataType: 'json',

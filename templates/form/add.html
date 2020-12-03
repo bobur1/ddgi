@@ -1201,7 +1201,7 @@
                 let value = $(this).children("option:selected").val();
                 if (value) {
                     $.ajax({
-                    url: '/api/product_type/?item_id=' + value,
+                    url: '/api/get_product_types_by/?item_id=' + value,
                     method: "GET",
                     success: function (data) {
                         if (data.success === true) {
@@ -1215,6 +1215,24 @@
 
                             if (product.has_pledger) {
                                 pledgerCardBody.show();
+
+                                $.ajax({
+                                    url: '/api/client_legal/',
+                                    method: "GET",
+                                    success: function (data) {
+                                        if (data.success === true) {
+                                            pledgerId.empty().append('<option selected="selected"></option>');
+                                            const clients = data.data;
+                                            const length = clients.length;
+                                            for (let i = 0; i < length; i++) {
+                                                pledgerId.append(`<option value="${clients[i].id}">${clients[i].name}</option>`);
+                                            }
+                                        }
+                                    },
+                                    error: function () {
+                                        console.log('error');
+                                    }
+                                });
                             } else {
                                 pledgerCardBody.hide();
                             }

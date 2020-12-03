@@ -263,6 +263,7 @@ def create_update_legal_client(request):
 
 
 def create_update_individual_client(request):
+
     client_id = request.data.get('client_id', None)
     phone = request.data.get('phone', None)
     first_name = request.data.get('first_name', None)
@@ -301,7 +302,7 @@ def create_update_individual_client(request):
         obj.save()
     else:
         IndividualClient.objects.create(
-            phone=phone,
+            phone=phone or "",
             first_name=first_name,
             last_name=last_name,
             middle_name=middle_name,
@@ -314,5 +315,5 @@ def create_update_individual_client(request):
             inn=inn,
             cr_by=cr_by,
             cr_on=cr_on,
-            is_exists=is_exists or True
-        ).save()
+            is_exist=is_exists or True
+        )

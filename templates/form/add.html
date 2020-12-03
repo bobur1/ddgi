@@ -351,7 +351,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">ОКОНХ</span>
                             </div>
-                            <input type="text" id="insurer-okonh" name="okonh" class="form-control">
+                            <input type="text" id="insurer-okonh" name="okonh" class="form-control" disabled="disabled">
                           </div>
                         </div>
                       </div>
@@ -473,7 +473,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">ОКОНХ</span>
                             </div>
-                            <input type="text" id="beneficiary-okonh" name="okonh" class="form-control">
+                            <input type="text" id="beneficiary-okonh" name="okonh" class="form-control" disabled="disabled">
                           </div>
                         </div>
                       </div>
@@ -501,32 +501,32 @@
                 </div>
                 <div class="card-body">
                   <form method="POST" id="pledger-form">
-                    <div class="row client-fullname" id="pledger-individual-client-row">
+                    <div class="row client-fullname" id="pledger-individual-client-row" style="display: none;">
                       <div class="col-sm-4">
                         <div class="form-group">
                           <label for="pledger_first_name">Имя зологодателя</label>
-                          <input id="pledger_first_name" name="first_name" type="text" class="form-control" placeholder="Имя">
+                          <input id="pledger_first_name" name="first_name" type="text" class="form-control" placeholder="Имя" disabled="disabled">
                         </div>
                       </div>
                       <div class="col-sm-4">
                         <div class="form-group">
                           <label for="pledger_surname">Фамилия зологодателя</label>
-                          <input id="pledger_surname" name="surname" type="text" class="form-control" placeholder="Фамилия">
+                          <input id="pledger_surname" name="surname" type="text" class="form-control" placeholder="Фамилия" disabled="disabled">
                         </div>
                       </div>
                       <div class="col-sm-4">
                         <div class="form-group">
                           <label for="pledger_middle_name">Отчество зологодателя</label>
-                          <input id="pledger_middle_name" name="middle_name" type="text" class="form-control" placeholder="Отчество">
+                          <input id="pledger_middle_name" name="middle_name" type="text" class="form-control" placeholder="Отчество" disabled="disabled">
                         </div>
                       </div>
                     </div>
 
-                    <div class="row client-fullname" id="pledger-legal-client-row" style="display: none">
+                    <div class="row client-fullname" id="pledger-legal-client-row">
                       <div class="col-sm-12">
                         <div class="form-group">
                           <label for="pledger_name">Название зологодателя</label>
-                          <input id="pledger-name" name="name" type="text" class="form-control" placeholder="Название" disabled="disabled">
+                          <input id="pledger-name" name="name" type="text" class="form-control" placeholder="Название">
                         </div>
                       </div>
                     </div>
@@ -1184,7 +1184,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             productId.empty().append('<option selected="selected"></option>');
-                            const products = data.data;
+                            const products = data.results;
                             const length = products.length;
                             for (let i = 0; i < length; i++) {
                                 productId.append(`<option value="${products[i].id}">${products[i].name}</option>`);
@@ -1205,7 +1205,7 @@
                     method: "GET",
                     success: function (data) {
                         if (data.success === true) {
-                            product = data.data;
+                            product = data.results;
 
                             if (product.has_beneficiary) {
                                 beneficiaryCardBody.show();
@@ -1269,6 +1269,54 @@
                 } else {
                     formContainer.hide();
                 }
+            });
+
+            $('.beneficiary-type-radio').click(function () {
+                clientType = $("input:radio[name='beneficiary_type_radio']:checked").val();
+                console.log(clientType);
+
+                {#let clientType = $("input:radio[name='beneficiary_type_radio']:checked").val();#}
+                // {#getPolicyList(clientType === 'individual' ? 1 : 2);#}
+
+                if (clientType === 'individual') {
+                    console.log('beneficiary individual');
+                    beneficiaryLegalClientRow.hide();
+                    beneficiaryName.prop('disabled', true);
+                    beneficiaryOkonh.prop('disabled', true);
+                    beneficiaryIndividualClientRow.show();
+                    beneficiaryFirstName.prop('disabled', false);
+                    beneficiaryLastName.prop('disabled', false);
+                    beneficiaryMiddleName.prop('disabled', false);
+                    beneficiaryIndividualClient = true;
+                } else {
+                    console.log('beneficiary legal');
+                    beneficiaryLegalClientRow.show();
+                    beneficiaryName.prop('disabled', false);
+                    beneficiaryOkonh.prop('disabled', false);
+                    beneficiaryIndividualClientRow.hide();
+                    beneficiaryFirstName.prop('disabled', true);
+                    beneficiaryLastName.prop('disabled', true);
+                    beneficiaryMiddleName.prop('disabled', true);
+                    beneficiaryIndividualClient = false;
+                }
+
+                $.ajax({
+                    url: '/api/client_' + clientType + '/',
+                    method: "GET",
+                    success: function (data) {
+                        if (data.success === true) {
+                            beneficiaryId.empty().append('<option selected="selected"></option>');
+                            const clients = data.data;
+                            const length = clients.length;
+                            for (let i = 0; i < length; i++) {
+                                beneficiaryId.append(`<option value="${clients[i].id}">${clients[i].name}</option>`);
+                            }
+                        }
+                    },
+                    error: function () {
+                        console.log('error');
+                    }
+                });
             });
 
             insurerModalButton.click(function (e) {

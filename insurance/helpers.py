@@ -231,6 +231,8 @@ def create_update_legal_client(request):
     is_exists = request.data.get('is_exists', None)
     okohx = request.data.get('okohx', None)
 
+    checking_account = request.data.get('checking_account', None)
+
     cr_by = request.user
     up_by = request.user
     cr_on = datetime.now()
@@ -247,6 +249,7 @@ def create_update_legal_client(request):
         obj.up_by = up_by
         obj.up_on = up_on
         obj.okohx = okohx or obj.okohx
+        obj.client_checking_account = checking_account or obj.client_checking_account
         obj.save()
     else:
         LegalClient.objects.create(
@@ -255,10 +258,11 @@ def create_update_legal_client(request):
             phone_number=phone_number,
             inn=inn,
             bank_id=bank_id,
-            is_exists=is_exists or True,
+            is_exist=is_exists or True,
             cr_by=cr_by,
             cr_on=cr_on,
-            okohx=okohx
+            okohx=okohx,
+            client_checking_account=checking_account
         ).save()
 
 
@@ -270,6 +274,7 @@ def create_update_individual_client(request):
     last_name = request.data.get('last_name', None)
     middle_name = request.data.get('middle_name', None)
     address = request.data.get('address', None)
+    checking_account = request.data.get('checking_account', None)
     p_series = request.data.get('passport_series', None)
     p_number = request.data.get('passport_number', None)
     p_given_date = request.data.get('passport_given_date', None)
@@ -295,6 +300,7 @@ def create_update_individual_client(request):
         obj.passport_given_date = p_given_date or obj.passport_given_date
         obj.passport_given_by = p_given_by or obj.passport_given_by
         obj.bank_id = bank_id or obj.bank_id
+        obj.client_checking_account = checking_account or obj.client_checking_account
         obj.inn = inn or obj.inn
         obj.is_exist = is_exists or obj.is_exist
         obj.up_by = up_by
@@ -315,5 +321,6 @@ def create_update_individual_client(request):
             inn=inn,
             cr_by=cr_by,
             cr_on=cr_on,
-            is_exist=is_exists or True
+            is_exist=is_exists or True,
+            client_checking_account=checking_account
         )

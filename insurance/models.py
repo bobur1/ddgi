@@ -319,13 +319,17 @@ class LegalClient(models.Model):
     name = models.CharField(verbose_name="Наименование", max_length=255)
     address = models.CharField(verbose_name="Адрес", max_length=150)
     phone_number = models.CharField(verbose_name="Номер телефона", max_length=15)
+    client_checking_account = models.CharField(max_length=20, verbose_name="Расчётный счёт", null=True,
+                                               blank=True, default=None)
     fax = models.CharField(verbose_name="Fax number", max_length=20, default=None, blank=True, null=True)
     inn = models.CharField(verbose_name="INN", max_length=15, default=None, blank=True)
     okohx = models.CharField(verbose_name="OKOHX", max_length=15, default=None, blank=True)
-    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
+    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True,
+                             related_name="legal_client_bank")
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(default=None, null=True)
-    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='legal_client_up_by', )
+    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                              related_name='legal_client_up_by', )
     up_on = models.DateTimeField(default=None, null=True)
     is_exist = models.BooleanField(default=True)
 
@@ -334,11 +338,15 @@ class LegalClient(models.Model):
 
 
 class IndividualClient(Human):
-    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True)
+    bank = models.ForeignKey(Bank, on_delete=models.SET_NULL, null=True, blank=True,
+                             related_name="individual_client_bank")
+    client_checking_account = models.CharField(max_length=20, verbose_name="Расчётный счёт", null=True,
+                                               blank=True, default=None)
     inn = models.CharField(verbose_name="INN", max_length=15, default=None, blank=True)
     cr_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cr_on = models.DateTimeField(auto_now_add=True)
-    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='individual_client_up_by')
+    up_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
+                              related_name='individual_client_up_by')
     up_on = models.DateTimeField(auto_now_add=True)
     is_exist = models.BooleanField(default=True)
 

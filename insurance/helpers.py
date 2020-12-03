@@ -258,7 +258,7 @@ def create_update_legal_client(request):
             phone_number=phone_number,
             inn=inn,
             bank_id=bank_id,
-            is_exists=is_exists or True,
+            is_exist=is_exists or True,
             cr_by=cr_by,
             cr_on=cr_on,
             okohx=okohx,

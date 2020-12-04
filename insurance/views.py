@@ -394,7 +394,7 @@ class PolicyIncomeViewSet(viewsets.ModelViewSet):
                                            params['to_number']) is not True:
                     response['success'] = False
                     return Response(response)
-
+# ToDO change policy_type var in db to default 1
                 new_object = PoliciesIncome.objects.create(
                     act_number=params['act_number'],
                     act_date=datetime.now(),

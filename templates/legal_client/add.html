@@ -64,16 +64,16 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="position_id" class="col-form-label">Должность</label>
+                    <label for="bank_id" class="col-form-label">МФО</label>
                     <select
-                        id="position_id"
+                        id="bank_id"
                         class="form-control"
-                        name="position_id"
+                        name="bank_id"
                         required
                     >
                       <option selected></option>
-                      {% for position in positions %}
-                          <option value="{{ position.id }}">{{ position.name }}</option>
+                      {% for bank in banks %}
+                          <option value="{{ bank.id }}">{{ bank.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -83,22 +83,22 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="mfo" class="col-form-label">МФО</label>
+                    <label for="inn" class="col-form-label">ИНН</label>
                     <input
-                      id="mfo"
+                      id="inn"
                       class="form-control"
-                      name="mfo"
+                      name="inn"
                       required
                     >
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="inn" class="col-form-label">ИНН</label>
+                    <label for="okohx" class="col-form-label">ОКОНХ</label>
                     <input
-                      id="inn"
+                      id="okohx"
                       class="form-control"
-                      name="inn"
+                      name="okohx"
                       required
                     >
                   </div>
@@ -147,9 +147,9 @@
                 forms.action = 'create';
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
-                forms.params = params;
+                {#forms.params = params;#}
 
                 $.ajax({
                     url: '/api/client-legal/',
@@ -161,7 +161,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             console.log(data);
-                            window.location.replace('/legal-client/' + {{ client.id }} + '/');
+                            window.location.replace('/legal-client/');
                         }
                     }
                 });

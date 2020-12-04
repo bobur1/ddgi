@@ -234,10 +234,10 @@
                 forms.id = {{ client.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
-                params.id = {{ client.id }};
-                forms.params = params;
+                {#params.id = {{ client.id }};#}
+                {#forms.params = params;#}
 
                 $.ajax({
                     url: '/api/client-individual/',

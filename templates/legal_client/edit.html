@@ -67,16 +67,16 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="position_id" class="col-form-label">Должность</label>
+                    <label for="bank_id" class="col-form-label">МФО</label>
                     <select
-                        id="position_id"
+                        id="bank_id"
                         class="form-control"
-                        name="position_id"
+                        name="bank_id"
                         required
                     >
-                      <option selected></option>
-                      {% for position in positions %}
-                          <option value="{{ position.id }}" {% if client.position_id == position.id %}selected="selected"{% endif %}>{{ position.name }}</option>
+                      <option></option>
+                      {% for bank in banks %}
+                          <option value="{{ bank.id }}" {% if client.bank_id == bank.id %}selected="selected"{% endif %}>{{ bank.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
@@ -86,24 +86,24 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="mfo" class="col-form-label">МФО</label>
-                    <input
-                      id="mfo"
-                      class="form-control"
-                      name="mfo"
-                      value="{{ client.mfo }}"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
                     <label for="inn" class="col-form-label">ИНН</label>
                     <input
                       id="inn"
                       class="form-control"
                       name="inn"
                       value="{{ client.inn }}"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="okohx" class="col-form-label">ОКОНХ</label>
+                    <input
+                      id="okohx"
+                      class="form-control"
+                      name="okohx"
+                      value="{{ client.okohx }}"
                       required
                     >
                   </div>
@@ -153,10 +153,10 @@
                 forms.id = {{ client.id }};
                 let serializedForm = form.serializeArray();
                 for (let i = 0; i < serializedForm.length; i++) {
-                    params[serializedForm[i]['name']] = serializedForm[i]['value'];
+                    forms[serializedForm[i]['name']] = serializedForm[i]['value'];
                 }
-                params.id = {{ client.id }};
-                forms.params = params;
+                {#params.id = {{ client.id }};#}
+                {#forms.params = params;#}
 
                 $.ajax({
                     url: '/api/client-legal/',

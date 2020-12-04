@@ -22,7 +22,7 @@ def individual_client(request):
 @login_required
 def individual_client_add(request):
     banks = Bank.objects.all()
-    return render(request, "individual_client/add.html", {'banks': banks})
+    return render(request, "individual_client/add.html", { 'banks': banks })
 
 
 @login_required
@@ -34,8 +34,10 @@ def individual_client_show(request, id):
 @login_required
 def individual_client_edit(request, id):
     client = IndividualClient.objects.filter(id=id).first()
+    banks = Bank.objects.all()
     return render(request, "individual_client/edit.html", {
         'client': client,
+        'banks': banks,
     })
 
 
@@ -46,9 +48,9 @@ def legal_client(request):
 
 @login_required
 def legal_client_add(request):
-    positions = Position.objects.all()
+    banks = Bank.objects.all()
     return render(request, "legal_client/add.html", {
-        'positions': positions,
+        'banks': banks,
     })
 
 
@@ -62,9 +64,11 @@ def legal_client_show(request, id):
 def legal_client_edit(request, id):
     client = LegalClient.objects.filter(id=id).first()
     users = User.objects.get()
+    banks = Bank.objects.all()
     return render(request, "legal_client/edit.html", {
         'client': client,
-        'users': users
+        'banks': banks,
+        'users': users,
     })
 
 

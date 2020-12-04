@@ -21,8 +21,8 @@ def individual_client(request):
 
 @login_required
 def individual_client_add(request):
-    currency_list = Currency.objects.all()
-    return render(request, "individual_client/add.html", {'curr_list': currency_list})
+    banks = Bank.objects.all()
+    return render(request, "individual_client/add.html", {'banks': banks})
 
 
 @login_required

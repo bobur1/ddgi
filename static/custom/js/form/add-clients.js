@@ -13,7 +13,7 @@ $(document).ready(function () {
         forms.params = params;
 
         $.ajax({
-            url: '/api/' + (individualClient ? 'client-individual' : 'client-legal') + '/',
+            url: '/api/' + (insurerIndividualClient ? 'client-individual' : 'client-legal') + '/',
             data: JSON.stringify(forms),
             contentType: 'application/json',
             dataType: 'json',
@@ -45,7 +45,7 @@ $(document).ready(function () {
         forms.params = params;
 
         $.ajax({
-            url: '/api/client-legal/',
+            url: '/api/' + (beneficiaryIndividualClient ? 'client-individual' : 'client-legal') + '/',
             data: JSON.stringify(forms),
             contentType: 'application/json',
             dataType: 'json',

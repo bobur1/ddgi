@@ -1184,7 +1184,7 @@
                     success: function (data) {
                         if (data.success === true) {
                             productId.empty().append('<option selected="selected"></option>');
-                            const products = data.results;
+                            const products = data.data;
                             const length = products.length;
                             for (let i = 0; i < length; i++) {
                                 productId.append(`<option value="${products[i].id}">${products[i].name}</option>`);
@@ -1205,7 +1205,7 @@
                     method: "GET",
                     success: function (data) {
                         if (data.success === true) {
-                            product = data.results;
+                            product = data.data;
 
                             if (product.has_beneficiary) {
                                 beneficiaryCardBody.show();

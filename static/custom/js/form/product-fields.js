@@ -10,6 +10,7 @@ function addRow() {
                       'number_of_seats-',
                       'insurance_cost-',
                       'insurance_sum-',
+                      'overall_insurance_sum-',
                       'insurance_premium-',
     ];
     let rowCnt = empTab.rows.length;    // get the number of rows.
@@ -66,9 +67,14 @@ function addRow() {
             if (columnName === 'insurance_cost-') {
                 ele.setAttribute('class', 'form-control forsum2');
             } else if (columnName === 'insurance_sum-') {
-                ele.setAttribute('class', 'form-control forsum');
+                ele.setAttribute('class', 'form-control forsum insurance_sum-'+productFieldNumber);
+                ele.setAttribute('data-field-number', productFieldNumber);
             } else if (columnName === 'insurance_premium-'){
-                ele.setAttribute('class', 'form-control forsum3');
+                ele.setAttribute('class', 'form-control forsum3 insurance_premium-'+productFieldNumber);
+                 ele.setAttribute('readonly', 'true');
+            } else if (columnName === 'overall_insurance_sum-'){
+                ele.setAttribute('class', 'form-control forsum4 overall_insurance_sum-'+productFieldNumber);
+                ele.setAttribute('readonly', 'true');
             } else {
                 ele.setAttribute('class', 'form-control');
             }
@@ -82,8 +88,29 @@ function addRow() {
 $(document).ready(function () {
     $(document).on("keyup", ".forsum", calculateSum);
     $(document).on("keyup", ".forsum2", calculateSum2);
-    $(document).on("keyup", ".forsum3", calculateSum3);
+    // $(document).on("keyup", ".forsum3", calculateSum3);
+    // $(document).on("change", ".forsum4", calculateSum4);
+    // $(document).on("keyup", ".forsum4", calculateSum4);
 });
+
+ $(document).on("keyup", ".modal", function() {
+     let fieldNumber = $(this).data('field-number');
+     overallSum = parseFloat($('#insurance_sum-' + fieldNumber).val() || 0) + parseFloat($('#civil_liability_sum-' + fieldNumber).val() || 0) +
+         parseFloat($('#passenger_total_sum-' + fieldNumber).val() || 0) + parseFloat($('#driver_total_sum-' + fieldNumber).val() || 0) +
+         parseFloat($('#vehicle_damage_sum-' + fieldNumber).val() || 0);
+    $('#overall-sum-' + fieldNumber).val(overallSum);
+    overAllInsurenceSumByField(fieldNumber);
+});
+
+ function overAllInsurenceSumByField(fieldNumber) {
+     let overallSum =  $('#overall-sum-' + fieldNumber).val() || 0;
+     Osum = parseFloat(overallSum) +  parseFloat($('.insurance_sum-' + fieldNumber).val() || 0);
+     $('.overall_insurance_sum-'+ fieldNumber).val(Osum);
+     $('.insurance_premium-'+ fieldNumber).val(Osum*0.01); // франшиза 1% -> премия 1% от общей суммы
+     calculateSum3();
+     calculateSum4();
+ }
+
 
 function calculateSum() {
 
@@ -96,6 +123,8 @@ function calculateSum() {
 
     });
     $('.overall-sum').val(sum.toFixed(2));
+    let fieldNumber = $(this).data('field-number');
+    overAllInsurenceSumByField(fieldNumber);
 }
 
 function calculateSum2() {
@@ -122,6 +151,19 @@ function calculateSum3() {
 
     });
     $('.overall-sum3').val(sum.toFixed(2));
+}
+
+function calculateSum4() {
+
+    let sum = 0;
+    $('.forsum4').each(function () {
+
+        if (!isNaN(this.value) && this.value.length != 0) {
+            sum += parseFloat(this.value);
+        }
+
+    });
+    $('.overall-sum4').val(sum.toFixed(2));
 }
 
 
@@ -294,7 +336,6 @@ function addProductFields(fieldNumber) {
                           <th>Наименование оборудования</th>
                           <th>Серийный номер</th>
                           <th>Страховая сумма</th>
-                          <th>Страховая премия</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -302,11 +343,10 @@ function addProductFields(fieldNumber) {
                           <td><input type="text" class="form-control" name="mark_model"></td>
                           <td><input type="text" class="form-control" name="name"></td>
                           <td><input type="text" class="form-control" name="series_number"></td>
-                          <td><input type="text" class="form-control" name="insurance_sum"></td>
-                          <td><input type="text" class="form-control" name="insurance_premium"></td>
+                          <td><input type="text" class="form-control" name="insurance_sum" id="insurance_sum-${fieldNumber}"></td>
                         </tr>
                         <tr>
-                          <td colspan="4"><label class="text-bold">Итого</label></td>
+                          <td colspan="3"><label class="text-bold">Итого</label></td>
                           <td><input type="text" class="form-control" name="total"></td>
                         </tr>
                         </tbody>
@@ -427,31 +467,12 @@ function addProductFields(fieldNumber) {
                             <div class="input-group-prepend">
                               <span class="input-group-text">Сумма</span>
                             </div>
-                            <input type="text" class="form-control" name="vehicle_damage_sum">
+                            <input type="text" class="form-control" name="vehicle_damage_sum" id="vehicle_damage_sum-${fieldNumber}">
                           </div>
                         </div>
                       </div>
 
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Премия</span>
-                            </div>
-                            <input type="text" class="form-control" name="vehicle_damage_premium">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Франшиза</span>
-                            </div>
-                            <input type="text" class="form-control" name="vehicle_damage_franchise">
-                          </div>
-                        </div>
-                      </div>
+                    
                       </div>
                     </div>
                   </form>
@@ -476,21 +497,12 @@ function addProductFields(fieldNumber) {
                               <div class="input-group-prepend">
                                 <span class="input-group-text">Сумма</span>
                               </div>
-                              <input type="text" class="form-control" name="civil_liability_sum">
+                              <input type="text" class="form-control" name="civil_liability_sum" id="civil_liability_sum-${fieldNumber}">
                             </div>
                           </div>
                         </div>
 
-                        <div class="col-sm-4">
-                          <div class="form-group">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">Премия</span>
-                              </div>
-                              <input type="text" class="form-control" name="civil_liability_premium">
-                            </div>
-                          </div>
-                        </div>
+   
                       </div>
                     </div>
                   </form>
@@ -518,7 +530,6 @@ function addProductFields(fieldNumber) {
                           <th>Количество водителей /пассажиров</th>
                           <th>Страховая сумма на одного лица</th>
                           <th>Страховая сумма</th>
-                          <th>Страховая премия</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -534,8 +545,7 @@ function addProductFields(fieldNumber) {
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control" name="driver_total_sum"></td>
-                          <td><input type="number" class="form-control" name="driver_premium"></td>
+                          <td><input type="number" class="form-control" name="driver_total_sum"  id="driver_total_sum-${fieldNumber}"></td>
                         </tr>
                         <tr>
                           <td><label>Пассажиры</label></td>
@@ -550,8 +560,7 @@ function addProductFields(fieldNumber) {
                             </div>
                           </div>
                           </td>
-                          <td><input type="number" class="form-control" name="passenger_total_sum"></td>
-                          <td><input type="number" class="form-control" name="passenger_premium"></td>
+                          <td><input type="number" class="form-control" name="passenger_total_sum" id="passenger_total_sum-${fieldNumber}"></td>
                         </tr>
                         <tr>
                           <td><label class="text-bold">Общий Лимит</label></td>
@@ -565,12 +574,11 @@ function addProductFields(fieldNumber) {
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control" name="limit_total_sum"></td>
-                          <td><input type="number" class="form-control" name="limit_premium"></td>
+                          <td><input type="number" class="form-control" name="limit_total_sum" id="limit_total_sum-${fieldNumber}"></td>
                         </tr>
                         <tr>
                           <td colspan="3"><label class="text-bold">Итого</label></td>
-                          <td><input type="number" class="form-control" name="total"></td>
+                          <td><input type="number" readonly class="form-control" name="total"></td>
                         </tr>
                         </tbody>
                       </table>
@@ -652,6 +660,26 @@ function addProductFields(fieldNumber) {
                 <div class="card-footer">
                   <button type="submit" class="btn btn-primary float-right">Сохранить</button>
                 </div>
+              </div>
+              <div class="card card-info polis" id="Overall">
+                <div class="card-header">
+                  <h3 class="card-title">Итого</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                   <div class="form-group">
+                      <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Общая страховая сумма</span>
+                            </div>
+                            <input type="text" class="form-control" readonly id="overall-sum-${fieldNumber}">
+                      </div>
+                   </div>
+                </div>
+             
               </div>
             </div>
           </div>

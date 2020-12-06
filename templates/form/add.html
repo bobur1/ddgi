@@ -639,6 +639,7 @@
                     <th class="text-nowrap">Количество посадочных мест</th>
                     <th class="text-nowrap">Страховая стоимость</th>
                     <th class="text-nowrap">Страховая сумма</th>
+                    <th class="text-nowrap">Общая страховая сумма</th>
                     <th class="text-nowrap">Страховая премия</th>
                     <th></th>
                     <th></th>
@@ -655,14 +656,16 @@
                     <td><input type="text" class="form-control" name="lifting_capacity-0"></td>
                     <td><input type="text" class="form-control" name="number_of_seats-0"></td>
                     <td><input type="text" class="form-control forsum2" name="insurance_cost-0"></td>
-                    <td><input type="text" class="form-control forsum" name="insurance_sum-0"></td>
-                    <td><input type="text" class="form-control forsum3" name="insurance_premium-0"></td>
+                    <td><input type="text" class="form-control forsum insurance_sum-0" data-field-number="0" name="insurance_sum-0"></td>
+                    <td><input type="text" class="form-control forsum4 overall_insurance_sum-0" readonly name="overall_insurance_sum-0"></td>
+                    <td><input type="text" class="form-control forsum3 insurance_premium-0" readonly name="insurance_premium-0"></td>
                     <td><input type="button" value="Заполнить" class="btn btn-success product-fields-button" id="product-fields-button" data-field-number="0"></td>
                   </tr>
                   <tr>
                     <td colspan="8" style="text-align: right"><label class="text-bold">Итого</label></td>
                     <td><input readonly type="text" class="form-control overall-sum2"/></td>
                     <td><input readonly type="text" class="form-control overall-sum"/></td>
+                    <td><input readonly type="text" class="form-control overall-sum4"/></td>
                     <td><input readonly type="text" class="form-control overall-sum3"/></td>
                   </tr>
                   </tbody>
@@ -714,7 +717,6 @@
                           <th>Наименование оборудования</th>
                           <th>Серийный номер</th>
                           <th>Страховая сумма</th>
-                          <th>Страховая премия</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -722,11 +724,10 @@
                           <td><input type="text" class="form-control" name="mark_model"></td>
                           <td><input type="text" class="form-control" name="name"></td>
                           <td><input type="text" class="form-control" name="series_number"></td>
-                          <td><input type="text" class="form-control" name="insurance_sum"></td>
-                          <td><input type="text" class="form-control" name="insurance_premium"></td>
+                          <td><input type="text" class="form-control" name="insurance_sum" id="insurance_sum-0"></td>
                         </tr>
                         <tr>
-                          <td colspan="4"><label class="text-bold">Итого</label></td>
+                          <td colspan="3"><label class="text-bold">Итого</label></td>
                           <td><input type="text" class="form-control" name="total"></td>
                         </tr>
                         </tbody>
@@ -847,28 +848,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text">Сумма</span>
                             </div>
-                            <input type="text" class="form-control" name="vehicle_damage_sum">
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Премия</span>
-                            </div>
-                            <input type="text" class="form-control" name="vehicle_damage_premium">
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-4">
-                        <div class="form-group">
-                          <div class="input-group mb-3">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text">Франшиза</span>
-                            </div>
-                            <input type="text" class="form-control" name="vehicle_damage_franchise">
+                            <input type="text" class="form-control" name="vehicle_damage_sum" id="vehicle_damage_sum-0">
                           </div>
                         </div>
                       </div>
@@ -896,18 +876,7 @@
                               <div class="input-group-prepend">
                                 <span class="input-group-text">Сумма</span>
                               </div>
-                              <input type="text" class="form-control" name="civil_liability_sum">
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class="col-sm-4">
-                          <div class="form-group">
-                            <div class="input-group mb-3">
-                              <div class="input-group-prepend">
-                                <span class="input-group-text">Премия</span>
-                              </div>
-                              <input type="text" class="form-control" name="civil_liability_premium">
+                              <input type="text" class="form-control" name="civil_liability_sum" id="civil_liability_sum-0">
                             </div>
                           </div>
                         </div>
@@ -938,7 +907,6 @@
                           <th>Количество водителей /пассажиров</th>
                           <th>Страховая сумма на одного лица</th>
                           <th>Страховая сумма</th>
-                          <th>Страховая премия</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -954,8 +922,7 @@
                               </select>
                             </div>
                           </div></td>
-                          <td><input type="number" class="form-control" name="driver_total_sum"></td>
-                          <td><input type="number" class="form-control" name="driver_premium"></td>
+                          <td><input type="number" class="form-control" name="driver_total_sum" id="driver_total_sum-0"></td>
                         </tr>
                         <tr>
                           <td><label>Пассажиры</label></td>
@@ -970,8 +937,7 @@
                             </div>
                           </div>
                           </td>
-                          <td><input type="number" class="form-control" name="passenger_total_sum"></td>
-                          <td><input type="number" class="form-control" name="passenger_premium"></td>
+                          <td><input type="number" class="form-control" name="passenger_total_sum" id="passenger_total_sum-0"></td>
                         </tr>
                         <tr>
                           <td><label class="text-bold">Общий Лимит</label></td>
@@ -986,7 +952,6 @@
                             </div>
                           </div></td>
                           <td><input type="number" class="form-control" name="limit_total_sum"></td>
-                          <td><input type="number" class="form-control" name="limit_premium"></td>
                         </tr>
                         <tr>
                           <td colspan="3"><label class="text-bold">Итого</label></td>
@@ -1076,6 +1041,27 @@
                     <!-- /.card -->
                   </div>
                 </div>
+              </div>
+
+             <div class="card card-info polis" id="Overall">
+                <div class="card-header">
+                  <h3 class="card-title">Итого</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                      <i class="fas fa-minus"></i></button>
+                  </div>
+                </div>
+                <div class="card-body">
+                   <div class="form-group">
+                      <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">Общая страховая сумма</span>
+                            </div>
+                            <input type="text" class="form-control" readonly id="overall-sum-0">
+                      </div>
+                   </div>
+                </div>
+
               </div>
             </div>
           </div>

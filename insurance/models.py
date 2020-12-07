@@ -178,6 +178,8 @@ class ProductType(models.Model):
 
     classes = models.ManyToManyField(ProductTypeCode, default=[], blank=True, max_length=3)
 
+    price_bounty_percentage = models.FloatField(default=1, blank=True, null=False)
+
     has_beneficiary = models.BooleanField(verbose_name='Has beneficiary', default=False)
 
     has_pledger = models.BooleanField(verbose_name='Has pledger', default=False, )
@@ -574,5 +576,41 @@ class ProductApplicationField(ProductField):
     application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
 
 
-class Vehicle(models.Model):
-    model_name = models.CharField(max_length=128, null=False, blank=False)
+class VehicleApplicationForm(models.Model):
+    application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
+    based_on = models.CharField(max_length=256, null=True, default=None, blank=True)
+    geo_location = models.CharField(max_length=256, null=True, default=None, blank=True)
+
+
+class VehicleApplicationFormAdditional(models.Model):
+    # application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
+    # vehicle_form_item = models.OneToOneField(VehicleApplicationItemForm, blank=False, null=False, on_delete=models.CASCADE)
+    model = models.CharField(max_length=256, null=True, default=None, blank=True)
+    title = models.CharField(max_length=256, null=True, default=None, blank=True)
+    number_series = models.CharField(max_length=256, null=True, default=None, blank=True)
+    price = models.FloatField(default=0)
+
+
+class VehicleApplicationFormHazard(models.Model):
+    # application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
+    title = models.CharField(max_length=256, null=True, default=None, blank=True)
+    status = models.BooleanField(default=False)
+    price = models.FloatField(default=0, verbose_name="Сумма")
+    bottom_price = models.FloatField(default=0, verbose_name="Франшиза")
+
+
+class VehicleApplicationItemForm(models.Model):
+    application_id = models.ForeignKey(ApplicationForm, on_delete=models.CASCADE)
+    model_name = models.CharField(max_length=256, null=True, default=None, blank=True)
+    release_date = models.DateField(default=None, blank=True, null=True)
+    state_number = models.CharField(max_length=16, null=True, default=None, blank=True)
+    passport_tech_number = models.CharField(max_length=16, null=True, default=None, blank=True)
+    engine_number = models.CharField(max_length=16, null=True, default=None, blank=True)
+    body_number = models.CharField(max_length=16, null=True, default=None, blank=True)
+    lifting_capacity = models.FloatField(default=0, blank=True)
+    seat_number = models.PositiveIntegerField(default=0, blank=True)
+    price = models.FloatField(default=0)
+    awarded_price = models.FloatField(default=0, auto_created=False,
+                                      null=False, blank=False)
+    additional = models.ManyToManyField(VehicleApplicationFormAdditional)
+    hazards = models.ManyToManyField(VehicleApplicationFormHazard)

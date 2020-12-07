@@ -182,19 +182,28 @@ class ProductFieldInline(admin.TabularInline):
 
 admin.site.register(ProductFieldClass)
 admin.site.register(SimpleField)
+admin.site.register(VehicleApplicationFormAdditional)
+admin.site.register(VehicleApplicationFormHazard)
 
 
 class ApplicationFieldInline(admin.TabularInline):
     model = ProductApplicationField
     extra = 0
-    fields = ('type', 'input_type', 'is_required', 'name', 'value', 'order')
+    fields = ('field_class', 'input_type', 'is_required', 'name', 'extra_fields', 'value', 'order')
+
+
+class VehicleApplicationFormItemInline(admin.TabularInline):
+    model = VehicleApplicationItemForm
+    extra = 0
+    fields = ('model_name', 'release_date', 'state_number', 'passport_tech_number', 'engine_number', 'body_number',
+              'lifting_capacity', 'seat_number', 'price', 'awarded_price', 'additional', 'hazards')
 
 
 @admin.register(ApplicationForm)
 class ApplicationFormAdmin(admin.ModelAdmin):
     model = ApplicationForm
     list_display = ('product_type', 'from_time', 'to_time', 'contract_type')
-    inlines = [ApplicationFieldInline]
+    inlines = [ApplicationFieldInline, VehicleApplicationFormItemInline]
 
 
 @admin.register(ProductType)

@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  db:
+      image: postgres
+      restart: "no"
+      container_name: "postgres_ddgi"
+      environment:
+        - POSTGRES_USER=user
+        - POSTGRES_PASSWORD=user12
+        - POSTGRES_DB=ddgi_db
+      ports:
+            - "54320:5432"
+      volumes:
+        - ./postgres-data:/var/lib/postgresql/data
+  back_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    container_name: 'ddgi_django'
+    command: bash -c "python manage.py runserver 0.0.0.0:5000"
+    volumes:
+      - .:/code
+    ports:
+      - '5000:5000'
+    depends_on:
+      - db

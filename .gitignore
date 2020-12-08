@@ -77,5 +77,6 @@ dmypy.json
 .pytype/
 cython_debug/
 new_venv/
-insurance/migrations/
 media/
+static/
+postgres-data/

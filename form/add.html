@@ -577,19 +577,19 @@
                                                 <input type="text" class="form-control" name="polis-modification-0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control forsum2" name="polis-gos-num-0">
+                                                <input type="text" class="form-control" name="polis-gos-num-0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control forsum2" name="polis-teh-passport-0">
+                                                <input type="text" class="form-control" name="polis-teh-passport-0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control forsum2" name="polis-num-engine-0">
+                                                <input type="text" class="form-control" name="polis-num-engine-0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control forsum2" name="polis-num-body-0">
+                                                <input type="text" class="form-control" name="polis-num-body-0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control forsum2" name="polis-payload-0">
+                                                <input type="text" class="form-control" name="polis-payload-0">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control forsum2" name="polis-places-0">
@@ -598,7 +598,7 @@
                                                 <input type="text" class="form-control forsum insurance_sum-0" data-field-number="0" name="polis_sum-0">
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control forsum4 overall_insurance_sum-0" readonly name="overall_polis_sum-0">
+                                                <input type="text" class="form-control forsum4 overall_insurance_sum-0" name="overall_polis_sum-0">
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control forsum3 insurance_premium-0" readonly name="polis_premium-0">
@@ -622,17 +622,17 @@
                             <label>При наружном осмотре ТС дефекты и повреждения</label>
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <div class="checkbox icheck-success defects">
-                                        <input type="radio" name="defects" checked value="1">
-                                        <label for="">Нет - не имеются</label>
+                                    <div class="checkbox icheck-success">
+                                        <input id="defects-1" type="radio" class="defects" name="defects" value="1">
+                                        <label for="defects-1">Да - присутствуют</label>
                                     </div>
-                                    <div class="checkbox icheck-success defects">
-                                        <input type="radio" name="radio" id="" value="0">
-                                        <label for="">Да - присутствуют</label>
+                                    <div class="checkbox icheck-success ">
+                                        <input id="defects-0" type="radio" class="defects" name="defects" value="0">
+                                        <label for="defects-0">Нет - не имеются</label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group defects_images" style="display:none">
+                            <div class="form-group defects_images" style="display: none;">
                                 <label>Фотографии дефектов ТС</label>
                                 <input class="form-control" type="file" multiple name="defects_images">
                             </div>
@@ -674,11 +674,11 @@
                                                             <td><input type="text" class="form-control" name="mark_model"></td>
                                                             <td><input type="text" class="form-control" name="name"></td>
                                                             <td><input type="text" class="form-control" name="series_number"></td>
-                                                            <td><input type="text" class="form-control" name="insurance_sum" id="insurance_sum-0"></td>
+                                                            <td><input type="text" class="form-control forsum5" name="insurance_sum" id="insurance_sum-0"></td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="3"><label class="text-bold">Итого</label></td>
-                                                            <td><input type="text" class="form-control" name="total"></td>
+                                                            <td><input type="text" class="form-control overall-sum5" readonly name="total"></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
@@ -702,7 +702,7 @@
                                             <div class="form-group">
                                                 <label>Покрытие террористических актов с ТС </label>
                                                 <div class="input-group mb-4">
-                                                    <input type="text" class="form-control" name="cover_terror_attacks_sum">
+                                                    <input type="text" class="form-control terror-tc-0" name="cover_terror_attacks_sum">
                                                     <div class="input-group-append">
                                                         <select class="form-control success" name="cover_terror_attacks_currency" style="width: 100%;">
                                                             <option selected="selected">UZS</option>
@@ -715,7 +715,7 @@
                                             <div class="form-group">
                                                 <label>Покрытие террористических актов с застрахованными лицами </label>
                                                 <div class="input-group mb-4">
-                                                    <input type="text" class="form-control" name="cover_terror_attacks_insured_sum">
+                                                    <input type="text" class="form-control terror-zl-0" name="cover_terror_attacks_insured_sum">
                                                     <div class="input-group-append">
                                                         <select class="form-control success" name="cover_terror_attacks_insured_currency" style="width: 100%;">
                                                             <option selected="selected">UZS</option>
@@ -728,7 +728,7 @@
                                             <div class="form-group">
                                                 <label>Покрытие расходы по эвакуации</label>
                                                 <div class="input-group mb-4">
-                                                    <input type="text" class="form-control" name="coverage_evacuation_cost">
+                                                    <input type="text" class="form-control evocuation-0" name="coverage_evacuation_cost">
                                                     <div class="input-group-append">
                                                         <select class="form-control success" name="coverage_evacuation_currency" style="width: 100%;">
                                                         <option selected="selected">UZS</option>
@@ -757,27 +757,17 @@
                                                 <div class="row">
                                                     <div class="col-sm-1">
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="vehicle_damage" checked id="radioSuccess1" value="1">
+                                                            <input type="radio" class="other_insurance-0" name="vehicle_damage" id="radioSuccess1" value="1">
                                                             <label for="radioSuccess1">Да</label>
                                                         </div>
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="vehicle_damage" id="radioSuccess2" value="0">
+                                                            <input type="radio" class="other_insurance-0" name="vehicle_damage" id="radioSuccess2" value="0">
                                                             <label for="radioSuccess2">Нет</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">Сумма</span>
-                                                                </div>
-                                                                <input type="text" class="form-control" name="vehicle_damage_sum" id="vehicle_damage_sum-0">
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group other_insurance_info" style="display:none">
+                                            <div class="form-group other_insurance_info-0" style="display:none">
                                                 <label>Укажите название и адрес страховой организации и номер Полиса</label>
                                                 <input class="form-control" type="text" name="other_insurance_info">
                                             </div>
@@ -799,51 +789,84 @@
                                             <div class="form-group">
                                                 <label>Раздел I. Гибель или повреждение транспортного средства</label>
                                                 <div class="row">
-                                                    <div class="col-sm-1">
+                                                    <div class="col-md-1">
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="vehicle_damage" checked id="radioSuccess3" value="1">
+                                                            <input type="radio" name="vehicle_damage" class="r-1-0" id="radioSuccess3" value="1">
                                                             <label for="radioSuccess3">Да</label>
                                                         </div>
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="vehicle_damage" id="radioSuccess4" value="0">
+                                                            <input type="radio" name="vehicle_damage" class="r-1-0" id="radioSuccess4" value="0">
                                                             <label for="radioSuccess4">Нет</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">Сумма</span>
+                                                    <div class="row r-1-show-0" style="display: none;">
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Сумма</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control r-1-sum-0" name="one-sum" id="vehicle_damage_sum-0">
                                                                 </div>
-                                                                <input type="text" class="form-control" name="vehicle_damage_sum" id="vehicle_damage_sum-0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Страховая премия</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control r-1-premia-0" name="one-premia" id="vehicle_damage_sum-0">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Франшиза</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control r-1-frnshiza" name="one-franshiza" id="vehicle_damage_sum-0">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </form>
-
                                         <form method="POST" id="product-fields-0-5">
                                             <div class="form-group">
                                                 <label class=>Раздел II. Автогражданская ответственность</label>
                                                 <div class="row">
                                                     <div class="col-sm-1">
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="civil_liability" checked id="radioSuccess5" value="1">
+                                                            <input type="radio" name="civil_liability" class="r-2-0" id="radioSuccess5" value="1">
                                                             <label for="radioSuccess5">Да</label>
                                                         </div>
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="civil_liability" id="radioSuccess6" value="0">
+                                                            <input type="radio" name="civil_liability" class="r-2-0" id="radioSuccess6" value="0">
                                                             <label for="radioSuccess6">Нет</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">Сумма</span>
+                                                    <div class="row r-2-show-0" style="display: none;">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Сумма</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control r-2-sum-0" name="tho_sum" id="vehicle_damage_sum-0">
                                                                 </div>
-                                                                <input type="text" class="form-control" name="civil_liability_sum" id="civil_liability_sum-0">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <div class="input-group mb-3">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">Страховая премия</span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control r-2-premia-0" name="two-preim" id="vehicle_damage_sum-0">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -855,100 +878,93 @@
                                             <div class="form-group">
                                                 <label>Раздел III. Несчастные случаи с Застрахованными лицами</label>
                                                 <div class="row">
-                                                    <div class="col-sm-1">
+                                                    <div class="col-md-1">
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="accidents" checked id="radioSuccess7-0" value="1">
+                                                            <input type="radio" name="accidents" class="r-3-0" id="radioSuccess7-0" value="1">
                                                             <label for="radioSuccess7-0">Да</label>
                                                         </div>
                                                         <div class="checkbox icheck-success">
-                                                            <input type="radio" name="vehicle_damage" id="radioSuccess8-0" value="0">
+                                                            <input type="radio" name="accidents" class="r-3-0" id="radioSuccess8-0" value="0">
                                                             <label for="radioSuccess8-0">Нет</label>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <div class="input-group mb-3">
-                                                                <div class="input-group-prepend">
-                                                                    <span class="input-group-text">Сумма</span>
-                                                                </div>
-                                                                <input type="text" class="form-control" name="vehicle_damage_sum" id="vehicle_damage_sum-0">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
                                                 </div>
                                             </div>
+                                            <!-- раздел 3 - да - show -->
+                                            <div class="table-responsive p-0 r-3-show-0" style="display: none;">
+                                                <form method="POST" id="product-fields-0-7">
+                                                    <table class="table table-hover table-head-fixed">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Объекты страхования </th>
+                                                                <th>Количество водителей /пассажиров</th>
+                                                                <th>Страховая сумма на одного лица</th>
+                                                                <th>Страховая сумма</th>
+                                                                <th>Страховая премия</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><label>Водитель(и)</label></td>
+                                                                <td><input type="number" class="form-control r-3-pass-0" name="driver_quantity"></td>
+                                                                <td>
+                                                                    <div class="input-group mb-4">
+                                                                        <input type="text" class="form-control r-3-one-0" name="driver_one_sum">
+                                                                        <div class="input-group-append">
+                                                                            <select class="form-control success" name="driver_currency" style="width: 100%;">
+                                                                                <option selected="selected">UZS</option>
+                                                                                <option>USD</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><input type="number" class="form-control r-3-sum-0" name="driver_total_sum" id="driver_total_sum-0"></td>
+                                                                <td><input type="number" class="form-control r-3-premia-0" name="driver_preim_sum" id="driver_total_sum-0"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><label>Пассажиры</label></td>
+                                                                <td><input type="number" class="form-control r-3-pass-1-0" name="passenger_quantity"></td>
+                                                                <td>
+                                                                    <div class="input-group mb-4">
+                                                                        <input type="text" class="form-control r-3-one-1-0" name="passenger_one_sum">
+                                                                        <div class="input-group-append">
+                                                                            <select class="form-control success" name="passenger_currency" style="width: 100%;">
+                                                                            <option selected="selected">UZS</option>
+                                                                            <option>USD</option>
+                                                                        </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><input type="number" class="form-control r-3-sum-1-0" name="passenger_total_sum" id="passenger_total_sum-0"></td>
+                                                                <td><input type="number" class="form-control r-3-premia-1-0" name="passenger_preim_sum" id="passenger_total_sum-0"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><label class="text-bold">Общий Лимит</label></td>
+                                                                <td><input type="number" class="form-control r-3-pass-2-0" name="limit_quantity"></td>
+                                                                <td>
+                                                                    <div class="input-group mb-4">
+                                                                        <input type="text" class="form-control r-3-one-2-0" name="limit_one_sum">
+                                                                        <div class="input-group-append">
+                                                                            <select class="form-control success" name="limit_currency" style="width: 100%;">
+                                                                                <option selected="selected">UZS</option>
+                                                                                <option>USD</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td><input type="number" class="form-control r-3-sum-2-0" name="limit_total_sum"></td>
+                                                                <td><input type="number" class="form-control r-3-premia-2-0" name="limit_preim_sum"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3"><label class="text-bold">Итого</label></td>
+                                                                <td><input type="number" class="form-control r-summ-0"></td>
+                                                                <td><input type="number" class="form-control r-summ-premia-0"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </form>
+                                            </div>
                                         </form>
-
-                                        <div class="table-responsive p-0 ">
-                                            <form method="POST" id="product-fields-0-7">
-                                                <table class="table table-hover table-head-fixed">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Объекты страхования </th>
-                                                            <th>Количество водителей /пассажиров</th>
-                                                            <th>Страховая сумма на одного лица</th>
-                                                            <th>Страховая сумма</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td><label>Водитель(и)</label></td>
-                                                            <td><input type="number" class="form-control" name="driver_quantity"></td>
-                                                            <td>
-                                                                <div class="input-group mb-4">
-                                                                    <input type="text" class="form-control" name="driver_one_sum">
-                                                                    <div class="input-group-append">
-                                                                        <select class="form-control success" name="driver_currency" style="width: 100%;">
-                                                                            <option selected="selected">UZS</option>
-                                                                            <option>USD</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td><input type="number" class="form-control" name="driver_total_sum" id="driver_total_sum-0"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><label>Пассажиры</label></td>
-                                                            <td><input type="number" class="form-control" name="passenger_quantity"></td>
-                                                            <td>
-                                                                <div class="input-group mb-4">
-                                                                    <input type="text" class="form-control" name="passenger_one_sum">
-                                                                    <div class="input-group-append">
-                                                                        <select class="form-control success" name="passenger_currency" style="width: 100%;">
-                                                                        <option selected="selected">UZS</option>
-                                                                        <option>USD</option>
-                                                                    </select>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td><input type="number" class="form-control" name="passenger_total_sum" id="passenger_total_sum-0"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><label class="text-bold">Общий Лимит</label></td>
-                                                            <td><input type="number" class="form-control" name="limit_quantity"></td>
-                                                            <td>
-                                                                <div class="input-group mb-4">
-                                                                    <input type="text" class="form-control" name="limit_one_sum">
-                                                                    <div class="input-group-append">
-                                                                        <select class="form-control success" name="limit_currency" style="width: 100%;">
-                                                                            <option selected="selected">UZS</option>
-                                                                            <option>USD</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td><input type="number" class="form-control" name="limit_total_sum"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="3"><label class="text-bold">Итого</label></td>
-                                                            <td><input type="number" class="form-control"></td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </form>
-                                        </div>
                                         <div class="form-group col-sm-8">
                                             <label>Общий лимит ответственности </label>
                                             <div class="input-group mb-4">
@@ -973,82 +989,65 @@
                                         </button>
                                         </div>
                                     </div>
-                                    <div class="card-body">
-                                        <!-- Default box -->
-                                        <div class="card card-success">
-                                            <div class="card-header">
-                                                <h3 class="card-title">Общие Сведения:</h3>
-                                                <div class="card-tools">
-                                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                                    <i class="fas fa-minus"></i>
-                                                </button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <form method="POST" id="polis-fields-0">
-                                                    <div class="row policy">
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-                                                                <label for="polises">Полис</label>
-                                                                <select class="form-control polises" id="polises" name="policy" style="width: 100%;">
-                                                                <option selected="selected"></option>
-                                                            </select>
-                                                                <div class="input-group mb-3">
-                                                                    <div class="input-group-prepend">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-                                                                <div class="input-group mb-3" style="margin-top: 33px">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text">от</span>
-                                                                    </div>
-                                                                    <input type="date" class="form-control" name="from_date">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-4">
-                                                            <div class="form-group">
-                                                                <label>Ответственный Агент</label>
-                                                                <select class="form-control select2" name="agent" style="width: 100%;">
-                                                                <option selected="selected">Ф.И.О агента</option>
-                                                                <option></option>
-                                                            </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                                <!-- /.card-footer-->
-                                            </div>
-                                            <!-- /.card -->
-                                        </div>
-                                    </div>
                                     <div class="card payment">
                                         <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Оплата страховой премии</label>
-                                                        <select class="form-control select2" name="payment" style="width: 100%;">
-                                                        <option selected="selected">Сум</option>
-                                                        <option>Доллар</option>
-                                                        <option>Евро</option>
-                                                    </select>
+                                            <form method="POST" id="polis-fields-0">
+                                                <div class="row policy">
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label for="polises">Полис</label>
+                                                            <select class="form-control polises" id="polises" name="policy" style="width: 100%;">
+                                                            <option selected="selected"></option>
+                                                        </select>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <div class="input-group mb-3" style="margin-top: 33px">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">от</span>
+                                                                </div>
+                                                                <input type="date" class="form-control" name="from_date">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-group">
+                                                            <label>Ответственный Агент</label>
+                                                            <select class="form-control select2" name="agent" style="width: 100%;">
+                                                            <option selected="selected">Ф.И.О агента</option>
+                                                            <option></option>
+                                                        </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>Порядок оплаты</label>
-                                                        <select class="form-control select2" name="payment-order" style="width: 100%;">
-                                                        <option selected="selected">Сум</option>
-                                                        <option>Доллар</option>
-                                                        <option>Евро</option>
-                                                    </select>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Оплата страховой премии</label>
+                                                            <select class="form-control select2" name="payment" style="width: 100%;">
+                                                            <option selected="selected">Сум</option>
+                                                            <option>Доллар</option>
+                                                            <option>Евро</option>
+                                                        </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label>Порядок оплаты</label>
+                                                            <select class="form-control select2" name="payment-order" style="width: 100%;">
+                                                            <option selected="selected">Сум</option>
+                                                            <option>Доллар</option>
+                                                            <option>Евро</option>
+                                                        </select>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <div class="card card-info polis" id="Overall">

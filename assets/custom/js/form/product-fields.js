@@ -144,7 +144,6 @@ $(document).on("keyup", ".modal", function() {
     //     }
     // });
     $('.other_insurance-' + fieldNumber).on('change', function() {
-        console.log('1')
         let targetBox = $('.other_insurance_info-' + fieldNumber);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -153,7 +152,7 @@ $(document).on("keyup", ".modal", function() {
             $(targetBox).hide(400);
         }
     });
-    $('.r-1-' + fieldNumber).click(function() {
+    $('.r-1-' + fieldNumber).on('change', function() {
         let targetBox = $('.r-1-show-' + fieldNumber);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -161,7 +160,8 @@ $(document).on("keyup", ".modal", function() {
             $(targetBox).hide(400);
         }
     });
-    $('.r-2-' + fieldNumber).click(function() {
+    console.log($('.r-2-' + fieldNumber));
+    $('.r-2-' + fieldNumber).on('change', function() {
         let targetBox = $(`.r-2-show-${fieldNumber}`);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -169,8 +169,8 @@ $(document).on("keyup", ".modal", function() {
             $(targetBox).hide(400);
         }
     });
-    $('.r-3-' + fieldNumber).click(function() {
-        let targetBox = $(`.r-1-show-${fieldNumber}`);
+    $('.r-3-' + fieldNumber).on('change', function() {
+        let targetBox = $(`.r-3-show-${fieldNumber}`);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
         } else {
@@ -178,7 +178,7 @@ $(document).on("keyup", ".modal", function() {
         }
     });
 
-    $('.defects').click(function() {
+    $('.defects').on('change', function() {
         let targetBox = $('.defects_images');
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -225,9 +225,7 @@ function calculateSum2() {
 function calculateSum3() {
     let sum = 0;
     $('.forsum3').each(function() {
-        console.log('работаю');
         if (!isNaN(this.value) && this.value.length != 0) {
-            console.log('работаю и тут');
             sum += parseFloat(this.value);
         }
     });
@@ -379,8 +377,6 @@ function submit() {
 
 $(document).on("load", function() {
     let fieldNumber = $(this).data('field-number');
-
-
 });
 
 //ToDo: delete one of the addproductfields function
@@ -419,7 +415,7 @@ function addProductFields(fieldNumber) {
                                 </tr>
                                 <tr>
                                     <td colspan="3"><label class="text-bold">Итого</label></td>
-                                    <td><input type="text" class="form-control overall-sum" readonly name="total"></td>
+                                    <td><input type="text" class="form-control overall-sum${fieldNumber}" readonly name="total"></td>
                                 </tr>
                             </tbody>
                         </table>

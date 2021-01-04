@@ -281,26 +281,58 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label for="office-worker" class="col-form-label">Работники:</label>
-                                                    <select id="office-worker" class="form-control" name="to_user">
-                                                      <option selected></option>
-                                                      {% for officeWorker in officeWorkers %}
-                                                      <option value="{{ officeWorker.user.id }}">{{ officeWorker.user.username }}</option>
-                                                      {% endfor %}
-                                                    </select>
+                                                    <label class="col-form-label" for="retransfer-num-akt">Номер акта</label>
+                                                    <input type="text" name="retransferNumAkt" class="form-control" id="retransfer-num-akt">
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
+                                            <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="transfered-polises" class="col-form-label">Распределённые полиса:</label>
-                                                    <select id="transfered-polises" class="form-control" name="policies" multiple>
-                                                      {% for polisTransfer in polisTransfers %}
-                                                      <option value="{{ polisTransfer.id }}">{{ polisTransfer.policy.policy_number }} -
-                                                        {{ polisTransfer.policy.income_session.act_number }}</option>
-                                                      {% endfor %}
-                                                    </select>
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Дата акта</label>
+                                                    <input id="pretensii-final-settlement-date" name="retransferDate" type="date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Серия бланка</label>
+                                                    <input type="text" name="retransferBlankSeries" class="form-control" id="retransfer-num-akt">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Номер бланка (с - до)</label>
+                                                    <input type="text" name="retransferNumAktAfterBefore" class="form-control" id="retransfer-num-akt">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Откуда (головной офис)</label>
+                                                    <input type="text" name="retransferMainOffice" class="form-control" id="retransfer-num-akt">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Кому (филиал / отделение / центр )</label>
+                                                    <input type="text" name="retransferRecipient" class="form-control" id="retransfer-num-akt">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Дата распределения</label>
+                                                    <input id="pretensii-final-settlement-date" name="retransferDistribution" type="date" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Загрузка акта</label>
+                                                    <input class="form-control" type="file" multiple name="retransferAktFile">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label class="col-form-label" for="pretensii-final-settlement-date">Кто выдал полис</label>
+                                                    <input type="text" name="retransferGiven" class="form-control" id="retransfer-num-akt">
                                                 </div>
                                             </div>
                                         </div>

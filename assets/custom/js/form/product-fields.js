@@ -74,27 +74,20 @@ function addRow() {
             }
             if (columnName === 'polis-places-') {
                 ele.setAttribute('class', 'form-control forsum2');
-                console.log(columnName);
             } else if (columnName === 'insurance_sum-') {
                 ele.setAttribute('class', 'form-control forsum insurance_sum-' + productFieldNumber);
                 ele.setAttribute('data-field-number', productFieldNumber);
-                console.log(columnName);
             } else if (columnName === 'insurance_premium-') {
                 ele.setAttribute('class', 'form-control forsum3 insurance_premium-' + productFieldNumber);
                 ele.setAttribute('readonly', 'true');
-                console.log(columnName);
             } else if (columnName === 'overall_insurance_sum-') {
                 ele.setAttribute('class', 'form-control forsum4 overall_insurance_sum-' + productFieldNumber);
-                console.log(columnName);
             } else if (columnName === 'polis-num-') {
                 ele.setAttribute('class', 'form-control polis-num-' + productFieldNumber);
                 ele.setAttribute('readonly', 'true');
-                console.log(columnName);
             } else {
                 ele.setAttribute('class', 'form-control');
-                console.log(columnName);
             }
-            console.log(columnName);
             td.appendChild(ele);
         }
     }
@@ -102,110 +95,6 @@ function addRow() {
     addProductFields(productFieldNumber);
 }
 
-
-function addRow() {
-    let empTab = document.getElementById('empTable');
-    var fieldNames = [
-        'polis-num-',
-        'polis-series-',
-        'period_polis-',
-        'polis-agent-',
-        'polis-id-',
-        'polis-mark-',
-        'polis-model-',
-        'polis-modification-',
-        'polis-gos-num-',
-        'polis-teh-passport-',
-        'polis-num-engine-',
-        'polis-num-body-',
-        'polis-payload-',
-        'polis-places-',
-        'insurance_sum-',
-        'overall_insurance_sum-',
-        'insurance_premium-',
-    ];
-    let rowCnt = empTab.rows.length; // get the number of rows.
-    let tr = empTab.insertRow(rowCnt - 1); // table row.
-
-    productFieldNumber++;
-
-    var rowsAmount = $("#empTable thead tr th").length + 1;
-
-    for (let c = 0; c < rowsAmount; c++) {
-        let td = document.createElement('td'); // TABLE DEFINITION.
-        td = tr.insertCell(c);
-
-        if (c == (rowsAmount - 1)) { // if its the last column of the table.
-            // add delete a button
-            let button = document.createElement('input');
-
-            // set the attributes.
-            button.setAttribute('type', 'button');
-            button.setAttribute('value', 'Удалить');
-
-            // add button's "onclick" event.
-            button.setAttribute('onclick', 'removeRow(this)');
-            button.setAttribute('data-field-number', productFieldNumber);
-            button.setAttribute('class', 'btn btn-warning');
-
-            td.appendChild(button);
-
-            // add delete a button
-            let button2 = document.createElement('input');
-            button2.setAttribute('type', 'button');
-            button2.setAttribute('value', 'Заполнить');
-            button2.setAttribute('class', 'btn btn-success product-fields-button');
-            button2.setAttribute('id', 'product-fields-button-' + productFieldNumber);
-            button2.setAttribute('data-field-number', productFieldNumber);
-
-            let td2 = document.createElement('td'); // TABLE DEFINITION.
-            let fieldNumer = c + 1;
-            td2 = tr.insertCell(fieldNumer);
-            td2.appendChild(button2);
-        } else {
-            // all except the last colum will have input field.
-            let ele = document.createElement('input');
-
-            let fieldIndex = c + 1;
-            let columnName = fieldNames[c];
-            ele.setAttribute('name', columnName + productFieldNumber);
-
-            if (c === 1) {
-                ele = document.createElement('select');
-            } else if (c === 3) {
-                ele = document.createElement('select');
-            } else {
-                ele.setAttribute('type', 'text');
-            }
-            if (columnName === 'polis-places-') {
-                ele.setAttribute('class', 'form-control forsum2');
-                console.log(columnName);
-            } else if (columnName === 'insurance_sum-') {
-                ele.setAttribute('class', 'form-control forsum insurance_sum-' + productFieldNumber);
-                ele.setAttribute('data-field-number', productFieldNumber);
-                console.log(columnName);
-            } else if (columnName === 'insurance_premium-') {
-                ele.setAttribute('class', 'form-control forsum3 insurance_premium-' + productFieldNumber);
-                ele.setAttribute('readonly', 'true');
-                console.log(columnName);
-            } else if (columnName === 'overall_insurance_sum-') {
-                ele.setAttribute('class', 'form-control forsum4 overall_insurance_sum-' + productFieldNumber);
-                console.log(columnName);
-            } else if (columnName === 'polis-num-') {
-                ele.setAttribute('class', 'form-control polis-num-' + productFieldNumber);
-                ele.setAttribute('readonly', 'true');
-                console.log(columnName);
-            } else {
-                ele.setAttribute('class', 'form-control');
-                console.log(columnName);
-            }
-            console.log(columnName);
-            td.appendChild(ele);
-        }
-    }
-
-    addProductFields(productFieldNumber);
-}
 
 let num1 = 1;
 let num2 = 1;
@@ -278,8 +167,8 @@ $('#beneficiary-modal-button').on('click', function() {
     clone.find('#beneficiary-okonh').prev().attr('for', `beneficiary-okonh${num2}`)
     num2++;
     clone.find('.card-title').html(`Выгодоприобретатель №${num2}`)
-    clone.find('#insurer-modal-button').html(`Удалить`).attr('class', 'btn btn-warning')
-    clone.find('#insurer-modal-button').on('click', function() {
+    clone.find('#beneficiary-modal-button').html(`Удалить`).attr('class', 'btn btn-warning')
+    clone.find('#beneficiary-modal-button').on('click', function() {
         $(this).parent().parent().parent().remove();
         num2--;
     })
@@ -292,6 +181,24 @@ $(document).ready(function() {
     $(document).on("keyup", ".forsum3", calculateSum3);
     $(document).on("keyup", ".forsum4", calculateSum4);
     $(document).on("keyup", ".forsum5", calculateSum5);
+    $('.defects').on('change', function() {
+        console.log('sa');
+        let targetBox = $('.defects_images');
+        if ($(this).attr("value") === '1') {
+            $(targetBox).show(400);
+        } else {
+            $(targetBox).hide(400);
+        }
+    });
+});
+$(document).on('keyup', function() {
+    console.log('sadsa');
+    if ($('.overall-sum4').val() > $('.overall-sum').val()) {
+        alert('Страховая сумма не должна превышать страховую стоимость')
+        $('#form-save-button').attr('disabled', true)
+    } else {
+        $('#form-save-button').removeAttr('disabled');
+    }
 });
 
 $(document).on("keyup", ".modal", function() {
@@ -317,29 +224,33 @@ $(document).on("keyup", ".modal", function() {
     $('#overall-sum-' + fieldNumber).val(overallSum);
     $('.r-summ-' + fieldNumber).val(modalTableSum2);
     $('.r-summ-premia-' + fieldNumber).val(modalTableSum3);
+
+    $('#totalLimit-' + fieldNumber).on('keyup', function() {
+        if ($('.r-summ-' + fieldNumber).val() >= $('#totalLimit-' + fieldNumber).val()) {
+            console.log('sadas');
+            $('#form-save-button').attr('disabled', true)
+                // alert('Общий лимит ответственности не может превышать страховую сумму по видам опасностей');
+        } else {
+            $('#form-save-button').removeAttr('disabled');
+
+        }
+    });
+
     overAllInsurenceSumByField(fieldNumber);
-    // $('.other_insurance-' + fieldNumber).click(function() {
-    //     let targetBox = $('.other_insurance_info-' + fieldNumber);
-    //     if ($(this).attr("value") === '1') {
-    //         $(targetBox).show(400);
-    //         console.log('1')
-    //     } else {
-    //         $(targetBox).hide(400);
-    //     }
-    // });
+});
+
+$(document).on("change", ".modal", function() {
+    let fieldNumber = $(this).data('field-number');
 
     $('.other_insurance-' + fieldNumber).on('change', function() {
-        console.log('sa');
         let targetBox = $('.other_insurance_info-' + fieldNumber);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
-            console.log('1')
         } else {
             $(targetBox).hide(400);
         }
     });
     $('.r-1-' + fieldNumber).on('change', function() {
-        console.log('sa');
         let targetBox = $('.r-1-show-' + fieldNumber);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -348,7 +259,6 @@ $(document).on("keyup", ".modal", function() {
         }
     });
     $('.r-2-' + fieldNumber).on('change', function() {
-        console.log('sa');
         let targetBox = $(`.r-2-show-${fieldNumber}`);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -357,7 +267,6 @@ $(document).on("keyup", ".modal", function() {
         }
     });
     $('.r-3-' + fieldNumber).on('change', function() {
-        console.log('sa');
         let targetBox = $(`.r-3-show-${fieldNumber}`);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -365,16 +274,29 @@ $(document).on("keyup", ".modal", function() {
             $(targetBox).hide(400);
         }
     });
+    $('.r-3-one-' + fieldNumber).on('keyup', function() {
+        let numOne = $(this).val() * $(`.r-3-pass-${fieldNumber}`).val();
+        $(document).find(`.r-3-sum-${fieldNumber}`).val(numOne);
+    });
+    $('.r-3-pass-1-' + fieldNumber).on('keyup', function() {
+        let numOne = $(this).val() * $(`.r-3-one-1-${fieldNumber}`).val();
+        $(document).find(`.r-3-sum-1-${fieldNumber}`).val(numOne);
+    });
+    $('.r-3-one-1-' + fieldNumber).on('keyup', function() {
+        let numOne = $(this).val() * $(`.r-3-pass-1-${fieldNumber}`).val();
+        $(document).find(`.r-3-sum-1-${fieldNumber}`).val(numOne);
+    });
+    $('.r-3-pass-2-' + fieldNumber).on('keyup', function() {
+        let numOne = $(this).val() * $(`.r-3-one-2-${fieldNumber}`).val();
+        $(document).find(`.r-3-sum-2-${fieldNumber}`).val(numOne);
+    });
+    $('.r-3-one-2-' + fieldNumber).on('keyup', function() {
+        let numOne = $(this).val() * $(`.r-3-pass-2-${fieldNumber}`).val();
+        $(document).find(`.r-3-sum-2-${fieldNumber}`).val(numOne);
+    });
+
 });
-$('.defects').on('change', function() {
-    console.log('sa');
-    let targetBox = $('.defects_images');
-    if ($(this).attr("value") === '1') {
-        $(targetBox).show(400);
-    } else {
-        $(targetBox).hide(400);
-    }
-});
+
 
 function overAllInsurenceSumByField(fieldNumber) {
     Osum =
@@ -548,24 +470,9 @@ function submit() {
         }
     }
 }
-
-// function otherInsurance() {
-//     // Get the checkbox
-//     let checkBox = document.getElementById("other_insurance");
-//     // Get the output text
-//     let text = document.getElementById("other_insurance_info");
-
-//     // If the checkbox is checked, display the output text
-//     if (checkBox.value === 'yes') {
-//         text.style.display = "block";
-//     } else {
-//         text.style.display = "none";
-//     }
-// }
-
-$(document).on("load", function() {
-    let fieldNumber = $(this).data('field-number');
-});
+$('#form-save-button').on('click', function() {
+    $('#mainFormKasko').submit();
+})
 
 //ToDo: delete one of the addproductfields function
 function addProductFields(fieldNumber) {
@@ -831,7 +738,7 @@ function addProductFields(fieldNumber) {
                                 <tbody>
                                     <tr>
                                         <td><label>Водитель(и)</label></td>
-                                        <td><input type="number" class="form-control r-3-pass-${fieldNumber}" name="driver_quantity-${fieldNumber}"></td>
+                                        <td><input type="number" class="form-control r-3-pass-${fieldNumber}" value="1" readonly name="driver_quantity-${fieldNumber}"></td>
                                         <td>
                                             <div class="input-group mb-4">
                                                 <input type="text" class="form-control r-3-one-${fieldNumber}" name="driver_one_sum-${fieldNumber}">
@@ -889,19 +796,19 @@ function addProductFields(fieldNumber) {
                             </table>
                         </form>
                     </div>
-                </form>
-                <div class="form-group col-sm-8">
-                    <label>Общий лимит ответственности </label>
-                    <div class="input-group mb-4">
-                        <input type="text" class="form-control-${fieldNumber}" name="total_liability_limit-${fieldNumber}">
-                        <div class="input-group-append">
-                            <select class="form-control success" name="total_liability_limit_currency-${fieldNumber}" style="width: 100%;">
-                                <option selected="selected">UZS</option>
-                                <option>USD</option>
-                            </select>
+                    <div class="form-group col-sm-8">
+                        <label>Общий лимит ответственности </label>
+                        <div class="input-group mb-4">
+                            <input type="text" class="form-control" id="totalLimit-${fieldNumber}" name="total_liability_limit-${fieldNumber}">
+                            <div class="input-group-append">
+                                <select class="form-control success" name="total_liability_limit_currency-${fieldNumber}" style="width: 100%;">
+                                    <option selected="selected">UZS</option>
+                                    <option>USD</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
 

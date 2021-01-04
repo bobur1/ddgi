@@ -67,8 +67,8 @@
                     <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
                     <div class="input-group-append">
                         <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                 </div>
             </form>
@@ -299,7 +299,7 @@
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <div class="icheck-success">
-                                            <input type="radio" name="client_type_radio" checked class="client-type-radio" id="client-type-radio-1" value="individual">
+                                            <input type="radio" name="client_type_radio" class="client-type-radio" id="client-type-radio-1" value="individual">
                                             <label for="client-type-radio-1">физ. лицо</label>
                                         </div>
                                     </div>
@@ -324,26 +324,26 @@
                 </div>
 
                 <div class="card-body">
-                    <div class="card card-info">
+                    <div class="card card-info" id="clone-insurance">
                         <div class="card-header">
-                            <h3 class="card-title">Страхователи</h3>
-
+                            <h3 class="card-title">Страхователь №1</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                                    <i class="fas fa-minus"></i>
+                                </button>
                             </div>
                         </div>
 
                         <div class="card-body">
+
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="insurer-name" class="col-form-label">ФИО страхователя</label>
                                         <input type="text" id="insurer-name" name="fio-insurer" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="insurer-address" class="col-form-label">Юр адрес страхователя</label>
                                         <input type="text" id="insurer-address" name="address-insurer" class="form-control">
@@ -385,37 +385,35 @@
                                         <input type="text" id="insurer-okonh" name="okonh-insurer" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="margin-top: 38px">
-                                    <div class="form-group">
-                                        <button id="insurer-modal-button" class="btn btn-primary">Добавить</button>
-                                    </div>
-                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button id="insurer-modal-button" class="btn btn-primary">Добавить</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card-body">
-                    <div class="card card-info">
+                    <div class="card card-info" id="clone-beneficiary">
                         <div class="card-header">
-                            <h3 class="card-title">Выгодоприобретатели</h3>
-
+                            <h3 class="card-title">Выгодоприобретатель №1</h3>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
+                                    <i class="fas fa-minus"></i>
+                                </button>
                             </div>
                         </div>
 
                         <div class="card-body" id="beneficiary-card-body">
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="beneficiary-name" class="col-form-label">ФИО выгодоприобретателя</label>
                                         <input type="text" id="beneficiary-name" name="fio-beneficiary" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="beneficiary-address" class="col-form-label">Юр адрес выгодоприобретателя</label>
                                         <input type="text" id="beneficiary-address" name="address-beneficiary" class="form-control">
@@ -457,11 +455,10 @@
                                         <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-4" style="margin-top: 38px">
-                                    <div class="form-group">
-                                        <button id="beneficiary-modal-button" class="btn btn-primary">Добавить</button>
-                                    </div>
-                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <button id="beneficiary-modal-button" class="btn btn-primary">Добавить</button>
                             </div>
                         </div>
                     </div>
@@ -514,8 +511,8 @@
                         <h3 class="card-title">Сведени о трансортных средствах</h3>
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
+                                <i class="fas fa-minus"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="card-body">
@@ -985,8 +982,8 @@
                                         <h3 class="card-title">Полис</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
+                                                <i class="fas fa-minus"></i>
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="card payment">
@@ -1083,8 +1080,8 @@
                                 <h3 class="card-title">Условия оплаты страховой премии</h3>
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
+                                        <i class="fas fa-minus"></i>
+                                    </button>
                                 </div>
                             </div>
                             <div class="card-body">
@@ -1207,7 +1204,7 @@
 <script src="../assets/custom/js/form/add-clients.js"></script>
 <script src="../assets/custom/js/form/product-fields.js"></script>
 <script src="../assets/custom/js/form/product-fields.add.js"></script>
-
+<!-- 
 <script>
     insurerId.select2();
     beneficiaryId.select2();
@@ -1528,6 +1525,6 @@
             }
         });
     }
-</script>
+</script> -->
 
 </html>

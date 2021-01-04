@@ -102,6 +102,190 @@ function addRow() {
     addProductFields(productFieldNumber);
 }
 
+
+function addRow() {
+    let empTab = document.getElementById('empTable');
+    var fieldNames = [
+        'polis-num-',
+        'polis-series-',
+        'period_polis-',
+        'polis-agent-',
+        'polis-id-',
+        'polis-mark-',
+        'polis-model-',
+        'polis-modification-',
+        'polis-gos-num-',
+        'polis-teh-passport-',
+        'polis-num-engine-',
+        'polis-num-body-',
+        'polis-payload-',
+        'polis-places-',
+        'insurance_sum-',
+        'overall_insurance_sum-',
+        'insurance_premium-',
+    ];
+    let rowCnt = empTab.rows.length; // get the number of rows.
+    let tr = empTab.insertRow(rowCnt - 1); // table row.
+
+    productFieldNumber++;
+
+    var rowsAmount = $("#empTable thead tr th").length + 1;
+
+    for (let c = 0; c < rowsAmount; c++) {
+        let td = document.createElement('td'); // TABLE DEFINITION.
+        td = tr.insertCell(c);
+
+        if (c == (rowsAmount - 1)) { // if its the last column of the table.
+            // add delete a button
+            let button = document.createElement('input');
+
+            // set the attributes.
+            button.setAttribute('type', 'button');
+            button.setAttribute('value', 'Удалить');
+
+            // add button's "onclick" event.
+            button.setAttribute('onclick', 'removeRow(this)');
+            button.setAttribute('data-field-number', productFieldNumber);
+            button.setAttribute('class', 'btn btn-warning');
+
+            td.appendChild(button);
+
+            // add delete a button
+            let button2 = document.createElement('input');
+            button2.setAttribute('type', 'button');
+            button2.setAttribute('value', 'Заполнить');
+            button2.setAttribute('class', 'btn btn-success product-fields-button');
+            button2.setAttribute('id', 'product-fields-button-' + productFieldNumber);
+            button2.setAttribute('data-field-number', productFieldNumber);
+
+            let td2 = document.createElement('td'); // TABLE DEFINITION.
+            let fieldNumer = c + 1;
+            td2 = tr.insertCell(fieldNumer);
+            td2.appendChild(button2);
+        } else {
+            // all except the last colum will have input field.
+            let ele = document.createElement('input');
+
+            let fieldIndex = c + 1;
+            let columnName = fieldNames[c];
+            ele.setAttribute('name', columnName + productFieldNumber);
+
+            if (c === 1) {
+                ele = document.createElement('select');
+            } else if (c === 3) {
+                ele = document.createElement('select');
+            } else {
+                ele.setAttribute('type', 'text');
+            }
+            if (columnName === 'polis-places-') {
+                ele.setAttribute('class', 'form-control forsum2');
+                console.log(columnName);
+            } else if (columnName === 'insurance_sum-') {
+                ele.setAttribute('class', 'form-control forsum insurance_sum-' + productFieldNumber);
+                ele.setAttribute('data-field-number', productFieldNumber);
+                console.log(columnName);
+            } else if (columnName === 'insurance_premium-') {
+                ele.setAttribute('class', 'form-control forsum3 insurance_premium-' + productFieldNumber);
+                ele.setAttribute('readonly', 'true');
+                console.log(columnName);
+            } else if (columnName === 'overall_insurance_sum-') {
+                ele.setAttribute('class', 'form-control forsum4 overall_insurance_sum-' + productFieldNumber);
+                console.log(columnName);
+            } else if (columnName === 'polis-num-') {
+                ele.setAttribute('class', 'form-control polis-num-' + productFieldNumber);
+                ele.setAttribute('readonly', 'true');
+                console.log(columnName);
+            } else {
+                ele.setAttribute('class', 'form-control');
+                console.log(columnName);
+            }
+            console.log(columnName);
+            td.appendChild(ele);
+        }
+    }
+
+    addProductFields(productFieldNumber);
+}
+
+let num1 = 1;
+let num2 = 1;
+$('#insurer-modal-button').on('click', function() {
+
+    let clone = $('#clone-insurance:last').clone();
+    clone.insertAfter('#clone-insurance:last');
+
+    clone.find('#insurer-name').attr('name', `insurer-name${num1}`);
+    clone.find('#insurer-address').attr('name', `insurer-address${num1}`);
+    clone.find('#insurer-tel').attr('name', `insurer-tel${num1}`);
+    clone.find('#insurer-schet').attr('name', `insurer-schet${num1}`);
+    clone.find('#insurer-inn').attr('name', `insurer-inn${num1}`);
+    clone.find('#insurer-mfo').attr('name', `insurer-mfo${num1}`);
+    clone.find('#insurer-bank').attr('name', `insurer-bank${num1}`);
+    clone.find('#insurer-okonh').attr('name', `insurer-okonh${num1}`);
+    clone.find('#insurer-name').attr('id', `insurer-name${num1}`)
+    clone.find('#insurer-address').attr('id', `insurer-address${num1}`)
+    clone.find('#insurer-tel').attr('id', `insurer-tel${num1}`)
+    clone.find('#insurer-schet').attr('id', `insurer-schet${num1}`)
+    clone.find('#insurer-inn').attr('id', `insurer-inn${num1}`)
+    clone.find('#insurer-mfo').attr('id', `insurer-mfo${num1}`)
+    clone.find('#insurer-bank').attr('id', `insurer-bank${num1}`)
+    clone.find('#insurer-okonh').attr('id', `insurer-okonh${num1}`)
+    clone.find('#insurer-name').prev().attr('for', `insurer-name${num1}`)
+    clone.find('#insurer-address').prev().attr('for', `insurer-address${num1}`)
+    clone.find('#insurer-tel').prev().attr('for', `insurer-tel${num1}`)
+    clone.find('#insurer-schet').prev().attr('for', `insurer-schet${num1}`)
+    clone.find('#insurer-inn').prev().attr('for', `insurer-inn${num1}`)
+    clone.find('#insurer-mfo').prev().attr('for', `insurer-mfo${num1}`)
+    clone.find('#insurer-bank').prev().attr('for', `insurer-bank${num1}`)
+    clone.find('#insurer-okonh').prev().attr('for', `insurer-okonh${num1}`)
+    num1++;
+    clone.find('.card-title').html(`Страхователь №${num1}`)
+    clone.find('#insurer-modal-button').html(`Удалить`).attr('class', 'btn btn-warning')
+    clone.find('#insurer-modal-button').on('click', function() {
+        $(this).parent().parent().parent().remove();
+        num1--;
+    })
+});
+
+$('#beneficiary-modal-button').on('click', function() {
+
+    let clone = $('#clone-beneficiary:last').clone();
+    clone.insertAfter('#clone-beneficiary:first');
+
+    clone.find('#beneficiary-name').attr('name', `beneficiary-name${num2}`);
+    clone.find('#beneficiary-address').attr('name', `beneficiary-address${num2}`);
+    clone.find('#beneficiary-tel').attr('name', `beneficiary-tel${num2}`);
+    clone.find('#beneficiary-schet').attr('name', `beneficiary-schet${num2}`);
+    clone.find('#beneficiary-inn').attr('name', `beneficiary-inn${num2}`);
+    clone.find('#beneficiary-mfo').attr('name', `beneficiary-mfo${num2}`);
+    clone.find('#beneficiary-bank').attr('name', `beneficiary-bank${num2}`);
+    clone.find('#beneficiary-okonh').attr('name', `beneficiary-okonh${num2}`);
+    clone.find('#beneficiary-name').attr('id', `beneficiary-name${num2}`)
+    clone.find('#beneficiary-address').attr('id', `beneficiary-address${num2}`)
+    clone.find('#beneficiary-tel').attr('id', `beneficiary-tel${num2}`)
+    clone.find('#beneficiary-schet').attr('id', `beneficiary-schet${num2}`)
+    clone.find('#beneficiary-inn').attr('id', `beneficiary-inn${num2}`)
+    clone.find('#beneficiary-mfo').attr('id', `beneficiary-mfo${num2}`)
+    clone.find('#beneficiary-bank').attr('id', `beneficiary-bank${num2}`)
+    clone.find('#beneficiary-okonh').attr('id', `beneficiary-okonh${num2}`)
+    clone.find('#beneficiary-name').prev().attr('for', `beneficiary-name${num2}`)
+    clone.find('#beneficiary-address').prev().attr('for', `beneficiary-address${num2}`)
+    clone.find('#beneficiary-tel').prev().attr('for', `beneficiary-tel${num2}`)
+    clone.find('#beneficiary-schet').prev().attr('for', `beneficiary-schet${num2}`)
+    clone.find('#beneficiary-inn').prev().attr('for', `beneficiary-inn${num2}`)
+    clone.find('#beneficiary-mfo').prev().attr('for', `beneficiary-mfo${num2}`)
+    clone.find('#beneficiary-bank').prev().attr('for', `beneficiary-bank${num2}`)
+    clone.find('#beneficiary-okonh').prev().attr('for', `beneficiary-okonh${num2}`)
+    num2++;
+    clone.find('.card-title').html(`Выгодоприобретатель №${num2}`)
+    clone.find('#insurer-modal-button').html(`Удалить`).attr('class', 'btn btn-warning')
+    clone.find('#insurer-modal-button').on('click', function() {
+        $(this).parent().parent().parent().remove();
+        num2--;
+    })
+
+});
+
 $(document).ready(function() {
     $(document).on("keyup", ".forsum", calculateSum);
     $(document).on("keyup", ".forsum2", calculateSum2);
@@ -143,7 +327,9 @@ $(document).on("keyup", ".modal", function() {
     //         $(targetBox).hide(400);
     //     }
     // });
+
     $('.other_insurance-' + fieldNumber).on('change', function() {
+        console.log('sa');
         let targetBox = $('.other_insurance_info-' + fieldNumber);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -153,6 +339,7 @@ $(document).on("keyup", ".modal", function() {
         }
     });
     $('.r-1-' + fieldNumber).on('change', function() {
+        console.log('sa');
         let targetBox = $('.r-1-show-' + fieldNumber);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -160,8 +347,8 @@ $(document).on("keyup", ".modal", function() {
             $(targetBox).hide(400);
         }
     });
-    console.log($('.r-2-' + fieldNumber));
     $('.r-2-' + fieldNumber).on('change', function() {
+        console.log('sa');
         let targetBox = $(`.r-2-show-${fieldNumber}`);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -170,6 +357,7 @@ $(document).on("keyup", ".modal", function() {
         }
     });
     $('.r-3-' + fieldNumber).on('change', function() {
+        console.log('sa');
         let targetBox = $(`.r-3-show-${fieldNumber}`);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
@@ -177,15 +365,15 @@ $(document).on("keyup", ".modal", function() {
             $(targetBox).hide(400);
         }
     });
-
-    $('.defects').on('change', function() {
-        let targetBox = $('.defects_images');
-        if ($(this).attr("value") === '1') {
-            $(targetBox).show(400);
-        } else {
-            $(targetBox).hide(400);
-        }
-    });
+});
+$('.defects').on('change', function() {
+    console.log('sa');
+    let targetBox = $('.defects_images');
+    if ($(this).attr("value") === '1') {
+        $(targetBox).show(400);
+    } else {
+        $(targetBox).hide(400);
+    }
 });
 
 function overAllInsurenceSumByField(fieldNumber) {

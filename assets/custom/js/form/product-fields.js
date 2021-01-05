@@ -589,11 +589,11 @@ function addProductFields(fieldNumber) {
                         <div class="row">
                             <div class="col-sm-1">
                                 <div class="checkbox icheck-success">
-                                    <input type="radio" class="other_insurance-${fieldNumber}" name="vehicle_damage-${fieldNumber}" id="radioSuccess1-${fieldNumber}" value="1">
+                                    <input type="radio" class="other_insurance-${fieldNumber}" name="strtahovka-${fieldNumber}" id="radioSuccess1-${fieldNumber}" value="1">
                                     <label for="radioSuccess1-${fieldNumber}">Да</label>
                                 </div>
                                 <div class="checkbox icheck-success">
-                                    <input type="radio" class="other_insurance-${fieldNumber}" name="vehicle_damage-${fieldNumber}" id="radioSuccess2-${fieldNumber}" value="0">
+                                    <input type="radio" class="other_insurance-${fieldNumber}" name="strtahovka-${fieldNumber}" id="radioSuccess2-${fieldNumber}" value="0">
                                     <label for="radioSuccess2-${fieldNumber}">Нет</label>
                                 </div>
                             </div>

@@ -440,7 +440,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="beneficiary-schet" class="col-form-label">Страховая стоимость</label>
-                                                        <input type="text" id="beneficiary-schet" name="beneficiary-schet" class="form-control">
+                                                        <input type="text" id="beneficiary-schet" name="beneficiary-schet" class="form-control calc1">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -499,32 +499,32 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="beneficiary-mfo" class="col-form-label">Строительно монтажные</label>
-                                                <input type="text" id="beneficiary-mfo" name="mfo-beneficiary" class="form-control">
+                                                <label for="beneficiary-mfo" class="col-form-label ">Строительно монтажные</label>
+                                                <input type="text" id="beneficiary-mfo" name="mfo-beneficiary" class="form-control calc2">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="beneficiary-bank" class="col-form-label">Строительные</label>
-                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control">
+                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control calc3">
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="beneficiary-bank" class="col-form-label">Оборудование</label>
-                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control">
+                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control calc4">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="beneficiary-bank" class="col-form-label">Стрительные машины и механизмы</label>
-                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control">
+                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control calc5">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="beneficiary-bank" class="col-form-label">Расходы по расчистке территории</label>
-                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control">
+                                                <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control calc6">
                                             </div>
                                         </div>
                                     </div>
@@ -552,6 +552,14 @@
                                             <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
                                                 <option selected="selected">Единовременная</option>
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="geographic-zone">Общая страховая сумма</label>
+                                                <input type="text" readonly id="geographic-zone" name="geo-zone" class="form-control calcSumm">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -994,5 +1002,17 @@
         });
     }
 </script> -->
+<script>
+    $(document).on('keyup', function() {
+        var s1 = Number($('.calc1').val());
+        var s2 = Number($('.calc2').val());
+        var s3 = Number($('.calc3').val());
+        var s4 = Number($('.calc4').val());
+        var s5 = Number($('.calc5').val());
+        var s6 = Number($('.calc6').val());
+        var summ = s1 + s2 + s3 + s4 + s5 + s6;
+        $('.calcSumm').val(summ)
+    })
+</script>
 
 </html>

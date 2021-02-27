@@ -616,7 +616,7 @@
                                                     <input type="text" class="form-control forsum4 overall_insurance_sum-0" name="overall_polis_sum-0">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control forsum3 insurance_premium-0" readonly name="polis_premium-0">
+                                                    <input type="text" class="form-control forsum3 insurance_premium-0" name="polis_premium-0">
                                                 </td>
                                                 <td>
                                                     <input type="button" value="Заполнить" class="btn btn-success product-fields-button" id="product-fields-button" data-field-number="0">
@@ -639,7 +639,7 @@
                                             <label>Утрата (Гибель) или повреждение ТС</label>
                                             <div class="form-group">
                                                 <label>Страховая сумма</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control formus5">
                                             </div>
                                         </div>
                                     </div>
@@ -648,7 +648,7 @@
                                             <label>Риск невозврата кредита</label>
                                             <div class="form-group">
                                                 <label>Страховая сумма</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control formus6">
                                             </div>
                                         </div>
                                     </div>
@@ -658,7 +658,7 @@
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label>Общая cтраховая сумма</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control formus7">
                                             </div>
                                         </div>
                                     </div>
@@ -666,7 +666,7 @@
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label>Общая страховая премия</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control formus8">
                                             </div>
                                         </div>
                                     </div>
@@ -1607,5 +1607,19 @@
         });
     }
 </script> -->
+<script>
+    var num1 = $('.forsum2').val();
+    var num2 = $('.forsum3').val();
+    var num3 = $('.forsum4').val();
+    var num4 = $('.forsum5').val();
+    var num5 = $('.forsum6').val();
+    var num6 = $('.forsum7').val();
+    var num7 = $('.forsum8').val();
+
+    $(document).on('keyup', function() {
+        var strSumm = num2 + num4 + sum5;
+        var strPreim = num3;
+    });
+</script>
 
 </html>

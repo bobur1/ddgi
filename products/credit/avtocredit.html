@@ -607,16 +607,16 @@
                                                     <input type="text" class="form-control" name="polis-payload-0">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control forsum2" name="polis-places-0">
+                                                    <input type="text" class="form-control" name="polis-places-0">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control forsum2" name="polis-places-0">
+                                                    <input type="text" class="form-control" name="polis-places-0">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control forsum4 overall_insurance_sum-0" name="overall_polis_sum-0">
+                                                    <input type="text" class="form-control calc1 overall_insurance_sum-0" name="overall_polis_sum-0">
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control forsum3 insurance_premium-0" readonly name="polis_premium-0">
+                                                    <input type="text" class="form-control insurance_premium-0" readonly name="polis_premium-0">
                                                 </td>
                                                 <td>
                                                     <input type="button" value="Заполнить" class="btn btn-success product-fields-button" id="product-fields-button" data-field-number="0">
@@ -639,7 +639,7 @@
                                             <label>Утрата (Гибель) или повреждение ТС</label>
                                             <div class="form-group">
                                                 <label>Страховая сумма</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control calc2">
                                             </div>
                                         </div>
                                     </div>
@@ -648,7 +648,7 @@
                                             <label>Риск невозврата кредита</label>
                                             <div class="form-group">
                                                 <label>Страховая сумма</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control calc3">
                                             </div>
                                         </div>
                                     </div>
@@ -658,7 +658,16 @@
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label>Общая cтраховая сумма</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control calcSumm">
+                                                <script>
+                                                    $(document).on('keyup', function() {
+                                                        var s1 = Number($('.calc1').val());
+                                                        var s2 = Number($('.calc2').val());
+                                                        var s3 = Number($('.calc3').val());
+                                                        var summ = s1 + s2 + s3;
+                                                        $('.calcSumm').val(summ)
+                                                    })
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -1125,10 +1134,10 @@
                                                     <div class="form-group form-inline justify-content-between">
                                                         <label>Оплата страховой премии в</label>
                                                         <select class="form-control" style="width: 100%; text-align: center">
-                                                                            <option selected="selected" name="insurance_premium_currency">UZS</option>
-                                                                            <option>USD</option>
-                                                                            <option>Евро</option>
-                                                                        </select>
+                                                            <option selected="selected" name="insurance_premium_currency">UZS</option>
+                                                            <option>USD</option>
+                                                            <option>Евро</option>
+                                                        </select>
                                                     </div>
                                                 </div>
 

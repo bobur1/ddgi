@@ -389,7 +389,7 @@
                             <div class="card-body">
                                 <div class="card card-info" id="clone-beneficiary">
                                     <div class="card-header">
-                                        <h3 class="card-title">Заемщик</h3>
+                                        <h3 class="card-title">Выгодоприобретатель</h3>
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                                                 <i class="fas fa-minus"></i>
@@ -401,13 +401,13 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="beneficiary-name" class="col-form-label">ФИО заемщика</label>
+                                                        <label for="beneficiary-name" class="col-form-label">ФИО выгодоприобретателя</label>
                                                         <input type="text" id="beneficiary-name" name="fio-beneficiary" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="beneficiary-address" class="col-form-label">Юр адрес заемщика</label>
+                                                        <label for="beneficiary-address" class="col-form-label">Юр адрес выгодоприобретателя</label>
                                                         <input type="text" id="beneficiary-address" name="address-beneficiary" class="form-control">
                                                     </div>
                                                 </div>
@@ -419,14 +419,32 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="beneficiary-tel" class="col-form-label">Серия паспорта</label>
-                                                        <input type="text" id="beneficiary-tel" name="tel-beneficiary" class="form-control">
+                                                        <label for="beneficiary-schet" class="col-form-label">Расчетный счет</label>
+                                                        <input type="text" id="beneficiary-schet" name="beneficiary-schet" class="form-control">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="beneficiary-tel" class="col-form-label">Номер паспорта</label>
-                                                        <input type="text" id="beneficiary-tel" name="tel-beneficiary" class="form-control">
+                                                        <label for="beneficiary-inn" class="col-form-label">ИНН</label>
+                                                        <input type="text" id="beneficiary-inn" name="inn-beneficiary" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="beneficiary-mfo" class="col-form-label">МФО</label>
+                                                        <input type="text" id="beneficiary-mfo" name="mfo-beneficiary" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="beneficiary-bank" class="col-form-label">Банк</label>
+                                                        <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="beneficiary-okonh" class="col-form-label">ОКЭД</label>
+                                                        <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
@@ -453,16 +471,16 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="row">
-                                                <div class="col-sm-4">
+                                                <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <div class="form-group">
-                                                            <label for="dogovor-lizing-num" class="col-form-label">Кредитный договор</label>
+                                                            <label for="dogovor-lizing-num" class="col-form-label">Номер поставки</label>
                                                             <input type="text" id="dogovor-lizing-num" name="dogovor-lizing-num" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label class="col-form-label">Период кредитования</label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-form-label">Дата поставки</label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">с</span>
@@ -470,35 +488,164 @@
                                                         <input id="insurance_from" name="insurance_from" type="date" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label class="col-form-label">Период кредитования</label>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">до</span>
+                                                        <label for="geographic-zone">Пункт отправителя</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Пункт назначения</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Географическая зона</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Места перегрузок, перевалок</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Страны действия страхования</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Местонахождение груза</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Наименование груза</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Вид груза</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Вид упаковки</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Вес груза</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Количество единиц груза</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Особенности груза</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Вид транспорта</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label>Cопровождающие лица</label>
+                                                        <div class="row" id="cloneLitso">
+                                                            <div class="col-md-11">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label>ФИО</label>
+                                                                            <input type="text" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label>Должность</label>
+                                                                            <input type="text" class="form-control">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <input id="insurance_to" name="insurance_to" type="date" class="form-control">
+                                                            <div class="col-md-1">
+                                                                <input style="margin-top: 32px;" type="button" id="addLitso" value="Добавить" class="btn btn-success product-fields-button">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="geographic-zone">Цель кредита</label>
+                                                        <label for="geographic-zone">Количество грузовых мест</label>
                                                         <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="geographic-zone">Сумма кредита</label>
+                                                        <label for="geographic-zone">Грузаперевозчик</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Наименование грузоотправителя</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Адрес грузоотправителя</label>
                                                         <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-sm-4">
-                                                    <label class="col-form-label">Срок действия договора страхования</label>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Наименование грузополучателя</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Адрес грузополучателя</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="col-form-label">Период страхования </label>
                                                     <div class="input-group">
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text">с</span>
@@ -506,14 +653,78 @@
                                                         <input id="insurance_from" name="insurance_from" type="date" class="form-control">
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4">
-                                                    <label class="col-form-label">Срок действия договора страхования</label>
+                                                <div class="col-sm-6">
+                                                    <label class="col-form-label">Период страхования </label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">до</span>
+                                                        </div>
+                                                        <input id="insurance_from" name="insurance_from" type="date" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="col-form-label">Период упаковки  </label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">с</span>
+                                                        </div>
+                                                        <input id="insurance_from" name="insurance_from" type="date" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="col-form-label">Период упаковки  </label>
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <span class="input-group-text">до</span>
+                                                        </div>
+                                                        <input id="insurance_from" name="insurance_from" type="date" class="form-control">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-12">
                                                     <div class="form-group">
-                                                        <div class="input-group">
-                                                            <div class="input-group-prepend">
-                                                                <span class="input-group-text">до</span>
+                                                        <label for="geographic-zone">Условия страхования груза</label>
+                                                        <div class="col-sm-12">
+                                                            <div class="icheck-success">
+                                                                <input type="radio" name="client_type_radio" class="client-type-radio" id="client-type-radio-1" value="individual">
+                                                                <label for="client-type-radio-1">С ответственностью за все риски </label>
                                                             </div>
-                                                            <input id="insurance_to" name="insurance_to" type="date" class="form-control">
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="icheck-success">
+                                                                <input type="radio" name="client_type_radio" class="client-type-radio" id="client-type-radio-2" value="legal">
+                                                                <label for="client-type-radio-2">С ответственностью за частную аварию </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="icheck-success">
+                                                                <input type="radio" name="client_type_radio" class="client-type-radio" id="client-type-radio-2" value="legal">
+                                                                <label for="client-type-radio-2">Без ответственности за повреждения, кроме случаев крушения</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="geographic-zone">Сопровождающие документы</label>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <input type="file" id="geographic-zone" name="geo-zone" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <input type="file" id="geographic-zone" name="geo-zone" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <input type="file" id="geographic-zone" name="geo-zone" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <input type="file" id="geographic-zone" name="geo-zone" class="form-control">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -524,44 +735,39 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="card-body">
-                        <div class="card card-info" id="clone-beneficiary">
-                            <div class="card-header">
-                                <h3 class="card-title">Сведения о страховом полисе</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div id="anketa-fields">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="all-summ">Cтраховая сумма</label>
-                                                <input type="text" id="all-summ" name="geo-zone" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="geographic-zone">Страховая премия</label>
-                                                <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="polises">Валюта взаиморасчетов</label>
-                                            <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
-                                                <option selected="selected">UZS</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="polises">Условия оплаты страховой премии</label>
-                                            <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
-                                                <option selected="selected">Единовременная</option>
-                                            </select>
-                                        </div>
+                        <div id="anketa-fields">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label for="all-summ">Общая страховая сумма</label>
+                                        <input type="text" id="all-summ" name="geo-zone" class="form-control">
                                     </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="geographic-zone">Страховая премия</label>
+                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="geographic-zone">Франшза</label>
+                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="polises">Валюта взаиморасчетов</label>
+                                    <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
+                                        <option selected="selected">UZS</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="polises">Условия оплаты страховой премии</label>
+                                    <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
+                                        <option selected="selected">Единовременная</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -600,107 +806,6 @@
                                                 <select class="form-control polises" id="otvet-litso" name="litso" style="width: 100%;">
                                                     <option selected="selected">Имя Фамилия</option>
                                                 </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card card-success">
-                        <div class="card-header">
-                            <h3 class="card-title">Условия оплаты страховой премии</h3>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div id="payment-terms-form">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-inline justify-content-between">
-                                            <label>Валюта взаиморасчетов</label>
-                                            <select class="form-control" id="walletNames" style="width: 100%; text-align: center">
-                                                <option selected="selected" name="insurance_premium_currency">UZS</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group form-inline justify-content-between">
-                                            <label>Порядок оплаты страховой премии</label>
-                                            <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
-                                                <option value="1">Единовременно</option>
-                                                <option value="other">Другое</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="other-payment-schedule" style="display: block;">
-                                    <div class="form-group">
-                                        <button type="button" onclick="addRow3()" class="btn btn-primary ">
-                                            Добавить
-                                        </button>
-                                    </div>
-                                    <div class="table-responsive p-0 " style="max-height: 300px;">
-                                        <table class="table table-hover table-head-fixed" id="empTable3">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-nowrap">Сумма</th>
-                                                    <th class="text-nowrap">От</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr id="payment-term-tr-0" data-field-number="0">
-                                                    <td><input type="text" class="form-control" name="payment_sum-0-0"></td>
-                                                    <td><input type="date" class="form-control" name="payment_from-0-0"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card card-info" id="clone-beneficiary">
-                            <div class="card-header">
-                                <h3 class="card-title">Копии документов</h3>
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="card-body" id="beneficiary-card-body">
-                                <div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="polis-series" class="col-form-label">Паспорт</label>
-                                                <input type="file" id="polis-series" name="polis-series" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="polis-series" class="col-form-label">Договор</label>
-                                                <input type="file" id="polis-series" name="polis-series" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="polis-series" class="col-form-label">Справки</label>
-                                                <input type="file" id="polis-series" name="polis-series" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="polis-series" class="col-form-label">Другие</label>
-                                                <input type="file" id="polis-series" name="polis-series" class="form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -780,38 +885,16 @@
 
 
 <script src="../../assets/custom/js/csrftoken.js"></script>
-
-<script src="../../assets/custom/js/form/variables.js"></script>
-<script src="../../assets/custom/js/form/add-clients.js"></script>
-<script src="../../assets/custom/js/form/product-fields.js"></script>
-<script src="../../assets/custom/js/form/product-fields.add.js"></script>
 <script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '../../assets/json/cbu.json',
-            method: "GET",
-            type: 'json',
-            // beforeSend: function(xhr) {
-            //     xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-            // },
-            success: function(data) {
-                // $('#walletNames').append('<option selected="selected"></option>');
-                const products = data;
-                const length = products.length;
-                console.log(products)
-                for (let i = 0; i < length; i++) {
-                    $('#walletNames').append(`<option value="${products[i].id}">${products[i].Ccy}</option>`);
-                }
-            },
-            error: function() {
-                console.log('error');
-            }
+    $('#addLitso').on('click', function() {
+        let clone = $('#cloneLitso').clone();
+        clone.insertAfter('#cloneLitso:last');
+        clone.find('#addLitso').val('Удалить').addClass('removeLitso').addClass('btn-warning')
+        $('.removeLitso').on('click', function() {
+            $(this).parent().parent().remove();
+
         })
     });
-    // fetch('https://cbu.uz/ru/arkhiv-kursov-valyut/json/')
-    //     .then(function(data) {
-    //         console.log(data)
-    //     });
 </script>
 <!-- 
 <script>

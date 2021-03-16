@@ -941,15 +941,32 @@
                             <div id="payment-terms-form">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <div class="form-group form-inline justify-content-between">
-                                            <label>Валюта взаиморасчетов</label>
-                                            <select class="form-control" id="walletNames" style="width: 100%; text-align: center">
-                                                <option selected="selected" name="insurance_premium_currency">UZS
-                                                </option>
-                                            </select>
+                                        <div class="form-group">
+                                            <label for="all-summ">Cтраховая сумма</label>
+                                            <input type="text" id="all-summ" name="geo-zone" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="all-summ">Cтраховая премия</label>
+                                            <input type="text" id="all-summ" name="geo-zone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="all-summ">Франшиза</label>
+                                            <input type="text" id="all-summ" name="geo-zone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-inline justify-content-between">
+                                            <label>Валюта взаиморасчетов</label>
+                                            <select class="form-control" id="walletNames" style="width: 100%; text-align: center">
+                                                <option selected="selected" name="insurance_premium_currency">UZS</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
                                         <div class="form-group form-inline justify-content-between">
                                             <label>Порядок оплаты страховой премии</label>
                                             <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
@@ -958,42 +975,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group form-inline justify-content-between">
-                                            <label>Способ расчета</label>
-                                            <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
-                                                <option value="1">Сумах</option>
-                                                <option value="2">Сумах В ин. валюте</option>
-                                                <option value="3">В ин. валюте по курсу ЦБ на день заключение
-                                                    договора</option>
-                                                <option value="4">В ин. валюте по курсу ЦБ на день оплаты</option>
-                                            </select>
-                                        </div>
-                                    </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label for="all-summ">Cтраховая сумма</label>
-                                            <input type="text" id="all-summ" name="geo-zone" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="geographic-zone">Страховая премия</label>
-                                            <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="geographic-zone">Франшиза</label>
-                                            <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
-                                        </div>
-                                    </div>
-                                </div>
-
-
                                 <div id="other-payment-schedule" style="display: none;">
                                     <div class="form-group">
                                         <button type="button" onclick="addRow3()" class="btn btn-primary ">
@@ -1019,6 +1001,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="card-body">

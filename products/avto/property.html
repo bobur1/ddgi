@@ -475,22 +475,24 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group form-inline justify-content-between">
-                                                    <label>Использования ТС на основании</label>
-                                                    <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
-                                                        <option value="selected"></option>
-                                                        <option value="1">Тех пасспорт</option>
-                                                        <option value="2">Доверенность</option>
-                                                        <option value="3">Договор аренды</option>
-                                                        <option value="4">Путевой лист</option>
-                                                    </select>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group ">
+                                                        <label>Использования ТС на основании</label>
+                                                        <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
+                                                            <option value="selected"></option>
+                                                            <option value="1">Тех пасспорт</option>
+                                                            <option value="2">Доверенность</option>
+                                                            <option value="3">Договор аренды</option>
+                                                            <option value="4">Путевой лист</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="geographic-zone">Географическая зона:</label>
-                                                <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="geographic-zone">Географическая зона:</label>
+                                                        <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -682,7 +684,7 @@
                                 </div>
 
 
-                                <div id="other-payment-schedule" style="display: block;">
+                                <div id="other-payment-schedule" style="display: none;">
                                     <div class="form-group">
                                         <button type="button" onclick="addRow3()" class="btn btn-primary ">
                                             Добавить
@@ -728,19 +730,19 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="polis-series" class="col-form-label">Анкета</label>
-                                            <input type="file" id="geographic-zone" name="geo-zone" class="form-control">
+                                            <input type="file" multiple id="geographic-zone" name="geo-zone" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="polis-series" class="col-form-label">Договор</label>
-                                            <input type="file" id="geographic-zone" name="geo-zone" class="form-control">
+                                            <input type="file" multiple id="geographic-zone" name="geo-zone" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="polis-series" class="col-form-label">Полис</label>
-                                            <input type="file" id="geographic-zone" name="geo-zone" class="form-control">
+                                            <input type="file" multiple id="geographic-zone" name="geo-zone" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -771,14 +773,24 @@
         </aside>
         <!-- /.control-sidebar -->
 
-        </div>
-        <style>
-            #insurer-modal-button,
-            #beneficiary-modal-button {
-                width: 100px;
-            }
-        </style>
-        <!-- ./wrapper -->
+        <<<<<<< HEAD </div>
+            <style>
+                #insurer-modal-button,
+                #beneficiary-modal-button {
+                    width: 100px;
+                }
+            </style>
+            <!-- ./wrapper -->
+            =======
+            </div>
+            <style>
+                #insurer-modal-button,
+                #beneficiary-modal-button {
+                    width: 100px;
+                }
+            </style>
+            <!-- ./wrapper -->
+            >>>>>>> 86d6bae0bcf7a19d6c2f66430b3e05d9e8b00373
 </body>
 <!-- jQuery -->
 <script src="../../assets/plugins/jquery/jquery.min.js"></script>

@@ -632,52 +632,6 @@
                                     </table>
                                 </div>
                             </div>
-                            <div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Утрата (Гибель) или повреждение ТС</label>
-                                            <div class="form-group">
-                                                <label>Страховая сумма</label>
-                                                <input type="text" class="form-control formus5">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Риск невозврата кредита</label>
-                                            <div class="form-group">
-                                                <label>Страховая сумма</label>
-                                                <input type="text" class="form-control formus6">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label>Общая cтраховая сумма</label>
-                                                <input type="text" class="form-control formus7">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <div class="form-group">
-                                                <label>Общая страховая премия</label>
-                                                <input type="text" class="form-control formus8">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="payment">Условия оплаты</label>
-                                        <select class="form-control polises" id="payment" name="polis-series-0" style="width: 100%;">
-                                            <option selected="selected">Единовременно</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
 
@@ -1172,6 +1126,82 @@
 
                         </div>
                     </div>
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Условия оплаты страховой премии</h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="payment-terms-form">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="all-summ">Cтраховая сумма</label>
+                                            <input type="text" id="all-summ" name="geo-zone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="all-summ">Cтраховая премия</label>
+                                            <input type="text" id="all-summ" name="geo-zone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label for="all-summ">Франшиза</label>
+                                            <input type="text" id="all-summ" name="geo-zone" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-inline justify-content-between">
+                                            <label>Валюта взаиморасчетов</label>
+                                            <select class="form-control" id="walletNames" style="width: 100%; text-align: center">
+                                                <option selected="selected" name="insurance_premium_currency">UZS</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group form-inline justify-content-between">
+                                            <label>Порядок оплаты страховой премии</label>
+                                            <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
+                                                <option value="1">Единовременно</option>
+                                                <option value="other">Другое</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="other-payment-schedule" style="display: none;">
+                                    <div class="form-group">
+                                        <button type="button" onclick="addRow3()" class="btn btn-primary ">
+                                            Добавить
+                                        </button>
+                                    </div>
+                                    <div class="table-responsive p-0 " style="max-height: 300px;">
+                                        <table class="table table-hover table-head-fixed" id="empTable3">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-nowrap">Сумма</th>
+                                                    <th class="text-nowrap">От</th>
+                                                    <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr id="payment-term-tr-0" data-field-number="0">
+                                                    <td><input type="text" class="form-control" name="payment_sum-0-0"></td>
+                                                    <td><input type="date" class="form-control" name="payment_from-0-0"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="card card-info" id="clone-beneficiary">
                             <div class="card-header">
@@ -1285,6 +1315,10 @@
 
 
 <script src="../../assets/custom/js/csrftoken.js"></script>
+<script src="../../assets/custom/js/form/variables.js"></script>
+<script src="../../assets/custom/js/form/add-clients.js"></script>
+<script src="../../assets/custom/js/form/product-fields.js"></script>
+<script src="../../assets/custom/js/form/product-fields.add.js"></script>
 <!-- 
 <script>
     insurerId.select2();

@@ -241,7 +241,7 @@ $(document).on("change", ".modal", function() {
     let fieldNumber = $(this).data('field-number');
 
     $('.other_insurance-' + fieldNumber).on('change', function() {
-        let targetBox = $('.other_insurance_info-' + fieldNumber);
+        let targetBox = $(this).parent().parent().parent().parent().parent().find('.other_insurance_info-' + fieldNumber);
         if ($(this).attr("value") === '1') {
             $(targetBox).show(400);
         } else {
@@ -470,7 +470,6 @@ $('#form-save-button').on('click', function() {
 //ToDo: delete one of the addproductfields function
 function addProductFields(fieldNumber) {
     let fields = `
-    <div id="general-product-fields">
     <div id="product-field-modal-${fieldNumber}" class="modal" data-field-number="${fieldNumber}">
         <div class="modal-content" id="product-field-modal-content-${fieldNumber}">
             <span class="close product-fields-close" id="product-fields-close-"
@@ -495,18 +494,18 @@ function addProductFields(fieldNumber) {
                                     <div class="col-sm-1">
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess1" value="1">
-                                            <label for="radioSuccess1">Да</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess1-${fieldNumber}" value="1">
+                                            <label for="radioSuccess1-${fieldNumber}">Да</label>
                                         </div>
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess2" value="0">
-                                            <label for="radioSuccess2">Нет</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess2-${fieldNumber}" value="0">
+                                            <label for="radioSuccess2-${fieldNumber}">Нет</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group other_insurance_info-0" style="display:none">
+                            <div class="form-group other_insurance_info-${fieldNumber}" style="display:none">
                                 <label>Укажите название и адрес страховой организации и номер
                                     Полиса</label>
                                 <input class="form-control" type="text" name="other_insurance_info">
@@ -523,13 +522,13 @@ function addProductFields(fieldNumber) {
                                     <div class="col-sm-1">
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess1" value="1">
-                                            <label for="radioSuccess1">Да</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess3-${fieldNumber}" value="1">
+                                            <label for="radioSuccess3-${fieldNumber}">Да</label>
                                         </div>
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess2" value="0">
-                                            <label for="radioSuccess2">Нет</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess4-${fieldNumber}" value="0">
+                                            <label for="radioSuccess4-${fieldNumber}">Нет</label>
                                         </div>
                                     </div>
                                 </div>
@@ -551,18 +550,18 @@ function addProductFields(fieldNumber) {
                                     <div class="col-sm-1">
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess1" value="1">
-                                            <label for="radioSuccess1">Да</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess5-${fieldNumber}" value="1">
+                                            <label for="radioSuccess5-${fieldNumber}">Да</label>
                                         </div>
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess2" value="0">
-                                            <label for="radioSuccess2">Нет</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess6-${fieldNumber}" value="0">
+                                            <label for="radioSuccess6-${fieldNumber}">Нет</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group other_insurance_info-0" style="display:none">
+                            <div class="form-group other_insurance_info-${fieldNumber}" style="display:none">
                                 <label>Укажите название и адрес страховой организации и номер
                                     Полиса</label>
                                 <input class="form-control" type="text" name="other_insurance_info">
@@ -579,13 +578,13 @@ function addProductFields(fieldNumber) {
                                     <div class="col-sm-1">
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess1" value="1">
-                                            <label for="radioSuccess1">Да</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess7-${fieldNumber}" value="1">
+                                            <label for="radioSuccess7-${fieldNumber}">Да</label>
                                         </div>
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess2" value="0">
-                                            <label for="radioSuccess2">Нет</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess8-${fieldNumber}" value="0">
+                                            <label for="radioSuccess8-${fieldNumber}">Нет</label>
                                         </div>
                                     </div>
                                 </div>
@@ -607,13 +606,13 @@ function addProductFields(fieldNumber) {
                                     <div class="col-sm-1">
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess1" value="1">
-                                            <label for="radioSuccess1">Да</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess9-${fieldNumber}" value="1">
+                                            <label for="radioSuccess9-${fieldNumber}">Да</label>
                                         </div>
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess2" value="0">
-                                            <label for="radioSuccess2">Нет</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess10-${fieldNumber}" value="0">
+                                            <label for="radioSuccess10-${fieldNumber}">Нет</label>
                                         </div>
                                     </div>
                                 </div>
@@ -635,13 +634,13 @@ function addProductFields(fieldNumber) {
                                     <div class="col-sm-1">
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess1" value="1">
-                                            <label for="radioSuccess1">Да</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess11-${fieldNumber}" value="1">
+                                            <label for="radioSuccess11-${fieldNumber}">Да</label>
                                         </div>
                                         <div class="checkbox icheck-success">
                                             <input type="radio" class="other_insurance-${fieldNumber}"
-                                                name="strtahovka-${fieldNumber}" id="radioSuccess2" value="0">
-                                            <label for="radioSuccess2">Нет</label>
+                                                name="strtahovka-${fieldNumber}" id="radioSuccess12-${fieldNumber}" value="0">
+                                            <label for="radioSuccess12-${fieldNumber}">Нет</label>
                                         </div>
                                     </div>
                                 </div>
@@ -656,7 +655,6 @@ function addProductFields(fieldNumber) {
                 </div>
         </div>
     </div>
-</div>
         `;
 
     generalProductFields.append(fields);

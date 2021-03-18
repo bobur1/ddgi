@@ -300,8 +300,14 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="insurer-name" class="col-form-label">Наименования</label>
+                                            <label for="insurer-name" class="col-form-label">ФИО / Наименования</label>
                                             <input type="text" id="insurer-name" name="fio-insurer" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="insurer-address" class="col-form-label">Вид деятельности</label>
+                                            <input type="text" id="insurer-vid" name="vid-insurer" class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -374,7 +380,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="beneficiary-name" class="col-form-label">Наименования</label>
+                                                <label for="beneficiary-name" class="col-form-label">ФИО / Наименование выгодоприобретателя</label>
                                                 <input type="text" id="beneficiary-name" name="fio-beneficiary" class="form-control">
                                             </div>
                                         </div>
@@ -383,6 +389,22 @@
                                             <div class="form-group">
                                                 <label for="beneficiary-address" class="col-form-label">Адрес</label>
                                                 <input type="text" id="beneficiary-address" name="address-beneficiary" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="beneficiary-okonh" class="col-form-label">Серия</label>
+                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="beneficiary-okonh" class="col-form-label">Номер
+                                                    паспорта</label>
+                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
                                             </div>
                                         </div>
 
@@ -417,14 +439,6 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="beneficiary-okonh" class="col-form-label">Номер
-                                                    паспорта</label>
-                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
                                                 <label for="beneficiary-bank" class="col-form-label">Банк</label>
                                                 <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control">
                                             </div>
@@ -439,8 +453,8 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="beneficiary-okonh" class="col-form-label">Серия</label>
-                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
+                                                <label for="beneficiary-okonh" class="col-form-label">ОКЭД</label>
+                                                <input type="text" id="beneficiary-okonh" name="oked-beneficiary" class="form-control">
                                             </div>
                                         </div>
 
@@ -475,18 +489,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group form-inline justify-content-between">
-                                                    <label>Использования ТС на основании</label>
-                                                    <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
-                                                        <option value="selected"></option>
-                                                        <option value="1">Тех пасспорт</option>
-                                                        <option value="2">Доверенность</option>
-                                                        <option value="3">Договор аренды</option>
-                                                        <option value="4">Путевой лист</option>
-                                                    </select>
-                                                </div>
-                                            </div>
+                                            <!--<div class="col-sm-4">-->
+                                                <!--<div class="form-group form-inline justify-content-between">-->
+                                                    <!--<label>Использования ТС на основании</label>-->
+                                                    <!--<select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">-->
+                                                        <!--<option value="selected"></option>-->
+                                                        <!--<option value="1">Тех пасспорт</option>-->
+                                                        <!--<option value="2">Доверенность</option>-->
+                                                        <!--<option value="3">Договор аренды</option>-->
+                                                        <!--<option value="4">Путевой лист</option>-->
+                                                    <!--</select>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
                                             <div class="form-group">
                                                 <label for="geographic-zone">Географическая зона:</label>
                                                 <input type="text" id="geographic-zone" name="geo-zone" class="form-control">
@@ -538,20 +552,20 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
+                                                    <input class="form-control polises" id="polises" name="polis-series-0" readonly style="width: 100%;"/>
+                                                </td>
+                                                <td>
+                                                    <select type="text" class="form-control" name="period_polis-0">
                                                         <option selected="selected"></option>
                                                     </select>
                                                 </td>
                                                 <td>
-                                                    <input type="text" class="form-control" name="period_polis-0">
+                                                    <input class="form-control polises" id="polises" name="polis-agent-0" style="width: 100%;"/>
                                                 </td>
                                                 <td>
-                                                    <select class="form-control polises" id="polises" name="polis-agent-0" style="width: 100%;">
+                                                    <select type="text" class="form-control" name="polis-id-0">
                                                         <option selected="selected"></option>
                                                     </select>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" name="polis-id-0">
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" name="polis-mark-0">

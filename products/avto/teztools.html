@@ -298,12 +298,14 @@
                             <div class="card-body">
 
                                 <div class="row">
+
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="insurer-name" class="col-form-label">Наименования</label>
-                                            <input type="text" id="insurer-name" name="fio-insurer" class="form-control">
+                                            <label for="beneficiary-name" class="col-form-label">Наименования страхователя</label>
+                                            <input type="text" id="beneficiary-name" name="fio-beneficiary" class="form-control">
                                         </div>
                                     </div>
+
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="insurer-address" class="col-form-label">Адрес страхователя</label>
@@ -374,7 +376,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="beneficiary-name" class="col-form-label">Наименования</label>
+                                                <label for="beneficiary-name" class="col-form-label">Наименования страхователя</label>
                                                 <input type="text" id="beneficiary-name" name="fio-beneficiary" class="form-control">
                                             </div>
                                         </div>
@@ -417,6 +419,13 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
+                                                <label for="insurer-okonh" class="col-form-label">ОКЭД</label>
+                                                <input type="text" id="insurer-okonh" name="okonh-insurer" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
                                                 <label for="beneficiary-okonh" class="col-form-label">Номер
                                                     паспорта</label>
                                                 <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
@@ -430,14 +439,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="beneficiary-okonh" class="col-form-label">ОКОНХ</label>
                                                 <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="beneficiary-okonh" class="col-form-label">Серия</label>
                                                 <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
@@ -516,10 +525,10 @@
                                     <table class="table table-hover table-head-fixed" id="empTable">
                                         <thead>
                                             <tr>
-                                                <th class="text-nowrap">Номер полиса</th>
                                                 <th class="text-nowrap">Серия полиса</th>
-                                                <th class="text-nowrap">Период действия полиса</th>
                                                 <th class="text-nowrap">Выбор агента</th>
+                                                <th class="text-nowrap">Период действия полиса</th>
+                                                <th class="text-nowrap">Год выпуска</th>
                                                 <th class="text-nowrap">ИД строки</th>
                                                 <th class="text-nowrap">Марка</th>
                                                 <th class="text-nowrap">Модель</th>
@@ -530,18 +539,13 @@
                                                 <th class="text-nowrap">Номер кузова</th>
                                                 <th class="text-nowrap">Грузоподъёмность</th>
                                                 <th class="text-nowrap">Количество посадочных мест</th>
-                                                <th class="text-nowrap">Страховая стоимость</th>
-                                                <th class="text-nowrap">Страховая сумма</th>
-                                                <th class="text-nowrap">Страховая премия</th>
+                                                <th class="text-nowrap">Страховая стоимость*</th>
+                                                <th class="text-nowrap">Страховая сумма*</th>
+                                                <th class="text-nowrap">Страховая премия*</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>
-                                                    <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
-                                                        <option selected="selected"></option>
-                                                    </select>
-                                                </td>
                                                 <td>
                                                     <input type="text" class="form-control" name="period_polis-0">
                                                 </td>
@@ -549,6 +553,9 @@
                                                     <select class="form-control polises" id="polises" name="polis-agent-0" style="width: 100%;">
                                                         <option selected="selected"></option>
                                                     </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="polis-id-0">
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" name="polis-id-0">

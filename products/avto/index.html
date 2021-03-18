@@ -77,7 +77,7 @@
             <ul class="navbar-nav ml-auto">
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
+                    <a class="nav-link" data-toggle="dropdowНаименование страхователяn" href="#">
                         <i class="far fa-comments"></i>
                         <span class="badge badge-danger navbar-badge">3</span>
                     </a>
@@ -300,7 +300,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="insurer-name" class="col-form-label">Наименование страхователя</label>
+                                            <label for="insurer-name" class="col-form-label">ФИО / Наименование страхователя</label>
                                             <input type="text" id="insurer-name" name="fio-insurer" class="form-control">
                                         </div>
                                     </div>
@@ -374,7 +374,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="beneficiary-name" class="col-form-label">Наименование выгодоприобретателя</label>
+                                                <label for="beneficiary-name" class="col-form-label">ФИО / Наименование выгодоприобретателя</label>
                                                 <input type="text" id="beneficiary-name" name="fio-beneficiary" class="form-control">
                                             </div>
                                         </div>
@@ -383,6 +383,22 @@
                                             <div class="form-group">
                                                 <label for="beneficiary-address" class="col-form-label">Адрес</label>
                                                 <input type="text" id="beneficiary-address" name="address-beneficiary" class="form-control">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="beneficiary-okonh" class="col-form-label">Серия</label>
+                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="beneficiary-okonh" class="col-form-label">Номер
+                                                    паспорта</label>
+                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
                                             </div>
                                         </div>
 
@@ -417,14 +433,6 @@
 
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="beneficiary-okonh" class="col-form-label">Номер
-                                                    паспорта</label>
-                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class="form-group">
                                                 <label for="beneficiary-bank" class="col-form-label">Банк</label>
                                                 <input type="text" id="beneficiary-bank" name="bank-beneficiary" class="form-control">
                                             </div>
@@ -439,8 +447,8 @@
 
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="beneficiary-okonh" class="col-form-label">Серия</label>
-                                                <input type="text" id="beneficiary-okonh" name="okonh-beneficiary" class="form-control">
+                                                <label for="beneficiary-okonh" class="col-form-label">ОКЭД</label>
+                                                <input type="text" id="beneficiary-okonh" name="oked-beneficiary" class="form-control">
                                             </div>
                                         </div>
 
@@ -523,6 +531,7 @@
                                                     <th class="text-nowrap">Модель</th>
                                                     <th class="text-nowrap">Модификация</th>
                                                     <th class="text-nowrap">Гос. номер</th>
+                                                    <th class="text-nowrap">Год выпуска</th>
                                                     <th class="text-nowrap">Номер тех паспорта</th>
                                                     <th class="text-nowrap">Номер двигателя</th>
                                                     <th class="text-nowrap">Номер кузова</th>
@@ -536,20 +545,20 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <select class="form-control polises" id="polises" name="polis-series-0" style="width: 100%;">
+                                                        <input class="form-control polises" id="polises" name="polis-series-0" readonly style="width: 100%;"/>
+                                                    </td>
+                                                    <td>
+                                                        <select type="text" class="form-control" name="period_polis-0">
                                                             <option selected="selected"></option>
                                                         </select>
                                                     </td>
                                                     <td>
-                                                        <input type="text" class="form-control" name="period_polis-0">
+                                                        <input class="form-control polises" id="polises" name="polis-agent-0" style="width: 100%;"/>
                                                     </td>
                                                     <td>
-                                                        <select class="form-control polises" id="polises" name="polis-agent-0" style="width: 100%;">
+                                                        <select type="text" class="form-control" name="polis-id-0">
                                                             <option selected="selected"></option>
                                                         </select>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" class="form-control" name="polis-id-0">
                                                     </td>
                                                     <td>
                                                         <input type="text" class="form-control" name="polis-mark-0">

@@ -350,12 +350,6 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="insurer-tel" class="col-form-label">Почтовый адрес</label>
-                                            <input type="email" id="insurer-tel" name="tel-insurer" class="form-control">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
                                             <label for="insurer-tel" class="col-form-label">Телефон</label>
                                             <input type="text" id="insurer-tel" name="tel-insurer" class="form-control">
                                         </div>
@@ -378,13 +372,13 @@
                                             <input type="text" id="insurer-mfo" name="mfo-insurer" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="insurer-bank" class="col-form-label">Банк</label>
                                             <input type="text" id="insurer-bank" name="bank-insurer" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="insurer-okonh" class="col-form-label">ОКЭД</label>
                                             <input type="text" id="insurer-okonh" name="okonh-insurer" class="form-control">
@@ -514,12 +508,12 @@
                                         <div class="form-group form-inline justify-content-between">
                                             <label>Способ расчета</label>
                                             <select class="form-control payment-schedule" name="payment_term" onchange="showDiv('other-payment-schedule', this)" style="width: 100%; text-align: center">
-                                                        <option value="1">Сумах</option>
-                                                        <option value="2">Сумах В ин. валюте</option>
-                                                        <option value="3">В ин. валюте по курсу ЦБ на день заключение
-                                                            договора</option>
-                                                        <option value="4">В ин. валюте по курсу ЦБ на день оплаты</option>
-                                                    </select>
+                                                <option value="1">Сумах</option>
+                                                <option value="2">Сумах В ин. валюте</option>
+                                                <option value="3">В ин. валюте по курсу ЦБ на день заключение договора</option>
+                                                <option value="4">В ин. валюте по курсу ЦБ на день оплаты</option>
+                                                <option value="4">В ин. валюте по фиксированному ЦБ на день оплаты премии/первого транша</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
